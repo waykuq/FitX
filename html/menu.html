@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Gestión de Menús</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th,
+        td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #eaeaea;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .acciones button {
+            font-size: 0.9rem;
+        }
+
+        form.filtros {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        form.filtros input {
+            padding: 0.5rem;
+            min-width: 200px;
+        }
+
+        form.filtros button {
+            padding: 0.5rem 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Listado de Menús</h1>
+        <div>
+            <button class="btn" onclick="agregarMenu()">Agregar nuevo menú</button>
+            <button class="btn btn-secondary" onclick="cerrarVentana()">Cerrar ventana</button>
+        </div>
+    </header>
+
+    <form class="filtros">
+        <input type="text" name="nombre" placeholder="Buscar por nombre...">
+        <input type="date" name="fecha">
+        <button type="submit" class="btn">Filtrar</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Fecha</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Menú Ejecutivo</td>
+                <td>2025-06-10</td>
+                <td>Plato principal + bebida</td>
+                <td class="acciones">
+                    <button onclick="verMenu()">Ver</button>
+                    <button class="btn" onclick="editarMenu(1)">Editar</button>
+                    <button class="btn btn-danger" onclick="eliminarMenu(1)">Eliminar</button>
+                </td>
+            </tr>
+            <!-- Más filas dinámicamente generadas -->
+        </tbody>
+    </table>
+
+    <script>
+        function agregarMenu() {
+            alert('Redirigir al formulario de nuevo menú');
+        }
+
+        function cerrarVentana() {
+            window.close();
+        }
+
+        function verMenu(id) {
+            alert('Ver menú con ID ' + id);
+        }
+
+        function editarMenu(id) {
+            alert('Editar menú con ID ' + id);
+        }
+
+        function eliminarMenu(id) {
+            if (confirm('¿Estás seguro de eliminar este menú?')) {
+                alert('Menú eliminado: ID ' + id);
+            }
+        }
+    </script>
+</body>
+
+</html>

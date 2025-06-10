@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Perfil del Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background-color: #f4f6f8;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            max-width: 700px;
+        }
+
+        .section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .info-row {
+            margin-bottom: 1rem;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #444;
+        }
+
+        .info-value {
+            margin-top: 0.25rem;
+            color: #555;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn.volver {
+            background-color: #6c757d;
+        }
+
+        .btn.volver:hover {
+            background-color: #545b62;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Perfil del Usuario</h1>
+
+    <div class="button-group">
+        <button class="btn" onclick="editarPerfil()">Editar Perfil</button>
+        <button class="btn" onclick="editarPerfilNutricional()">Editar Perfil Nutricional</button>
+        <button class="btn volver" onclick="volver()">Volver</button>
+    </div>
+
+
+    <div class="section">
+        <h2>Datos Personales</h2>
+        <div class="info-row">
+            <div class="info-label">Nombre completo</div>
+            <div class="info-value">María López García</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Correo electrónico</div>
+            <div class="info-value">maria.lopez@example.com</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Edad</div>
+            <div class="info-value">29 años</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Sexo</div>
+            <div class="info-value">Femenino</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Perfil Nutricional</h2>
+        <div class="info-row">
+            <div class="info-label">Peso</div>
+            <div class="info-value">62 kg</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Altura</div>
+            <div class="info-value">1.65 m</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">IMC</div>
+            <div class="info-value">22.8</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Objetivo</div>
+            <div class="info-value">Mantener peso actual</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Nivel de actividad</div>
+            <div class="info-value">Moderado</div>
+        </div>
+    </div>
+
+
+    <script>
+        function editarPerfil() {
+            window.location.href = "editar_perfil.html";
+        }
+
+        function editarPerfilNutricional() {
+            window.location.href = "editar_perfil_nutricional.html";
+        }
+
+        function volver() {
+            window.history.back();
+        }
+    </script>
+
+</body>
+
+</html>

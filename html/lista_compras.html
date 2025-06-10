@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Insumos del Menú</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.7rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        th,
+        td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #eaeaea;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Insumos del Menú</h1>
+        <div>
+            <button class="btn btn-success" onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+            <button class="btn btn-secondary" onclick="window.print()">Imprimir</button>
+            <button class="btn btn-secondary" onclick="location.href='listado-menus.html'">🔙 Volver</button>
+        </div>
+    </header>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre del Insumo</th>
+                <th>Total Necesario</th>
+                <th>Unidad</th>
+                <th>Recetas que lo usan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Lechuga</td>
+                <td>400</td>
+                <td>g</td>
+                <td>Ensalada saludable, Wrap vegetal</td>
+            </tr>
+            <tr>
+                <td>Tomate</td>
+                <td>300</td>
+                <td>g</td>
+                <td>Ensalada saludable, Pizza vegana</td>
+            </tr>
+            <tr>
+                <td>Queso parmesano</td>
+                <td>100</td>
+                <td>g</td>
+                <td>Pizza vegana</td>
+            </tr>
+            <tr>
+                <td>Aceite de oliva</td>
+                <td>50</td>
+                <td>ml</td>
+                <td>Ensalada saludable</td>
+            </tr>
+            <!-- Más filas según el menú -->
+        </tbody>
+    </table>
+
+    <script>
+        function enviarWhatsApp() {
+            const mensaje = encodeURIComponent("Hola, aquí tienes el listado de insumos del menú:\n- Lechuga: 400g\n- Tomate: 300g\n- Queso parmesano: 100g\n- Aceite de oliva: 50ml");
+            const numero = ''; // Agrega el número si lo deseas (ej. 51912345678)
+            window.open(`https://wa.me/${numero}?text=${mensaje}`, '_blank');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Gestión de Recetas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .acciones {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      margin-left: 0.5rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+    }
+
+    form.filtros {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    form.filtros input,
+    form.filtros select {
+      padding: 0.5rem;
+      min-width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    form.filtros button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      margin-top: 1rem;
+    }
+
+    th,
+    td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #eaeaea;
+    }
+
+    .botones {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .botones button {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+
+    .botones button:nth-child(2) {
+      background-color: #ffc107;
+    }
+
+    .botones button:nth-child(3) {
+      background-color: #dc3545;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Listado de Recetas</h1>
+
+  <div class="acciones">
+    <div>
+      <button class="btn" onclick="window.location.href='nueva-receta.html'">Agregar Nueva Receta</button>
+      <button class="btn btn-secondary" onclick="window.close()">Cerrar Ventana</button>
+    </div>
+  </div>
+
+  <form class="filtros">
+    <input type="text" name="busqueda" placeholder="Buscar por nombre...">
+
+    <select name="etiqueta">
+      <option value="">Todas las etiquetas</option>
+      <option value="1">Vegetariana</option>
+      <option value="2">Alta proteína</option>
+      <!-- Añadir más etiquetas -->
+    </select>
+
+    <select name="insumo">
+      <option value="">Todos los insumos</option>
+      <option value="1">Pollo</option>
+      <option value="2">Espinaca</option>
+      <!-- Añadir más insumos -->
+    </select>
+
+    <button type="submit">Filtrar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Porciones</th>
+        <th>Tiempo Estimado</th>
+        <th>Fecha Creación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ensalada de Quinoa</td>
+        <td>2</td>
+        <td>00:15</td>
+        <td>2025-06-01</td>
+        <td class="botones">
+          <button onclick="verReceta()">Ver</button>
+          <button onclick="editarReceta()">Editar</button>
+          <button onclick="eliminarReceta()">Eliminar</button>
+        </td>
+      </tr>
+      <!-- Más recetas -->
+      <tr>
+        <td>Pollo al Limón</td>
+        <td>4</td>
+        <td>00:30</td>
+        <td>2025-06-02</td>
+        <td class="botones">
+          <button onclick="verReceta()">Ver</button>
+          <button onclick="editarReceta()">Editar</button>
+          <button onclick="eliminarReceta()">Eliminar</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Ensalada César</td>
+        <td>3</td>
+        <td>00:20</td>
+        <td>2025-06-03</td>
+        <td class="botones">
+          <button onclick="verReceta()">Ver</button>
+          <button onclick="editarReceta()">Editar</button>
+          <button onclick="eliminarReceta()">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    function verReceta() {
+      window.location.href = 'detalle-receta.html';
+    }
+
+    function editarReceta() {
+      alert('Funcionalidad para editar receta');
+    }
+
+    function eliminarReceta() {
+      if (confirm('¿Estás seguro de eliminar esta receta?')) {
+        alert('Receta eliminada');
+      }
+    }
+  </script>
+</body>
+
+</html>

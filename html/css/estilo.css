@@ -1,0 +1,138 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: #f2f2f2;
+}
+
+.sidebar {
+  width: 200px;
+  background: #fff;
+  height: 100vh;
+  position: fixed;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.header {
+  background: #333;
+  color: white;
+  padding: 10px 20px;
+  margin-left: 200px;
+}
+
+.content {
+  margin-left: 200px;
+  padding: 20px;
+}
+
+.menu-dia,
+.lista-insumos,
+.info-nutricional,
+.mis-recetas {
+  background: white;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(207, 206, 206);
+}
+
+.menu-dia .recetas {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.menu-dia .receta {
+  /* flex: 1 1 calc(33.333% - 10px); */
+  box-sizing: border-box;
+  margin: 5px;
+  background: #dbd4d4;
+  padding: 10px;
+  border-radius: 8px;
+  width: 220px;
+}
+
+.menu-dia img {
+  height: 170px;
+  width: 170px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 5px;
+}
+
+.menu-dia .receta .titulo h3 {
+   margin: 0;
+}
+
+.menu-dia .detalle {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+.menu-dia .detalle p {
+  flex-grow: 1; 
+  margin: 0;
+}
+.menu-dia .detalle .descripcion {
+  display: none;
+}
+
+.titulo-seccion {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.tabla th,
+.tabla td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.acciones button {
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.acciones button.descargar {
+  background-color: #f66;
+  color: white;
+}
+
+.acciones button.imprimir {
+  background-color: #f90;
+  color: white;
+}
+
+.acciones button.proveedores {
+  background-color: #2c9;
+  color: white;
+}

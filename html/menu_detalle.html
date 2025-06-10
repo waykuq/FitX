@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalles del Menú - FitX</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.6rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        .seccion {
+            margin-bottom: 2rem;
+        }
+
+        .titulo-seccion {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .receta {
+            display: flex;
+            gap: 1rem;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 1rem;
+        }
+
+        .receta img {
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .detalle {
+            flex: 1;
+        }
+
+        .detalle p {
+            margin: 0.25rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eaeaea;
+        }
+
+        hr {
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Menú: Almuerzo Saludable - 08/06/2025</h1>
+        <div>
+            <button class="btn btn-success" onclick="obtenerInsumos()">📋 Listado de insumos</button>
+            <button class="btn" onclick="agregarReceta()">➕ Agregar receta</button>
+            <button class="btn btn-secondary" onclick="location.href='listado-menus.html'">🔙 Volver</button>
+        </div>
+    </header>
+
+    <section class="seccion">
+        <div class="titulo-seccion">Recetas incluidas</div>
+        <hr>
+        <div class="receta">
+            <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/07/butter-chicken-in-a-pan.jpg"
+                alt="Rollo de Cordon Bleu">
+            <div class="detalle">
+                <h3>Rollo de Cordon Bleu</h3>
+                <p>📄 Pollo relleno de jamón y queso, empanizado y frito.</p>
+                <p>🍽️ Porciones: 4</p>
+                <p>⚖️ Peso total: 300 g</p>
+                <p>🕰️ Tiempo: 30 min</p>
+                <p>❤️ Favorito</p>
+            </div>
+        </div>
+        <!-- Puedes repetir más recetas aquí -->
+    </section>
+
+    <section class="seccion">
+        <div class="titulo-seccion">Información nutricional por porción</div>
+        <hr>
+        <table>
+            <thead>
+                <tr>
+                    <th>Plato</th>
+                    <th>Peso (g)</th>
+                    <th>Calorías</th>
+                    <th>Proteínas (g)</th>
+                    <th>Grasas (g)</th>
+                    <th>Carbs (g)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Rollo de Cordon Bleu</td>
+                    <td>300</td>
+                    <td>850</td>
+                    <td>65</td>
+                    <td>40</td>
+                    <td>45</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        function agregarReceta() {
+            alert('Agregar nueva receta al menú.');
+        }
+
+        function obtenerInsumos() {
+            alert('Generar listado de insumos para todas las recetas del menú.');
+        }
+    </script>
+</body>
+
+</html>

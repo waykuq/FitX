@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Insumos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      margin-left: 0.5rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #eaeaea;
+    }
+
+    .acciones {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .acciones button {
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Listado de Insumos</h1>
+    <div>
+      <button class="btn" onclick="agregarInsumo()">Agregar nuevo insumo</button>
+      <button class="btn btn-secondary" onclick="cerrarVentana()">Cerrar ventana</button>
+    </div>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Unidad de Medida</th>
+        <th>Tipo de Insumo</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Aquí deberías generar las filas dinámicamente desde la base de datos -->
+      <tr>
+        <td>1</td>
+        <td>Pollo</td>
+        <td>kg</td>
+        <td>Proteína</td>
+        <td>Activo</td>
+        <td class="acciones">
+          <button class="btn" onclick="editarInsumo(1)">Editar</button>
+          <button class="btn btn-danger" onclick="eliminarInsumo(1)">Eliminar</button>
+        </td>
+      </tr>
+      <!-- Más filas -->
+    </tbody>
+  </table>
+
+  <script>
+    function agregarInsumo() {
+      alert('Redirigir al formulario de nuevo insumo');
+    }
+
+    function cerrarVentana() {
+      window.close(); // Puede no funcionar en navegadores modernos sin haber sido abierta por JS
+    }
+
+    function editarInsumo(id) {
+      alert('Editar insumo con ID ' + id);
+    }
+
+    function eliminarInsumo(id) {
+      if (confirm('¿Estás seguro de eliminar este insumo?')) {
+        alert('Insumo eliminado: ID ' + id);
+      }
+    }
+  </script>
+</body>
+</html>

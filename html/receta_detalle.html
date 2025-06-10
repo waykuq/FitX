@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Receta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 1rem;
+        }
+
+        th,
+        td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #eaeaea;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .acciones button {
+            font-size: 0.9rem;
+        }
+
+        .info-receta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-receta img {
+            width: 200px;
+            height: auto;
+            border-radius: 5px;
+            object-fit: cover;
+            border: 1px solid #ccc;
+        }
+
+        .info-receta div {
+            flex: 1;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            min-height: 100px;
+            font-family: Arial, sans-serif;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Detalle de Receta</h1>
+        <div>
+            <button class="btn" onclick="agregarInsumo()">Agregar insumo</button>
+            <button class="btn btn-secondary" onclick="cerrarVentana()">Cerrar ventana</button>
+        </div>
+    </header>
+
+    <section class="info-receta">
+        <img src="ruta/a/la/imagen.jpg" alt="Foto de la receta">
+        <div>
+            <p><strong>Nombre:</strong> Ensalada saludable</p>
+            <p><strong>Porciones:</strong> 4</p>
+            <p><strong>Tiempo estimado:</strong> 30 minutos</p>
+        </div>
+    </section>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre del Insumo</th>
+                <th>Cantidad</th>
+                <th>Unidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Lechuga</td>
+                <td>200</td>
+                <td>g</td>
+                <td class="acciones">
+                    <button class="btn" onclick="editarInsumo(1)">Editar</button>
+                    <button class="btn btn-danger" onclick="eliminarInsumo(1)">Eliminar</button>
+                </td>
+            </tr>
+            <!-- Más insumos -->
+            <tr>
+                <td>Tomate</td>
+                <td>150</td>
+                <td>g</td>
+                <td class="acciones">
+                    <button class="btn" onclick="editarInsumo(2)">Editar</button>
+                    <button class="btn btn-danger" onclick="eliminarInsumo(2)">Eliminar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Pepino</td>
+                <td>100</td>
+                <td>g</td>
+                <td class="acciones">
+                    <button class="btn" onclick="editarInsumo(3)">Editar</button>
+                    <button class="btn btn-danger" onclick="eliminarInsumo(3)">Eliminar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Aceitunas</td>
+                <td>50</td>
+                <td>g</td>
+                <td class="acciones">
+                    <button class="btn" onclick="editarInsumo(4)">Editar</button>
+                    <button class="btn btn-danger" onclick="eliminarInsumo(4)">Eliminar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Sal</td>
+                <td>1</td>
+                <td>cucharadita</td>
+                <td class="acciones">
+                    <button class="btn" onclick="editarInsumo(5)">Editar</button>
+                    <button class="btn btn-danger" onclick="eliminarInsumo(5)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-top: 1.5rem;">
+        <label for="descripcion">Descripción de la receta:</label>
+        <textarea id="descripcion"
+            placeholder="Escribe aquí la preparación...">Lavar y cortar todos los ingredientes, mezclar con el aderezo y servir frío.</textarea>
+    </div>
+
+    <script>
+        function agregarInsumo() {
+            alert('Agregar nuevo insumo');
+        }
+
+        function cerrarVentana() {
+            window.close();
+        }
+
+        function editarInsumo(id) {
+            alert('Editar insumo con ID ' + id);
+        }
+
+        function eliminarInsumo(id) {
+            if (confirm('¿Estás seguro de eliminar este insumo?')) {
+                alert('Insumo eliminado: ID ' + id);
+            }
+        }
+    </script>
+</body>
+
+</html>
