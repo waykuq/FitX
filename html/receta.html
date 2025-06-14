@@ -40,15 +40,15 @@
                 <ul class="nav flex-column">
                     <li class="nav-item"><a class="nav-link active" href="dashboard.html">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link active" href="dashboard_admin.html">Dashboard Admin</a></li>
-                    <li class="nav-item"><a class="nav-link" href="menu.html">Menús</a></li>
-                    <li class="nav-item"><a class="nav-link" href="receta.html">Recetas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">Menús</a></li>                    
                     <li class="nav-item"><a class="nav-link" href="perfil.html">Perfil</a></li>
                     <hr class="mt-4">
                     <h4>Mantenimiento</h4>
+                    <li class="nav-item"><a class="nav-link" href="receta.html">Recetas</a></li>
                     <li class="nav-item"><a class="nav-link" href="etiquetas.html">Etiquetas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="insumo.html">Insumos</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="insumo.html">Insumos</a></li>
                     <li class="nav-item"><a class="nav-link" href="tipos_insumo.html">Tipos de Insumo</a></li>
-                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">Unidades de Medida</a></li>
+                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">Unidades de Medida</a></li> -->
                     <hr class="mt-4">
                     <li class="nav-item mt-4"><a class="nav-link text-danger" href="login.html">Cerrar sesión</a></li>
                 </ul>
@@ -68,7 +68,7 @@
                 <form class="row g-3 mb-4">
                     <div class="col-md-4">
                         <input type="text" class="form-control" placeholder="Buscar por nombre..." name="nombre" />
-                        <p class="text-muted ps-3">Filtrar por nombre</p>
+                        <p class="text-muted ps-3">Nombre</p>
                     </div>
                     <div class="col-md-2">
                         <select class="form-select" name="etiqueta">
@@ -76,7 +76,7 @@
                             <option value="1">Vegetariana</option>
                             <option value="2">Alta proteína</option>
                         </select>
-                        <p class="text-muted ps-3">Filtrar por etiquetas</p>
+                        <p class="text-muted ps-3">Etiquetas</p>
                     </div>
                     <div class="col-md-2">
                         <select class="form-select" name="insumo">
@@ -84,7 +84,7 @@
                             <option value="pollo">Pollo</option>
                             <option value="espinaca">Espinaca</option>
                         </select>
-                        <p class="text-muted ps-3">Filtrar por insumos</p>
+                        <p class="text-muted ps-3">Insumos</p>
                     </div>
                     <div class="col-md-2">
                         <select class="form-select" name="favorito">
@@ -92,7 +92,7 @@
                             <option value="1">Solo favoritos</option>
                             <option value="0">No favoritos</option>
                         </select>
-                        <p class="text-muted ps-3">Filtrar por recetas favoritas</p>
+                        <p class="text-muted ps-3">Recetas favoritas</p>
                     </div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-secondary w-100">🔍 Filtrar</button>
