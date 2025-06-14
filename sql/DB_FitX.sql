@@ -1,9 +1,19 @@
+DROP DATABASE IF EXISTS DB_FitX;
 CREATE DATABASE IF NOT EXISTS DB_FitX;
 USE DB_FitX;
+
+-- Tipo de Usuario
+CREATE TABLE TipoUsuario (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL,   
+    estado VARCHAR(20) NOT NULL -- Activo, Inactivo, Suspendido
+);
+
 
 -- Usuario
 CREATE TABLE Usuario (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    id_tipo_usuario INT NOT NULL,
     nombre_usuario VARCHAR(50) NOT NULL,
     nombres VARCHAR(100) NOT NULL,
     apellidos VARCHAR(100) NOT NULL,
@@ -11,7 +21,8 @@ CREATE TABLE Usuario (
     contraseña VARCHAR(100) NOT NULL,
     fecha_inscripcion DATETIME NOT NULL,
     estado VARCHAR(20) NOT NULL, -- Activo, Inactivo, Suspendido
-    telefono VARCHAR(15) NULL
+    telefono VARCHAR(15) NULL,
+    FOREIGN KEY (id_tipo_usuario) REFERENCES TipoUsuario(id) ON DELETE CASCADE
 );
 
 -- Perfil Nutricional
@@ -22,7 +33,7 @@ CREATE TABLE PerfilNutricional (
     fecha_nacimiento DATE NOT NULL,
     sexo ENUM('M', 'F') NOT NULL,
     talla DECIMAL(5,2) NOT NULL,
-    estilo_vida VARCHAR(50) NOT NULL,
+    nivel_actividad VARCHAR(50) NOT NULL,
     estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id) ON DELETE CASCADE
 );
@@ -48,18 +59,28 @@ CREATE TABLE Menu (
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
+-- Unidad de Medida
+CREATE TABLE UnidadMedida (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL,
+    simbolo VARCHAR(10) NOT NULL
+);
+
 -- Receta
 CREATE TABLE Receta (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT NOT NULL,
-    porciones INT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    tiempo_estimado TIME, -- en minutos
     fecha_creacion DATE NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    porciones INT NOT NULL,
+    peso_porcion DECIMAL(5,2) NOT NULL, 
+    id_unidad_medida INT NOT NULL,
+    tiempo_estimado TIME, -- en minutos    
     estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
     foto TEXT,
     descripcion TEXT,
-    FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
+    FOREIGN KEY (id_unidad_medida) REFERENCES UnidadMedida(id) ON DELETE CASCADE
 );
 
 -- Menú-Receta (relación N:M)
@@ -86,8 +107,10 @@ CREATE TABLE RecetaFavorita (
 -- Etiqueta
 CREATE TABLE Etiqueta (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT NOT NULL,
     nombre VARCHAR(100) NOT NULL,
-    estado VARCHAR(20) NOT NULL -- Activo, Inactivo
+    estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
 -- Receta-Etiqueta (relación N:M)
@@ -97,13 +120,6 @@ CREATE TABLE RecetaEtiqueta (
     PRIMARY KEY (id_etiqueta, id_receta),
     FOREIGN KEY (id_etiqueta) REFERENCES Etiqueta(id) ON DELETE CASCADE,
     FOREIGN KEY (id_receta) REFERENCES Receta(id) ON DELETE CASCADE
-);
-
--- Unidad de Medida
-CREATE TABLE UnidadMedida (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) NOT NULL,
-    simbolo VARCHAR(10) NOT NULL
 );
 
 -- Tipo de Insumo

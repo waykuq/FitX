@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mantenimiento de Insumos - FitX</title>
+    <title>Mantenimiento de Etiquetas - FitX</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -58,20 +58,22 @@
 
                 <!-- Header -->
                 <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
-                    <h2>Mantenimiento de Insumos</h2>
-                    <button class="btn btn-primary" onclick="abrirModalInsumo()">➕ Agregar Insumo</button>
+                    <h2>Mantenimiento de Etiquetas</h2>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-primary" onclick="abrirModalEtiqueta()">➕ Agregar etiqueta</button>
+                    </div>
                 </div>
 
                 <!-- Filtros -->
                 <form class="row g-3 mb-3">
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Buscar por nombre..." name="nombre" />
+                        <input type="text" class="form-control" placeholder="Buscar por nombre...">
                     </div>
                     <div class="col-md-4">
-                        <select class="form-select" name="tipo">
+                        <select class="form-select">
                             <option value="">Todos los tipos</option>
-                            <option value="1">Proteína</option>
-                            <option value="2">Vegetal</option>
+                            <option value="usuario">Usuario</option>
+                            <option value="sistema">Sistema</option>
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -81,7 +83,7 @@
 
                 <!-- Selector cantidad por página -->
                 <div class="d-flex justify-content-end align-items-center mb-2">
-                    <label for="porPagina" class="me-2 mb-0">Insumos por página:</label>
+                    <label for="porPagina" class="me-2 mb-0">Etiquetas por página:</label>
                     <select id="porPagina" class="form-select w-auto" onchange="cambiarCantidadPorPagina()">
                         <option value="5">5</option>
                         <option value="10" selected>10</option>
@@ -90,145 +92,134 @@
                     </select>
                 </div>
 
-                <!-- Tabla de insumos -->
+                <!-- Tabla -->
                 <div class="table-responsive">
                     <table class="table table-bordered bg-white align-middle">
                         <thead class="table-light">
                             <tr>
                                 <th>Nombre</th>
-                                <th>Tipo de insumo</th>
-                                <th>Unidad de medida</th>
+                                <th>Tipo</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Pechuga de pollo</td>
-                                <td>Proteína</td>
-                                <td>kg</td>
+                                <td>Vegetariana</td>
+                                <td>Sistema</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
+                                        <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
                                             Editar</button>
-                                        <button class="btn btn-outline-danger" onclick="abrirModalEliminar()">🗑️
-                                            Eliminar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="abrirModalEliminarEtiqueta()">🗑️ Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Brócoli</td>
-                                <td>Vegetal</td>
-                                <td>kg</td>
+                                <td>Sin Gluten</td>
+                                <td>Usuario</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
+                                        <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
                                             Editar</button>
-                                        <button class="btn btn-outline-danger" onclick="abrirModalEliminar()">🗑️
-                                            Eliminar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="abrirModalEliminarEtiqueta()">🗑️ Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Arroz integral</td>
-                                <td>Carbohidrato</td>
-                                <td>kg</td>
+                                <td>Alto en Proteínas</td>
+                                <td>Sistema</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
+                                        <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
                                             Editar</button>
-                                        <button class="btn btn-outline-danger" onclick="abrirModalEliminar()">🗑️
-                                            Eliminar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="abrirModalEliminarEtiqueta()">🗑️ Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Quinoa</td>
-                                <td>Carbohidrato</td>
-                                <td>kg</td>
+                                <td>Alto en Proteínas</td>
+                                <td>Sistema</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
+                                        <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
                                             Editar</button>
-                                        <button class="btn btn-outline-danger" onclick="abrirModalEliminar()">🗑️
-                                            Eliminar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="abrirModalEliminarEtiqueta()">🗑️ Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Batata</td>
-                                <td>Carbohidrato</td>
-                                <td>kg</td>
+                                <td>Vegana</td>
+                                <td>Sistema</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
+                                        <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
                                             Editar</button>
-                                        <button class="btn btn-outline-danger" onclick="abrirModalEliminar()">🗑️
-                                            Eliminar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="abrirModalEliminarEtiqueta()">🗑️ Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Espinaca</td>
-                                <td>Vegetal</td>
-                                <td>kg</td>
+                                <td>Sin Lactosa</td>
+                                <td>Usuario</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
+                                        <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
                                             Editar</button>
-                                        <button class="btn btn-outline-danger" onclick="abrirModalEliminar()">🗑️
-                                            Eliminar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="abrirModalEliminarEtiqueta()">🗑️ Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Espinaca</td>
-                                <td>Vegetal</td>
-                                <td>kg</td>
+                                <td>Sin Gluten</td>
+                                <td>Usuario</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
+                                        <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
                                             Editar</button>
-                                        <button class="btn btn-outline-danger" onclick="abrirModalEliminar()">🗑️
-                                            Eliminar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="abrirModalEliminarEtiqueta()">🗑️ Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Almendras</td>
-                                <td>Grasa saludable</td>
-                                <td>kg</td>
+                                <td>Sin Gluten</td>
+                                <td>Usuario</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
+                                        <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
                                             Editar</button>
-                                        <button class="btn btn-outline-danger" onclick="abrirModalEliminar()">🗑️
-                                            Eliminar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="abrirModalEliminarEtiqueta()">🗑️ Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Aceite de oliva</td>
-                                <td>Grasa saludable</td>
-                                <td>litros</td>
+                                <td>Sin Gluten</td>
+                                <td>Usuario</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
+                                        <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
                                             Editar</button>
-                                        <button class="btn btn-outline-danger" onclick="abrirModalEliminar()">🗑️
-                                            Eliminar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="abrirModalEliminarEtiqueta()">🗑️ Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Atún en lata</td>
-                                <td>Proteína</td>
-                                <td>latas</td>
+                                <td>Sin Gluten</td>
+                                <td>Usuario</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
+                                        <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
                                             Editar</button>
-                                        <button class="btn btn-outline-danger" onclick="abrirModalEliminar()">🗑️
-                                            Eliminar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="abrirModalEliminarEtiqueta()">🗑️ Eliminar</button>
                                     </div>
                                 </td>
                             </tr>
@@ -259,55 +250,39 @@
         </div>
     </div>
 
-    <!-- Modal Crear/Editar Insumo -->
-    <div class="modal fade" id="modalInsumo" tabindex="-1" aria-labelledby="modalInsumoLabel" aria-hidden="true">
+    <!-- Modal Etiqueta -->
+    <div class="modal fade" id="modalEtiqueta" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="formInsumo">
+                <form>
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalInsumoLabel">Crear insumo</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        <h5 class="modal-title" id="modalEtiquetaLabel">Agregar etiqueta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Nombre del insumo</label>
+                            <label class="form-label">Nombre de la etiqueta</label>
                             <input type="text" class="form-control" required />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Tipo de insumo</label>
-                            <select class="form-select">
-                                <option value="1">Proteína</option>
-                                <option value="2">Vegetal</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Unidad de medida</label>
-                            <select class="form-select">
-                                <option value="g">g</option>
-                                <option value="kg">kg</option>
-                                <option value="ml">ml</option>
-                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit">Guardar</button>
+                        <button class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal Eliminar Insumo -->
-    <div class="modal fade" id="modalEliminarInsumo" tabindex="-1" aria-labelledby="modalEliminarLabel"
-        aria-hidden="true">
+    <!-- Modal Eliminar Etiqueta -->
+    <div class="modal fade" id="modalEliminarEtiqueta" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEliminarLabel">Eliminar insumo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <h5 class="modal-title">Eliminar etiqueta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar este insumo? Esta acción no se puede deshacer.
+                    ¿Estás seguro de que deseas eliminar esta etiqueta? Esta acción no se puede deshacer.
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -317,26 +292,18 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function abrirModalInsumo(editar = false) {
-            const modal = new bootstrap.Modal(document.getElementById('modalInsumo'));
-            document.getElementById('modalInsumoLabel').textContent = editar ? 'Editar insumo' : 'Crear insumo';
+        function abrirModalEtiqueta(editar = false) {
+            const modal = new bootstrap.Modal(document.getElementById('modalEtiqueta'));
+            document.getElementById('modalEtiquetaLabel').textContent = editar ? 'Editar etiqueta' : 'Agregar etiqueta';
             modal.show();
         }
 
-        function abrirModalEliminar() {
-            new bootstrap.Modal(document.getElementById('modalEliminarInsumo')).show();
-        }
-
-        function cambiarCantidadPorPagina() {
-            const cantidad = document.getElementById('porPagina').value;
-            console.log('Mostrando ' + cantidad + ' insumos por página');
-            // Aquí iría lógica para recargar resultados
+        function abrirModalEliminarEtiqueta() {
+            new bootstrap.Modal(document.getElementById('modalEliminarEtiqueta')).show();
         }
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
