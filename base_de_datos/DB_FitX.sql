@@ -44,6 +44,7 @@ CREATE TABLE Suscripcion (
     id_usuario INT NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
+    precio DECIMAL(10,2) NOT NULL,
     estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id) ON DELETE CASCADE
 );
@@ -53,6 +54,7 @@ CREATE TABLE Menu (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT NOT NULL,
     nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
     fecha_creacion DATE NOT NULL,
     fecha_ejecucion DATE NOT NULL,
     estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
@@ -109,6 +111,7 @@ CREATE TABLE Etiqueta (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT NOT NULL,
     nombre VARCHAR(100) NOT NULL,
+    color VARCHAR(6), -- Color en formato hexadecimal
     estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id) ON DELETE CASCADE
 );
