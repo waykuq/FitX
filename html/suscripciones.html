@@ -60,20 +60,20 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
                 <!-- Header -->
-                <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
+                <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
                     <h2>Mantenimiento de Suscripciones</h2>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-primary" onclick="abrirModalSuscripcion(false)">➕ Agregar</button>
+                        <button class="btn btn-primary" onclick="abrirModalSuscripcion(false)">➕ Agregar Suscripción</button>
                     </div>
                 </div>
 
                 <!-- Filtros -->
-                <form class="row g-2 mb-3">
+                <form class="row g-2 mb-5">
                     <div class="col-md-2">
                         <input type="text" class="form-control" placeholder="DNI cliente">
                         <p class="text-muted ps-3">DNI</p>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input type="text" class="form-control" placeholder="Nombre cliente">
                         <p class="text-muted ps-3">Nombre o Apellido</p>
                     </div>
@@ -85,14 +85,17 @@
                         <input type="date" class="form-control">
                         <p class="text-muted ps-3">Fecha fin</p>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <select class="form-select">
                             <option value="">Estado</option>
-                            <option>Activa</option>
-                            <option>Inactiva</option>
-                            <option>Cancelada</option>
+                            <option>Activo</option>
+                            <option>Inactivo</option>
+                            <option>Cancelado</option>
                         </select>
                         <p class="text-muted ps-3">Estado</p>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-secondary w-100">🔍 Filtrar</button>
                     </div>
                 </form>
 
@@ -111,23 +114,23 @@
                     <table class="table table-bordered bg-white">
                         <thead class="table-light">
                             <tr>
-                                <th>DNI</th>
+                                <th class="text-center">DNI</th>
                                 <th>Nombre</th>
-                                <th>Inicio</th>
-                                <th>Final</th>
-                                <th>Precio</th>
-                                <th>Estado</th>
+                                <th class="text-center">Inicio</th>
+                                <th class="text-center">Final</th>
+                                <th class="text-center">Precio S/</th>
+                                <th class="text-center">Estado</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>12345678</td>
+                                <td class="text-center">12345678</td>
                                 <td>Ana García</td>
-                                <td>2024-01-01</td>
-                                <td>2024-06-30</td>
-                                <td>120</td>
-                                <td>Activa</td>
+                                <td class="text-center">2024-01-01</td>
+                                <td class="text-center">2024-06-30</td>
+                                <td class="text-center">120</td>
+                                <td class="text-center">Activo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm"><button class="btn btn-outline-warning"
                                             onclick="abrirModalSuscripcion(true)">✏️</button><button
@@ -137,12 +140,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>23456789</td>
+                                <td class="text-center">23456789</td>
                                 <td>Pedro López</td>
-                                <td>2023-05-01</td>
-                                <td>2023-10-31</td>
-                                <td>100</td>
-                                <td>Cancelada</td>
+                                <td class="text-center">2023-05-01</td>
+                                <td class="text-center">2023-10-31</td>
+                                <td class="text-center">100</td>
+                                <td class="text-center">Cancelado</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm"><button class="btn btn-outline-warning"
                                             onclick="abrirModalSuscripcion(true)">✏️</button><button
@@ -152,12 +155,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>34567890</td>
+                                <td class="text-center">34567890</td>
                                 <td>María Torres</td>
-                                <td>2024-03-01</td>
-                                <td>2024-09-01</td>
-                                <td>90</td>
-                                <td>Activa</td>
+                                <td class="text-center">2024-03-01</td>
+                                <td class="text-center">2024-09-01</td>
+                                <td class="text-center">90</td>
+                                <td class="text-center">Activo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm"><button class="btn btn-outline-warning"
                                             onclick="abrirModalSuscripcion(true)">✏️</button><button
@@ -167,12 +170,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>45678901</td>
+                                <td class="text-center">45678901</td>
                                 <td>Carlos Ruiz</td>
-                                <td>2023-01-01</td>
-                                <td>2023-06-01</td>
-                                <td>80</td>
-                                <td>Inactiva</td>
+                                <td class="text-center">2023-01-01</td>
+                                <td class="text-center">2023-06-01</td>
+                                <td class="text-center">80</td>
+                                <td class="text-center">Finalizado</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm"><button class="btn btn-outline-warning"
                                             onclick="abrirModalSuscripcion(true)">✏️</button><button
@@ -182,12 +185,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>56789012</td>
+                                <td class="text-center">56789012</td>
                                 <td>Lucía Salas</td>
-                                <td>2024-04-10</td>
-                                <td>2024-10-10</td>
-                                <td>120</td>
-                                <td>Activa</td>
+                                <td class="text-center">2024-04-10</td>
+                                <td class="text-center">2024-10-10</td>
+                                <td class="text-center">120</td>
+                                <td class="text-center">Activo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm"><button class="btn btn-outline-warning"
                                             onclick="abrirModalSuscripcion(true)">✏️</button><button
@@ -197,12 +200,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>67890123</td>
+                                <td class="text-center">67890123</td>
                                 <td>Mario Díaz</td>
-                                <td>2024-05-01</td>
-                                <td>2024-11-01</td>
-                                <td>140</td>
-                                <td>Activa</td>
+                                <td class="text-center">2024-05-01</td>
+                                <td class="text-center">2024-11-01</td>
+                                <td class="text-center">140</td>
+                                <td class="text-center">Activo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm"><button class="btn btn-outline-warning"
                                             onclick="abrirModalSuscripcion(true)">✏️</button><button
@@ -212,12 +215,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>78901234</td>
+                                <td class="text-center">78901234</td>
                                 <td>Rosa Paredes</td>
-                                <td>2023-02-01</td>
-                                <td>2023-08-01</td>
-                                <td>70</td>
-                                <td>Cancelada</td>
+                                <td class="text-center">2023-02-01</td>
+                                <td class="text-center">2023-08-01</td>
+                                <td class="text-center">70</td>
+                                <td class="text-center">Cancelado</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm"><button class="btn btn-outline-warning"
                                             onclick="abrirModalSuscripcion(true)">✏️</button><button
@@ -227,12 +230,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>89012345</td>
+                                <td class="text-center">89012345</td>
                                 <td>Elena Herrera</td>
-                                <td>2023-06-01</td>
-                                <td>2023-12-01</td>
-                                <td>110</td>
-                                <td>Inactiva</td>
+                                <td class="text-center">2023-06-01</td>
+                                <td class="text-center">2023-12-01</td>
+                                <td class="text-center">110</td>
+                                <td class="text-center">Finalizado</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm"><button class="btn btn-outline-warning"
                                             onclick="abrirModalSuscripcion(true)">✏️</button><button
@@ -242,12 +245,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>90123456</td>
+                                <td class="text-center">90123456</td>
                                 <td>Jorge Castillo</td>
-                                <td>2024-02-15</td>
-                                <td>2024-08-15</td>
-                                <td>130</td>
-                                <td>Activa</td>
+                                <td class="text-center">2024-02-15</td>
+                                <td class="text-center">2024-08-15</td>
+                                <td class="text-center">130</td>
+                                <td class="text-center">Activo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm"><button class="btn btn-outline-warning"
                                             onclick="abrirModalSuscripcion(true)">✏️</button><button
@@ -257,12 +260,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>01234567</td>
+                                <td class="text-center">01234567</td>
                                 <td>Diego Ramos</td>
-                                <td>2023-09-01</td>
-                                <td>2024-03-01</td>
-                                <td>115</td>
-                                <td>Inactiva</td>
+                                <td class="text-center">2023-09-01</td>
+                                <td class="text-center">2024-03-01</td>
+                                <td class="text-center">115</td>
+                                <td class="text-center">Finalizado</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm"><button class="btn btn-outline-warning"
                                             onclick="abrirModalSuscripcion(true)">✏️</button><button

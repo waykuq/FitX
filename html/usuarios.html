@@ -7,6 +7,12 @@
     <title>Mantenimiento de Usuarios - FitX</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.min.css" />
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,7 +66,7 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
                 <!-- Header -->
-                <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
+                <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
                     <h2>Mantenimiento de Usuarios</h2>
                     <div class="d-flex gap-2">
                         <button class="btn btn-primary" onclick="abrirModalUsuario(false)">➕ Agregar Usuario</button>
@@ -68,7 +74,7 @@
                 </div>
 
                 <!-- Filtros -->
-                <form class="row g-2 mb-3">
+                <form class="row g-2 mb-5">
                     <div class="col-md-3">
                         <input type="text" class="form-control" placeholder="Nombre o apellido">
                         <p class="text-muted ps-3">Recetas favoritas</p>
@@ -79,7 +85,7 @@
                     </div>
                     <div class="col-md-2">
                         <select class="form-select">
-                            <option value="">Sexo</option>
+                            <option value="">Todos</option>
                             <option value="M">Masculino</option>
                             <option value="F">Femenino</option>
                         </select>
@@ -87,12 +93,15 @@
                     </div>
                     <div class="col-md-2">
                         <select class="form-select">
-                            <option value="">Suscripción</option>
+                            <option value="">Todos</option>
                             <option value="activo">Activo</option>
                             <option value="inactivo">Finalizado</option>
                             <option value="suspendido">Baja</option>
                         </select>
                         <p class="text-muted ps-3">Suscripción</p>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-secondary w-100">🔍 Filtrar</button>
                     </div>
                 </form>
 
@@ -115,8 +124,8 @@
                                 <th>Nombres</th>
                                 <th>Apellidos</th>
                                 <th>Correo</th>
-                                <th>Teléfono</th>
-                                <th>Suscripción</th>
+                                <th class="text-center">Teléfono</th>
+                                <th class="text-center">Suscripción</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
@@ -125,8 +134,8 @@
                                 <td>Ana</td>
                                 <td>García</td>
                                 <td>ana@example.com</td>
-                                <td>987654321</td>
-                                <td>Activo</td>
+                                <td class="text-center">987654321</td>
+                                <td class="text-center">Activo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-info" onclick="abrirModalVerUsuario(true)">👁️
@@ -142,8 +151,8 @@
                                 <td>Luis</td>
                                 <td>Pérez</td>
                                 <td>luis@example.com</td>
-                                <td>987111111</td>
-                                <td>Activo</td>
+                                <td class="text-center">987111111</td>
+                                <td class="text-center">Activo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-info" onclick="abrirModalVerUsuario(true)">👁️
@@ -159,8 +168,8 @@
                                 <td>María</td>
                                 <td>Flores</td>
                                 <td>maria@example.com</td>
-                                <td>987222222</td>
-                                <td>Inactivo</td>
+                                <td class="text-center">987222222</td>
+                                <td class="text-center">Inactivo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-info" onclick="abrirModalVerUsuario(true)">👁️
@@ -176,8 +185,8 @@
                                 <td>Pedro</td>
                                 <td>Ramírez</td>
                                 <td>pedro@example.com</td>
-                                <td>987333333</td>
-                                <td>Suspendido</td>
+                                <td class="text-center">987333333</td>
+                                <td class="text-center">Suspendido</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-info" onclick="abrirModalVerUsuario(true)">👁️
@@ -193,8 +202,8 @@
                                 <td>Lucía</td>
                                 <td>Reyes</td>
                                 <td>lucia@example.com</td>
-                                <td>987444444</td>
-                                <td>Activo</td>
+                                <td class="text-center">987444444</td>
+                                <td class="text-center">Activo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-info" onclick="abrirModalVerUsuario(true)">👁️
@@ -210,8 +219,8 @@
                                 <td>Carlos</td>
                                 <td>Mendoza</td>
                                 <td>carlos@example.com</td>
-                                <td>987555555</td>
-                                <td>Inactivo</td>
+                                <td class="text-center">987555555</td>
+                                <td class="text-center">Inactivo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-info" onclick="abrirModalVerUsuario(true)">👁️
@@ -227,8 +236,8 @@
                                 <td>Sandra</td>
                                 <td>Torres</td>
                                 <td>sandra@example.com</td>
-                                <td>987666666</td>
-                                <td>Activo</td>
+                                <td class="text-center">987666666</td>
+                                <td class="text-center">Activo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-info" onclick="abrirModalVerUsuario(true)">👁️
@@ -244,8 +253,8 @@
                                 <td>Diego</td>
                                 <td>Sánchez</td>
                                 <td>diego@example.com</td>
-                                <td>987777777</td>
-                                <td>Activo</td>
+                                <td class="text-center">987777777</td>
+                                <td class="text-center">Activo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-info" onclick="abrirModalVerUsuario(true)">👁️
@@ -261,8 +270,8 @@
                                 <td>Rosa</td>
                                 <td>Morales</td>
                                 <td>rosa@example.com</td>
-                                <td>987888888</td>
-                                <td>Activo</td>
+                                <td class="text-center">987888888</td>
+                                <td class="text-center">Activo</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-info" onclick="abrirModalVerUsuario(true)">👁️
@@ -278,8 +287,8 @@
                                 <td>Jorge</td>
                                 <td>Vega</td>
                                 <td>jorge@example.com</td>
-                                <td>987999999</td>
-                                <td>Suspendido</td>
+                                <td class="text-center">987999999</td>
+                                <td class="text-center">Suspendido</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-info" onclick="abrirModalVerUsuario(true)">👁️
@@ -343,7 +352,8 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" placeholder="Teléfono">
+                                <input id="telefono" type="tel" class="form-control" name="telefono"
+                                placeholder="Ej. +51 987654321">
                             </div>
                         </div>
                         <hr>
@@ -360,7 +370,7 @@
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Sexo</label>
                                 <select class="form-select">
-                                    <option value="">Sexo</option>
+                                    <option value="">[ Seleccionar ]</option>
                                     <option value="M">Masculino</option>
                                     <option value="F">Femenino</option>
                                 </select>
@@ -371,7 +381,15 @@
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Estilo de vida</label>
-                                <input type="text" class="form-control" placeholder="Estilo de vida">
+                                <select class="form-select">
+                            <option value="">[ Seleccionar ]</option>
+                            <option value="Sedentario">Sedentario</option>
+                            <option value="Moderadamente activo">Moderadamente activo</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Muy Activo">Muy Activo</option>
+                            <option value="Enfocado en pérdida de peso">Enfocado en pérdida de peso</option>
+                            <option value="Enfocado en ganancia muscular">Enfocado en ganancia muscular</option>
+                        </select>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -465,6 +483,26 @@
     <script>
         function abrirModalUsuario(editar = false) {
             new bootstrap.Modal(document.getElementById('modalUsuario')).show();
+
+            // Inicializar intl-tel-input
+            let iti;
+            const modal = document.getElementById('modalUsuario');
+            const input = modal.querySelector('#telefono');
+            if (!input) return;
+
+            // evita reinicializar si ya existe
+            if (!input.classList.contains('iti')) {
+                iti = window.intlTelInput(input, {
+                    initialCountry: 'auto',
+                    preferredCountries: ['pe', 'mx', 'co'],
+                    geoIpLookup: callback => {
+                        fetch('https://ipinfo.io/json')
+                            .then(res => res.json())
+                            .then(data => callback(data.country || 'us'));
+                    },
+                    utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js'
+                });
+            }
         }
 
         function abrirModalVerUsuario(editar = false) {

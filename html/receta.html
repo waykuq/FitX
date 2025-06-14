@@ -46,9 +46,9 @@
                     <h4>Mantenimiento</h4>
                     <li class="nav-item"><a class="nav-link" href="receta.html">Recetas</a></li>
                     <li class="nav-item"><a class="nav-link" href="etiquetas.html">Etiquetas</a></li>
-                    <!-- <li class="nav-item"><a class="nav-link" href="insumo.html">Insumos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="insumo.html">Insumos</a></li>
                     <li class="nav-item"><a class="nav-link" href="tipos_insumo.html">Tipos de Insumo</a></li>
-                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">Unidades de Medida</a></li> -->
+                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">Unidades de Medida</a></li>
                     <hr class="mt-4">
                     <li class="nav-item mt-4"><a class="nav-link text-danger" href="login.html">Cerrar sesión</a></li>
                 </ul>
@@ -57,15 +57,15 @@
             <!-- Main Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <!-- Header -->
-                <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
+                <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
                     <h2>Mis Recetas</h2>
                     <button class="btn btn-primary" onclick="location.href='receta_detalle.html'">
-                        ➕ Crear receta
+                        ➕ Agregar Receta
                     </button>
                 </div>
 
                 <!-- Filtros -->
-                <form class="row g-3 mb-4">
+                <form class="row g-3 mb-5">
                     <div class="col-md-4">
                         <input type="text" class="form-control" placeholder="Buscar por nombre..." name="nombre" />
                         <p class="text-muted ps-3">Nombre</p>
@@ -116,20 +116,20 @@
                         <thead class="table-light">
                             <tr>
                                 <th>Nombre</th>
-                                <th>Porciones</th>
-                                <th>Peso por porción</th>
-                                <th>Tiempo estimado</th>
-                                <th>Etiquetas</th>
+                                <th class="text-center">Porciones</th>
+                                <th class="text-center">Peso por porción</th>
+                                <th class="text-center">Tiempo estimado</th>
+                                <th class="text-center">Etiquetas</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Ensalada saludable</td>
-                                <td>4</td>
-                                <td>250 g</td>
-                                <td>20 min</td>
-                                <td>
+                                <td class="text-center">4</td>
+                                <td class="text-center">250 g</td>
+                                <td class="text-center">20 min</td>
+                                <td class="text-center">
                                     <span class="badge bg-success">Vegetariana</span>
                                     <span class="badge bg-info">Baja en calorías</span>
                                 </td>
@@ -156,10 +156,10 @@
                             </tr>
                             <tr>
                                 <td>Pollo al horno</td>
-                                <td>6</td>
-                                <td>300 g</td>
-                                <td>1 hora</td>
-                                <td>
+                                <td class="text-center">6</td>
+                                <td class="text-center">300 g</td>
+                                <td class="text-center">1 hora</td>
+                                <td class="text-center">
                                     <span class="badge bg-primary">Alta proteína</span>
                                     <span class="badge bg-secondary">Sin gluten</span>
                                 </td>
@@ -186,10 +186,10 @@
                             </tr>
                             <tr>
                                 <td>Batido de frutas</td>
-                                <td>2</td>
-                                <td>500 ml</td>
-                                <td>5 min</td>
-                                <td>
+                                <td class="text-center">2</td>
+                                <td class="text-center">500 ml</td>
+                                <td class="text-center">5 min</td>
+                                <td class="text-center">
                                     <span class="badge bg-success">Vegetariana</span>
                                     <span class="badge bg-info">Baja en calorías</span>
                                 </td>
@@ -216,10 +216,10 @@
                             </tr>
                             <tr>
                                 <td>Ensalada César</td>
-                                <td>4</td>
-                                <td>200 g</td>
-                                <td>15 min</td>
-                                <td>
+                                <td class="text-center">4</td>
+                                <td class="text-center">200 g</td>
+                                <td class="text-center">15 min</td>
+                                <td class="text-center">
                                     <span class="badge bg-success">Vegetariana</span>
                                     <span class="badge bg-info">Baja en calorías</span>
                                 </td>
@@ -246,10 +246,10 @@
                             </tr>
                             <tr>
                                 <td>Guiso de lentejas</td>
-                                <td>5</td>
-                                <td>350 g</td>
-                                <td>1 hora 30 min</td>
-                                <td>
+                                <td class="text-center">5</td>
+                                <td class="text-center">350 g</td>
+                                <td class="text-center">1 hora 30 min</td>
+                                <td class="text-center">
                                     <span class="badge bg-primary">Alta proteína</span>
                                     <span class="badge bg-secondary">Sin gluten</span>
                                 </td>
@@ -276,10 +276,10 @@
                             </tr>
                             <tr>
                                 <td>Wrap de pollo</td>
-                                <td>3</td>
-                                <td>200 g</td>
-                                <td>10 min</td>
-                                <td>
+                                <td class="text-center">3</td>
+                                <td class="text-center">200 g</td>
+                                <td class="text-center">10 min</td>
+                                <td class="text-center">
                                     <span class="badge bg-success">Vegetariana</span>
                                     <span class="badge bg-info">Baja en calorías</span>
                                 </td>
@@ -306,10 +306,10 @@
                             </tr>
                             <tr>
                                 <td>Pizza integral</td>
-                                <td>8</td>
-                                <td>150 g</td>
-                                <td>45 min</td>
-                                <td>
+                                <td class="text-center">8</td>
+                                <td class="text-center">150 g</td>
+                                <td class="text-center">45 min</td>
+                                <td class="text-center">
                                     <span class="badge bg-primary">Alta proteína</span>
                                     <span class="badge bg-secondary">Sin gluten</span>
                                 </td>
@@ -336,10 +336,10 @@
                             </tr>
                             <tr>
                                 <td>Sopa de verduras</td>
-                                <td>4</td>
-                                <td>300 ml</td>
-                                <td>30 min</td>
-                                <td>
+                                <td class="text-center">4</td>
+                                <td class="text-center">300 ml</td>
+                                <td class="text-center">30 min</td>
+                                <td class="text-center">
                                     <span class="badge bg-success">Vegetariana</span>
                                     <span class="badge bg-info">Baja en calorías</span>
                                 </td>
@@ -366,10 +366,10 @@
                             </tr>
                             <tr>
                                 <td>Batata asada</td>
-                                <td>2</td>
-                                <td>400 g</td>
-                                <td>40 min</td>
-                                <td>
+                                <td class="text-center">2</td>
+                                <td class="text-center">400 g</td>
+                                <td class="text-center">40 min</td>
+                                <td class="text-center">
                                     <span class="badge bg-primary">Alta proteína</span>
                                     <span class="badge bg-secondary">Sin gluten</span>
                                 </td>
@@ -396,10 +396,10 @@
                             </tr>
                             <tr>
                                 <td>Wrap de pollo</td>
-                                <td>3</td>
-                                <td>200 g</td>
-                                <td>10 min</td>
-                                <td>
+                                <td class="text-center">3</td>
+                                <td class="text-center">200 g</td>
+                                <td class="text-center">10 min</td>
+                                <td class="text-center">
                                     <span class="badge bg-success">Vegetariana</span>
                                     <span class="badge bg-info">Baja en calorías</span>
                                 </td>

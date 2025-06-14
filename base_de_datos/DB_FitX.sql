@@ -6,7 +6,7 @@ USE DB_FitX;
 CREATE TABLE TipoUsuario (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL,   
-    estado VARCHAR(20) NOT NULL -- Activo, Inactivo, Suspendido
+    -- estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo'
 );
 
 
@@ -20,7 +20,7 @@ CREATE TABLE Usuario (
     correo VARCHAR(100) NOT NULL UNIQUE,
     contraseña VARCHAR(100) NOT NULL,
     fecha_inscripcion DATETIME NOT NULL,
-    estado VARCHAR(20) NOT NULL, -- Activo, Inactivo, Suspendido
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo',
     telefono VARCHAR(15) NULL,
     FOREIGN KEY (id_tipo_usuario) REFERENCES TipoUsuario(id) ON DELETE CASCADE
 );
@@ -33,8 +33,8 @@ CREATE TABLE PerfilNutricional (
     fecha_nacimiento DATE NOT NULL,
     sexo ENUM('M', 'F') NOT NULL,
     talla DECIMAL(5,2) NOT NULL,
-    nivel_actividad VARCHAR(50) NOT NULL,
-    estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
+    nivel_actividad ENUM('Sedentario', 'Moderadamente activo', 'Activo', 'Muy Activo', 'Enfocado en pérdida de peso', 'Enfocado en ganancia muscular') NOT NULL, 
+    -- estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo',
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
@@ -45,7 +45,7 @@ CREATE TABLE Suscripcion (
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     precio DECIMAL(10,2) NOT NULL,
-    estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
+    estado ENUM('Activo', 'Inactivo', 'Cancelado') DEFAULT 'Activo',
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE Menu (
     descripcion TEXT,
     fecha_creacion DATE NOT NULL,
     fecha_ejecucion DATE NOT NULL,
-    estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo',
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
@@ -77,8 +77,8 @@ CREATE TABLE Receta (
     porciones INT NOT NULL,
     peso_porcion DECIMAL(5,2) NOT NULL, 
     id_unidad_medida INT NOT NULL,
-    tiempo_estimado TIME, -- en minutos    
-    estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
+    tiempo_estimado TIME, -- en minutos
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo',
     foto TEXT,
     descripcion TEXT,
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
@@ -112,7 +112,7 @@ CREATE TABLE Etiqueta (
     id_usuario INT NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     color VARCHAR(6), -- Color en formato hexadecimal
-    estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo',
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
@@ -137,7 +137,7 @@ CREATE TABLE Insumo (
     id_unidad_medida INT NOT NULL,
     id_tipo_insumo INT NOT NULL,
     nombre VARCHAR(100) NOT NULL,
-    estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo',
     FOREIGN KEY (id_unidad_medida) REFERENCES UnidadMedida(id),
     FOREIGN KEY (id_tipo_insumo) REFERENCES TipoInsumo(id)
 );
@@ -149,7 +149,7 @@ CREATE TABLE RecetaDetalle (
     id_insumo INT NOT NULL,
     id_unidad_medida INT NOT NULL,
     cantidad DECIMAL(8,2) NOT NULL,
-    estado VARCHAR(20) NOT NULL, -- Activo, Inactivo
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo', -- Activo, Inactivo
     FOREIGN KEY (id_receta) REFERENCES Receta(id) ON DELETE CASCADE,
     FOREIGN KEY (id_insumo) REFERENCES Insumo(id),
     FOREIGN KEY (id_unidad_medida) REFERENCES UnidadMedida(id)

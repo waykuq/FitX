@@ -40,10 +40,12 @@
                 <ul class="nav flex-column">
                     <li class="nav-item"><a class="nav-link active" href="dashboard.html">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link active" href="dashboard_admin.html">Dashboard Admin</a></li>
-                    <li class="nav-item"><a class="nav-link" href="menu.html">Menús</a></li>                    
                     <li class="nav-item"><a class="nav-link" href="perfil.html">Perfil</a></li>
                     <hr class="mt-4">
                     <h4>Mantenimiento</h4>
+                    <li class="nav-item"><a class="nav-link" href="usuarios.html">Usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="suscripciones.html">Suscripciones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">Menús</a></li>
                     <li class="nav-item"><a class="nav-link" href="receta.html">Recetas</a></li>
                     <li class="nav-item"><a class="nav-link" href="etiquetas.html">Etiquetas</a></li>
                     <li class="nav-item"><a class="nav-link" href="insumo.html">Insumos</a></li>
@@ -58,15 +60,16 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
                 <!-- Header -->
-                <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
+                <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
                     <h2>Mantenimiento de Insumos</h2>
                     <button class="btn btn-primary" onclick="abrirModalInsumo()">➕ Agregar Insumo</button>
                 </div>
 
                 <!-- Filtros -->
-                <form class="row g-3 mb-3">
+                <form class="row g-3 mb-5">
                     <div class="col-md-6">
                         <input type="text" class="form-control" placeholder="Buscar por nombre..." name="nombre" />
+                        <p class="text-muted ps-3">Nombre</p>
                     </div>
                     <div class="col-md-4">
                         <select class="form-select" name="tipo">
@@ -74,6 +77,7 @@
                             <option value="1">Proteína</option>
                             <option value="2">Vegetal</option>
                         </select>
+                        <p class="text-muted ps-3">Tipo</p>
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-secondary w-100">🔍 Filtrar</button>
@@ -97,16 +101,16 @@
                         <thead class="table-light">
                             <tr>
                                 <th>Nombre</th>
-                                <th>Tipo de insumo</th>
-                                <th>Unidad de medida</th>
+                                <th class="text-center">Tipo de insumo</th>
+                                <th class="text-center">Unidad de medida</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Pechuga de pollo</td>
-                                <td>Proteína</td>
-                                <td>kg</td>
+                                <td class="text-center">Proteína</td>
+                                <td class="text-center">kg</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
@@ -118,8 +122,8 @@
                             </tr>
                             <tr>
                                 <td>Brócoli</td>
-                                <td>Vegetal</td>
-                                <td>kg</td>
+                                <td class="text-center">Vegetal</td>
+                                <td class="text-center">kg</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
@@ -131,8 +135,8 @@
                             </tr>
                             <tr>
                                 <td>Arroz integral</td>
-                                <td>Carbohidrato</td>
-                                <td>kg</td>
+                                <td class="text-center">Carbohidrato</td>
+                                <td class="text-center">kg</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
@@ -144,8 +148,8 @@
                             </tr>
                             <tr>
                                 <td>Quinoa</td>
-                                <td>Carbohidrato</td>
-                                <td>kg</td>
+                                <td class="text-center">Carbohidrato</td>
+                                <td class="text-center">kg</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
@@ -157,8 +161,8 @@
                             </tr>
                             <tr>
                                 <td>Batata</td>
-                                <td>Carbohidrato</td>
-                                <td>kg</td>
+                                <td class="text-center">Carbohidrato</td>
+                                <td class="text-center">kg</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
@@ -170,8 +174,8 @@
                             </tr>
                             <tr>
                                 <td>Espinaca</td>
-                                <td>Vegetal</td>
-                                <td>kg</td>
+                                <td class="text-center">Vegetal</td>
+                                <td class="text-center">kg</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
@@ -183,8 +187,8 @@
                             </tr>
                             <tr>
                                 <td>Espinaca</td>
-                                <td>Vegetal</td>
-                                <td>kg</td>
+                                <td class="text-center">Vegetal</td>
+                                <td class="text-center">kg</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
@@ -196,8 +200,8 @@
                             </tr>
                             <tr>
                                 <td>Almendras</td>
-                                <td>Grasa saludable</td>
-                                <td>kg</td>
+                                <td class="text-center">Grasa saludable</td>
+                                <td class="text-center">kg</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
@@ -209,8 +213,8 @@
                             </tr>
                             <tr>
                                 <td>Aceite de oliva</td>
-                                <td>Grasa saludable</td>
-                                <td>litros</td>
+                                <td class="text-center">Grasa saludable</td>
+                                <td class="text-center">litros</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️
@@ -222,8 +226,8 @@
                             </tr>
                             <tr>
                                 <td>Atún en lata</td>
-                                <td>Proteína</td>
-                                <td>latas</td>
+                                <td class="text-center">Proteína</td>
+                                <td class="text-center">latas</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalInsumo(true)">✏️

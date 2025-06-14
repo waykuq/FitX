@@ -47,9 +47,9 @@
                     <h4>Mantenimiento</h4>
                     <li class="nav-item"><a class="nav-link" href="receta.html">Recetas</a></li>
                     <li class="nav-item"><a class="nav-link" href="etiquetas.html">Etiquetas</a></li>
-                    <!-- <li class="nav-item"><a class="nav-link" href="insumo.html">Insumos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="insumo.html">Insumos</a></li>
                     <li class="nav-item"><a class="nav-link" href="tipos_insumo.html">Tipos de Insumo</a></li>
-                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">Unidades de Medida</a></li> -->
+                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">Unidades de Medida</a></li>
                     <hr class="mt-4">
                     <li class="nav-item mt-4"><a class="nav-link text-danger" href="login.html">Cerrar sesión</a></li>
                 </ul>
@@ -59,17 +59,18 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
                 <!-- Header -->
-                <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
+                <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
                     <h2>Mantenimiento de Etiquetas</h2>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-primary" onclick="abrirModalEtiqueta()">➕ Agregar etiqueta</button>
+                        <button class="btn btn-primary" onclick="abrirModalEtiqueta()">➕ Agregar Etiqueta</button>
                     </div>
                 </div>
 
                 <!-- Filtros -->
-                <form class="row g-3 mb-3">
+                <form class="row g-3 mb-5">
                     <div class="col-md-6">
                         <input type="text" class="form-control" placeholder="Buscar por nombre...">
+                        <p class="text-muted ps-3">Nombre</p>
                     </div>
                     <div class="col-md-4">
                         <select class="form-select">
@@ -77,6 +78,7 @@
                             <option value="usuario">Usuario</option>
                             <option value="sistema">Sistema</option>
                         </select>
+                        <p class="text-muted ps-3">Tipo</p>
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-secondary w-100">🔍 Filtrar</button>
@@ -100,20 +102,20 @@
                         <thead class="table-light">
                             <tr>
                                 <th>Nombre</th>
-                                <th>Color</th>
-                                <th>Tipo</th>
+                                <th class="text-center">Color</th>
+                                <th class="text-center">Tipo</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Vegetariana</td>
-                                <td>
+                                <td class="text-center">
                                     <span class="d-inline-block rounded-circle"
                                         style="width: 20px; height: 20px; background-color: #ff0000;"
                                         title="#ff0000"></span>
                                 </td>
-                                <td>Sistema</td>
+                                <td class="text-center">Sistema</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
@@ -125,12 +127,12 @@
                             </tr>
                             <tr>
                                 <td>Sin Gluten</td>
-                                <td>
+                                <td class="text-center">
                                     <span class="d-inline-block rounded-circle"
                                         style="width: 20px; height: 20px; background-color: #00ff00;"
                                         title="#00ff00"></span>
                                 </td>
-                                <td>Usuario</td>
+                                <td class="text-center">Usuario</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
@@ -142,12 +144,12 @@
                             </tr>
                             <tr>
                                 <td>Alto en Proteínas</td>
-                                <td>
+                                <td class="text-center">
                                     <span class="d-inline-block rounded-circle"
                                         style="width: 20px; height: 20px; background-color: #0000ff;"
                                         title="#0000ff"></span>
                                 </td>
-                                <td>Sistema</td>
+                                <td class="text-center">Sistema</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
@@ -159,12 +161,12 @@
                             </tr>
                             <tr>
                                 <td>Alto en Proteínas</td>
-                                <td>
+                                <td class="text-center">
                                     <span class="d-inline-block rounded-circle"
                                         style="width: 20px; height: 20px; background-color: #f1c40f;"
                                         title="#f1c40f"></span>
                                 </td>
-                                <td>Sistema</td>
+                                <td class="text-center">Sistema</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
@@ -176,12 +178,12 @@
                             </tr>
                             <tr>
                                 <td>Vegana</td>
-                                <td>
+                                <td class="text-center">
                                     <span class="d-inline-block rounded-circle"
                                         style="width: 20px; height: 20px; background-color: #9b59b6;"
                                         title="#9b59b6"></span>
                                 </td>
-                                <td>Sistema</td>
+                                <td class="text-center">Sistema</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
@@ -193,12 +195,12 @@
                             </tr>
                             <tr>
                                 <td>Sin Lactosa</td>
-                                <td>
+                                <td class="text-center">
                                     <span class="d-inline-block rounded-circle"
                                         style="width: 20px; height: 20px; background-color: #e67e22;"
                                         title="#e67e22"></span>
                                 </td>
-                                <td>Usuario</td>
+                                <td class="text-center">Usuario</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
@@ -210,12 +212,12 @@
                             </tr>
                             <tr>
                                 <td>Sin Gluten</td>
-                                <td>
+                                <td class="text-center">
                                     <span class="d-inline-block rounded-circle"
                                         style="width: 20px; height: 20px; background-color: #6C7A89;"
                                         title="#6C7A89"></span>
                                 </td>
-                                <td>Usuario</td>
+                                <td class="text-center">Usuario</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
@@ -227,12 +229,12 @@
                             </tr>
                             <tr>
                                 <td>Desayuno</td>
-                                <td>
+                                <td class="text-center">
                                     <span class="d-inline-block rounded-circle"
                                         style="width: 20px; height: 20px; background-color: #E94E77;"
                                         title="#E94E77"></span>
                                 </td>
-                                <td>Sistema</td>
+                                <td class="text-center">Sistema</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
@@ -244,12 +246,12 @@
                             </tr>
                             <tr>
                                 <td>Almuerzo</td>
-                                <td>
+                                <td class="text-center">
                                     <span class="d-inline-block rounded-circle"
                                         style="width: 20px; height: 20px; background-color: #E94E77;"
                                         title="#E94E77"></span>
                                 </td>
-                                <td>Usuario</td>
+                                <td class="text-center">Usuario</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
@@ -261,12 +263,12 @@
                             </tr>
                             <tr>
                                 <td>Cena</td>
-                                <td>
+                                <td class="text-center">
                                     <span class="d-inline-block rounded-circle"
                                         style="width: 20px; height: 20px; background-color: #E94E77;"
                                         title="#E94E77"></span>
                                 </td>
-                                <td>Usuario</td>
+                                <td class="text-center">Usuario</td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <button class="btn btn-outline-warning" onclick="abrirModalEtiqueta(true)">✏️
