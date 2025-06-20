@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_principal.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+    <aside class="sidebar">
+<!--        <div th:replace="menu/menu :: menu"></div>-->
+    </aside>
+    <main class="content" layout:fragment="content">
+        <section layout:fragment="contenido">
+            <h1>Prueba 2</h1>
+            <p>dasdasdas</p>
+        </section>
+    </main>
+</div>
+</body>
+</html>
