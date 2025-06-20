@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del menú - FitX</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Summernote -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            position: fixed;
+        }
+
+        .card img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-white sidebar p-3 border-end">
+                <h5 class="mb-4">FitX</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="dashboard.html">🏠 Dashboard Usuario</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="dashboard_admin.html">📊 Dashboard Admin</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">📋 Menús</a></li>
+                    <li class="nav-item"><a class="nav-link" href="perfil.html">👤 Perfil</a></li>
+                    <hr class="mt-4">
+                    <h4>Mantenimiento</h4>
+                    <li class="nav-item"><a class="nav-link" href="receta.html">🍽️ Recetas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="etiquetas.html">🏷️ Etiquetas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="insumo.html">🧂 Insumos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tipos_insumo.html">📦 Tipos de Insumo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">📏 Unidades de Medida</a></li>
+                    <hr class="mt-4">
+                    <li class="nav-item mt-4"><a class="nav-link text-danger" href="login.html">🚪Cerrar sesión</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+                <!-- Header -->
+                <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
+                    <h2>Menú: Almuerzo Saludable - 15/06/2025</h2>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-success" onclick="abrirModalAgregar()">➕ Agregar receta</button>
+                        <button class="btn btn-outline-primary" onclick="location.href='receta_detalle.html'">📝 Crear
+                            receta</button>
+                        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalLista">📋
+                            Lista de compras</button>
+                    </div>
+                </div>
+
+                <!-- Recetas -->
+                <h4 class="mb-3 mt-5">Recetas</h4>
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100">
+                            <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2024/12/refreshing-lemon-cheesecake-slice-with-mint-garnish.jpg"
+                                class="card-img-top" alt="Bavarois de Guanabana">
+                            <div class="card-body">
+                                <h5 class="card-title">Bavarois de Guanabana</h5>
+                                <p class="card-text">Un delicioso postre tropical con un toque cremoso.</p>
+                                <ul class="list-unstyled">
+                                    <li>🍽️ 4 porciones</li>
+                                    <li>⚖️ 300 g</li>
+                                    <li>🕰️ 30 min</li>
+                                </ul>
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-sm btn-warning"
+                                        onclick="abrirModalEditar('Rollo de Cordon Bleu', 4)">✏️ Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="abrirModalEliminar()">🗑️
+                                        Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Repetir por cada receta -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100">
+                            <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2025/01/colorful-bowl-of-deliciousness-with-fried-egg.png"
+                                class="card-img-top" alt="Roll Criollo">
+                            <div class="card-body">
+                                <h5 class="card-title">Roll Criollo</h5>
+                                <p class="card-text">Un plato típico con un sabor auténtico y delicioso.</p>
+                                <ul class="list-unstyled">
+                                    <li>🍽️ 2 porciones</li>
+                                    <li>⚖️ 200 g</li>
+                                    <li>🕰️ 45 min</li>
+                                </ul>
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-sm btn-warning"
+                                        onclick="abrirModalEditar('Rollo de Cordon Bleu', 4)">✏️ Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="abrirModalEliminar()">🗑️
+                                        Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100">
+                            <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/07/butter-chicken-in-a-pan.jpg"
+                                class="card-img-top" alt="Ensalada Fresca">
+                            <div class="card-body">
+                                <h5 class="card-title">Ensalada Fresca</h5>
+                                <p class="card-text">Una ensalada ligera y nutritiva con pollo y aguacate.</p>
+                                <ul class="list-unstyled">
+                                    <li>🍽️ 2 porciones</li>
+                                    <li>⚖️ 150 g</li>
+                                    <li>🕰️ 20 min</li>
+                                </ul>
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-sm btn-warning"
+                                        onclick="abrirModalEditar('Rollo de Cordon Bleu', 4)">✏️ Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="abrirModalEliminar()">🗑️
+                                        Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100">
+                            <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2025/05/grilled-lemon-herb-chicken-breasts-on-a-rustic-tray.webp"
+                                class="card-img-top" alt="Tostada de Aguacate">
+                            <div class="card-body">
+                                <h5 class="card-title">Tostada de Aguacate</h5>
+                                <p class="card-text">Una opción saludable y deliciosa para el desayuno.</p>
+                                <ul class="list-unstyled">
+                                    <li>🍽️ 1 porción</li>
+                                    <li>⚖️ 100 g</li>
+                                    <li>🕰️ 10 min</li>
+                                </ul>
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-sm btn-warning"
+                                        onclick="abrirModalEditar('Rollo de Cordon Bleu', 4)">✏️ Editar</button>
+                                    <button class="btn btn-sm btn-danger" onclick="abrirModalEliminar()">🗑️
+                                        Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mt-4">
+                <!-- Descripcion -->
+                <h4 class="mb-3 d-flex justify-content-between align-items-center mt">
+                    Descripción
+                    <button class="btn btn-sm btn-outline-primary" onclick="abrirModalDescripcion()">✏️ Editar</button>
+                </h4>
+                <div class="mb-5">
+                    <p id="textoDescripcion">
+                        Este menú está diseñado para ofrecer una experiencia culinaria balanceada y deliciosa, con
+                        recetas
+                        que combinan sabores frescos y nutritivos. Cada plato ha sido seleccionado para proporcionar una
+                        variedad de nutrientes esenciales.
+                    </p>
+                </div>
+                <hr class="mt-4">
+
+                <!-- Información Nutricional -->
+                <h4 class="mb-3">Información nutricional</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered bg-white">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Plato</th>
+                                <th>Peso (g)</th>
+                                <th>Calorías (Kcal)</th>
+                                <th>Proteínas (g)</th>
+                                <th>Grasas (g)</th>
+                                <th>Carbs (g)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Rollo de Cordon Bleu</td>
+                                <td>300</td>
+                                <td>850</td>
+                                <td>65</td>
+                                <td>40</td>
+                                <td>45</td>
+                            </tr>
+                            <tr>
+                                <td>Ensalada César</td>
+                                <td>200</td>
+                                <td>300</td>
+                                <td>15</td>
+                                <td>20</td>
+                                <td>25</td>
+                            </tr>
+                            <tr>
+                                <td>Ensalada César</td>
+                                <td>200</td>
+                                <td>300</td>
+                                <td>15</td>
+                                <td>20</td>
+                                <td>25</td>
+                            </tr>
+                            <tr>
+                                <td>Postre de Frutas</td>
+                                <td>150</td>
+                                <td>200</td>
+                                <td>2</td>
+                                <td>5</td>
+                                <td>30</td>
+                            </tr>
+                            <!-- Total -->
+                            <tr class="table-secondary fw-bold">
+                                <td>Total menú</td>
+                                <td>600</td>
+                                <td>1400</td>
+                                <td>80</td>
+                                <td>60</td>
+                                <td>90</td>
+                            </tr>
+                            <!-- Recomendación del sistema -->
+                            <tr class="table-secondary">
+                                <td><strong>Recomendación diaria</strong></td>
+                                <td>650</td>
+                                <td><strong>2000</strong></td>
+                                <td><strong>75</strong></td>
+                                <td><strong>70</strong></td>
+                                <td><strong>260</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Footer -->
+                <footer class="mt-5">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="mb-0">Desarrollado por FitX © 2025. Todos los derechos reservados.</p>
+                        <a href="#" class="text-decoration-none">Política de privacidad</a>
+                    </div>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Lista de compras -->
+    <div class="modal fade" id="modalLista" tabindex="-1" aria-labelledby="modalListaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalListaLabel">Lista de Insumos del Menú</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Cantidad</th>
+                                <th>Unidad</th>
+                                <th>Insumo</th>
+                                <th>Usado en</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>kg</td>
+                                <td>Pechuga de pollo</td>
+                                <td>Rollo de Cordon Bleu</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>g</td>
+                                <td>Queso mozzarella</td>
+                                <td>Rollo de Cordon Bleu</td>
+                            </tr>
+                            <tr>
+                                <td>200</td>
+                                <td>g</td>
+                                <td>Lechuga</td>
+                                <td>Ensalada César</td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>g</td>
+                                <td>Queso parmesano</td>
+                                <td>Ensalada César</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>unidades</td>
+                                <td>Limones</td>
+                                <td>Rollo de Cordon Bleu</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>kg</td>
+                                <td>Tomates cherry</td>
+                                <td>Ensalada César</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>kg</td>
+                                <td>Aguacate</td>
+                                <td>Tostada de Aguacate</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-secondary" onclick="window.print()">🖨️ Imprimir</button>
+                    <button class="btn btn-outline-danger">📥 Descargar PDF</button>
+                    <button class="btn btn-success" onclick="enviarWhatsApp()">📲 Enviar por WhatsApp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Agregar/Editar Receta -->
+    <div class="modal fade" id="modalReceta" tabindex="-1" aria-labelledby="modalRecetaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="form-receta">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalRecetaLabel">Agregar receta al menú</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="busqueda" class="form-label">Buscar receta por nombre o etiqueta</label>
+                            <input type="text" class="form-control" id="busqueda"
+                                placeholder="Ej. Ensalada, Proteína...">
+                        </div>
+                        <div class="mb-3">
+                            <label for="raciones" class="form-label">Cantidad de raciones</label>
+                            <input type="number" class="form-control" id="raciones" min="1" value="1">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btn-receta">Agregar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Eliminar Receta -->
+    <div class="modal fade" id="modalEliminarReceta" tabindex="-1" aria-labelledby="modalEliminarLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEliminarLabel">Eliminar receta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro que deseas eliminar esta receta del menú?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Descripción -->
+    <div class="modal fade" id="modalDescripcion" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form onsubmit="guardarDescripcion(event)">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar descripción</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="inputDescripcion"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function enviarWhatsApp() {
+            const mensaje = encodeURIComponent('Lista de compras del menú:\n- 1 kg Pechuga de pollo');
+            window.open(`https://wa.me/?text=${mensaje}`, '_blank');
+        }
+
+        function abrirModalAgregar() {
+            document.getElementById('modalRecetaLabel').textContent = 'Agregar receta al menú';
+            document.getElementById('btn-receta').textContent = 'Agregar';
+            document.getElementById('form-receta').reset();
+            new bootstrap.Modal(document.getElementById('modalReceta')).show();
+        }
+
+        function abrirModalEditar(nombre, raciones) {
+            document.getElementById('modalRecetaLabel').textContent = 'Editar receta del menú';
+            document.getElementById('btn-receta').textContent = 'Modificar';
+            document.getElementById('busqueda').value = nombre;
+            document.getElementById('raciones').value = raciones;
+            new bootstrap.Modal(document.getElementById('modalReceta')).show();
+        }
+
+        function abrirModalEliminar() {
+            new bootstrap.Modal(document.getElementById('modalEliminarReceta')).show();
+        }
+
+        function abrirModalDescripcion() {
+            const actual = document.getElementById('textoDescripcion').innerHTML.trim();
+            const editor = document.getElementById('inputDescripcion');
+            $(editor).summernote({
+                height: 250,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link']]
+                ]
+            });
+            $(editor).summernote('code', actual);
+            new bootstrap.Modal(document.getElementById('modalDescripcion')).show();
+        }
+
+        function guardarDescripcion(event) {
+            event.preventDefault();
+            const nueva = $('#inputDescripcion').summernote('code');
+            document.getElementById('textoDescripcion').innerHTML = nueva;
+            bootstrap.Modal.getInstance(document.getElementById('modalDescripcion')).hide();
+        }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
