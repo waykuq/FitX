@@ -7,6 +7,8 @@ import org.hibernate.annotations.ColumnDefault;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -53,5 +55,13 @@ public class RecetaEntity {
     // @Lob
     @Column(name = "descripcion")
     private String descripcion;
+
+    @ManyToMany
+    @JoinTable(
+            name = "RecetaEtiqueta",
+            joinColumns = @JoinColumn(name = "id_receta"),
+            inverseJoinColumns = @JoinColumn(name = "id_etiqueta")
+    )
+    private Set<EtiquetaEntity> etiquetas = new HashSet<>();
 
 }

@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @Entity
 @Table(name = "Etiqueta")
@@ -28,5 +31,8 @@ public class EtiquetaEntity {
     // @Lob
     @Column(name = "estado")
     private String estado;
+
+    @ManyToMany(mappedBy = "etiquetas")
+    private Set<RecetaEntity> recetas = new HashSet<>();
 
 }
