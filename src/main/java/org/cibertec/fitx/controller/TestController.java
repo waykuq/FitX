@@ -8,11 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/test")
+@RequestMapping({"/web"})
 public class TestController {
 
-    @GetMapping({"", "/", "/index"})
-    String index() {
+    @GetMapping("/etiquetas")
+    String etiquetas() {
         return "etiquetas";
+    }
+
+    @GetMapping("/tiposInsumo")
+    String tipos_insumo() {
+        return "tipos_insumo";
     }
 }
