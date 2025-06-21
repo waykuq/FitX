@@ -16,27 +16,34 @@ public class GenericServiceImpl<T, ID> implements GenericService<T, ID> {
 //    }
 
     @Override
-    public T getById(ID id) {
-        return repository.findById(id).get();
+    public T buscarPorId(ID id) {
+//        return repository.findById(id).get();
+        return repository.findById(id).orElse(null);
     }
 
     @Override
-    public List<T> getAll() {
+    public List<T> listar() {
         return repository.findAll();
     }
 
     @Override
-    public void create(T entity) {
+    public void crear(T entity) {
         repository.save(entity);
     }
 
     @Override
-    public void modify(T entity) {
+    public void guardar(T entity) {
         repository.save(entity);
     }
 
     @Override
-    public void remove(ID id) {
+    public T guardarGet(T entity) {
+        return repository.save(entity);
+    }
+
+
+    @Override
+    public void eliminar(ID id) {
         repository.deleteById(id);
     }
 }
