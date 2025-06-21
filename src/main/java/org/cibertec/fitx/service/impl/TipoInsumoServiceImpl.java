@@ -44,20 +44,6 @@ public class TipoInsumoServiceImpl extends GenericServiceImpl<TipoInsumoEntity, 
 		dto.setId(tipoInsumoEntity.getId());
 		dto.setNombre(tipoInsumoEntity.getNombre());
 
-//		if (tipoInsumoEntity.getUsuario() != null) {
-//			dto.setUsuarioId(tipoInsumoEntity.getUsuario().getId());
-////			dto.setNombreUsuario(tipoInsumoEntity.getUsuario().getNombreUsuario());
-//		}
-
-		// Mapea la colección de Recetas a su versión simplificada (RecetaMinDTO)
-//		if (tipoInsumoEntity.getRecetas() != null && !tipoInsumoEntity.getRecetas().isEmpty()) {
-//			dto.setRecetas(tipoInsumoEntity.getRecetas().stream().map(receta -> {
-//				RecetaMinDTO recetaMinDto = new RecetaMinDTO();
-//				recetaMinDto.setId(receta.getId());
-//				recetaMinDto.setNombre(receta.getNombre());
-//				return recetaMinDto;
-//			}).collect(Collectors.toSet()));
-//		}
 
 		return dto;
 	}

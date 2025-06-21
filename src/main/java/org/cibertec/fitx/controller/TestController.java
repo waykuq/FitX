@@ -20,4 +20,9 @@ public class TestController {
     String tipos_insumo() {
         return "tipos_insumo";
     }
+
+    @GetMapping("/unidadesMedida")
+    String unidades_medida() {
+        return "unidad_medida";
+    }
 }

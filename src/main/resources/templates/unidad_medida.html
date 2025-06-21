@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mantenimiento de Tipos de Insumo - FitX</title>
+    <title>Mantenimiento de Unidades de Medida - FitX</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" />
 
@@ -18,9 +18,11 @@
             position: fixed;
         }
 
-        /* Alinea al centro las columnas 2 */
-        #tiposInsumoTable th:nth-child(2),
-        #tiposInsumoTable td:nth-child(2) {
+        /* Alinea al centro las columnas 2 y 3 */
+        #unidadTable th:nth-child(2),
+        #unidadTable td:nth-child(2),
+        #unidadTable th:nth-child(3),
+        #unidadTable td:nth-child(3) {
             text-align: center;
         }
 
@@ -64,12 +66,12 @@
 
                 <!-- Header -->
                 <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
-                    <h2>Mantenimiento de Tipos de Insumo</h2>
+                    <h2>Mantenimiento de Unidades de Medida</h2>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-primary" onclick="abrirModalCrearTipo()">➕ Agregar Tipo de Insumo</button>
-
+                        <button class="btn btn-primary" onclick="abrirModalCrearUnidad()">➕ Agregar Unidad de Medida</button>
                     </div>
                 </div>
+
 
                 <!-- Filtros -->
 <!--                <form class="row g-3 mb-5">-->
@@ -82,10 +84,10 @@
 <!--                    </div>-->
 <!--                </form>-->
 
-<!--                &lt;!&ndash; Selector cantidad por página &ndash;&gt;-->
+                <!-- Selector cantidad por página -->
 <!--                <div class="d-flex justify-content-end align-items-center mb-2">-->
-<!--                    <label for="porPagina" class="me-2 mb-0">Tipos por página:</label>-->
-<!--                    <select id="porPagina" class="form-select w-auto">-->
+<!--                    <label for="porPagina" class="me-2 mb-0">Unidades por página:</label>-->
+<!--                    <select id="porPagina" class="form-select w-auto" onchange="cambiarCantidadPorPagina()">-->
 <!--                        <option value="5">5</option>-->
 <!--                        <option value="10" selected>10</option>-->
 <!--                        <option value="20">20</option>-->
@@ -95,10 +97,11 @@
 
                 <!-- Tabla -->
                 <div class="table-responsive">
-                    <table class="table table-bordered bg-white align-middle" id="tiposInsumoTable">
+                    <table class="table table-bordered bg-white align-middle" id="unidadTable">
                         <thead class="table-light">
                             <tr>
                                 <th>Nombre</th>
+                                <th class="text-center">Símbolo</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
@@ -131,21 +134,28 @@
     </div>
 
     <!-- Modal Crear/Editar -->
-    <div class="modal fade" id="modalTipo" tabindex="-1">
+    <div class="modal fade" id="modalUnidad" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="formTipo" class="needs-validation" novalidate>
-                    <input type="hidden" name="tipoInsumoId" id="tipoInsumoId" />
+                <form id="formUnidad">
+                    <input type="hidden" name="unidadMedidaId" id="unidadMedidaId" />
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalTipoLabel">Agregar tipo de insumo</h5>
+                        <h5 class="modal-title" id="modalUnidadLabel">Agregar unidad de medida</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Nombre del tipo de insumo</label>
+                            <label class="form-label">Nombre</label>
                             <input type="text" class="form-control" name="nombre" id="nombre" required />
                             <div class="invalid-feedback">
                                 Ingrese un nombre válido.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Símbolo</label>
+                            <input type="text" class="form-control" name="simbolo" id="simbolo" required />
+                            <div class="invalid-feedback">
+                                Ingrese un símbolo válido.
                             </div>
                         </div>
                     </div>
@@ -158,30 +168,42 @@
     </div>
 
     <!-- Modal Eliminar -->
-    <div class="modal fade" id="modalEliminarTipo" tabindex="-1">
+    <div class="modal fade" id="modalEliminarUnidad" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Eliminar tipo de insumo</h5>
+                    <h5 class="modal-title">Eliminar unidad de medida</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Estás seguro que deseas eliminar este tipo de insumo? <br />
-                    Esta acción no se puede deshacer.
+                    ¿Estás seguro que deseas eliminar esta unidad de medida? <br /> Esta acción no se puede deshacer.
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-danger" id="btnEliminar">Eliminar</button>
+                    <button class="btn btn-danger">Eliminar</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const API_URL = 'http://localhost:8080/api/tiposInsumo'; // Cambia esto si tu API está en otra URL
-        let tipoInsumoActualId = null;
+        // function abrirModalUnidad(editar = false) {
+        //     const modal = new bootstrap.Modal(document.getElementById('modalUnidad'));
+        //     document.getElementById('modalUnidadLabel').textContent = editar ? 'Editar unidad de medida' : 'Agregar unidad de medida';
+        //     modal.show();
+        // }
+        // function abrirModalEliminar() {
+        //     new bootstrap.Modal(document.getElementById('modalEliminarUnidad')).show();
+        // }
+        // function cambiarCantidadPorPagina() {
+        //     const cantidad = document.getElementById('porPagina').value;
+        //     console.log('Mostrar ' + cantidad + ' unidades por página');
+        // }
+        const API_URL = 'http://localhost:8080/api/unidadesMedida'; // Cambia esto si tu API está en otra URL
+        let unidadActualId = null;
         let dataTable;
 
         function obtenerUsuarioId() {
@@ -194,7 +216,7 @@
                 dataTable = null;
             }
 
-            dataTable = new simpleDatatables.DataTable("#tiposInsumoTable", {
+            dataTable = new simpleDatatables.DataTable("#unidadTable", {
                 labels: {
                     placeholder: "Buscar...",
                     perPage: " registros por página",
@@ -204,32 +226,34 @@
             });
         }
 
-        // 1. Cargar y mostrar tipos de insumo en la tabla
-        async function cargarTiposInsumo() {
+        // 1. Cargar y mostrar unidades de medida en la tabla
+        async function cargarUnidadesMedida() {
             try {
                 const response = await fetch(API_URL);
                 if (!response.ok) {
                     const errorText = await response.text();
-                    throw new Error(`Error al cargar tipos de insumo: ${response.status} ${response.statusText || ''} - ${errorText}`);
+                    throw new Error(`Error al cargar unidades de medida: ${response.status} ${response.statusText || ''} - ${errorText}`);
                 }
-                const tiposInsumo = await response.json();
-                console.log("Tipos de insumo cargados:", tiposInsumo);
+                const unidadesMedida = await response.json();
+                console.log("Unidades de medida cargadas:", unidadesMedida);
 
-                const tbody = document.querySelector('#tiposInsumoTable tbody');
+                const tbody = document.querySelector('#unidadTable tbody');
+                // Limpiar el tbody directamente antes de construir las filas
                 tbody.innerHTML = '';
 
                 const data = {
-                    headings: ['Nombre', 'Acciones'], // Encabezados de la tabla
+                    headings: ['Nombre', 'Símbolo', 'Acciones'], // Encabezados de la tabla
                     data: []
                 };
 
-                tiposInsumo.forEach(tipo => {
+                unidadesMedida.forEach(unidad => {
                     const actionsHtml = `
-                        <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarTipoInsumo(${tipo.id})">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="abrirModalEliminarTipoInsumo(${tipo.id})">Eliminar</button>
+                        <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarUnidad(${unidad.id})">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="abrirModalEliminarUnidad(${unidad.id})">Eliminar</button>
                     `;
                     data.data.push([
-                        tipo.nombre,
+                        unidad.nombre,
+                        unidad.simbolo,
                         actionsHtml
                     ]);
                 });
@@ -237,45 +261,45 @@
                 inicializarTabla();
                 dataTable.insert(data);
 
-
             } catch (error) {
-                console.error("Error al cargar tipos de insumo:", error);
-                alert("No se pudieron cargar los tipos de insumo: " + error.message);
+                console.error("Error al cargar unidades de medida:", error);
+                alert("No se pudieron cargar las unidades de medida: " + error.message);
             }
         }
 
-        // 2. Abrir modal para crear nuevo tipo de insumo
-        function abrirModalCrearTipo() {
-            tipoInsumoActualId = null;
-            document.getElementById('formTipo').reset();
-            document.getElementById('tipoInsumoId').value = '';
-            document.getElementById('modalTipoLabel').textContent = 'Nuevo Tipo de Insumo';
-            new bootstrap.Modal(document.getElementById('modalTipo')).show();
+        // 2. Abrir modal para crear nueva unidad de medida
+        function abrirModalCrearUnidad() {
+            unidadActualId = null;
+            document.getElementById('formUnidad').reset(); // Limpia el formulario
+            document.getElementById('unidadMedidaId').value = ''; // Asegura que el ID esté vacío
+            document.getElementById('modalUnidadLabel').textContent = 'Agregar Unidad de Medida';
+            new bootstrap.Modal(document.getElementById('modalUnidad')).show();
         }
 
-        // 3. Abrir modal para editar tipo de insumo y cargar datos
-        async function abrirModalEditarTipoInsumo(id) {
+        // 3. Abrir modal para editar unidad de medida y cargar datos
+        async function abrirModalEditarUnidad(id) {
             try {
                 const response = await fetch(`${API_URL}/${id}`);
                 if (!response.ok) {
                     const errorText = await response.text();
-                    throw new Error(`Error al cargar tipo de insumo para editar: ${response.status} ${response.statusText || ''} - ${errorText}`);
+                    throw new Error(`Error al cargar unidad de medida para editar: ${response.status} ${response.statusText || ''} - ${errorText}`);
                 }
-                const tipoInsumo = await response.json();
+                const unidadMedida = await response.json();
 
-                document.getElementById('tipoInsumoId').value = tipoInsumo.id;
-                document.getElementById('nombre').value = tipoInsumo.nombre;
-                document.getElementById('modalTipoLabel').textContent = 'Editar Tipo de Insumo';
+                document.getElementById('unidadMedidaId').value = unidadMedida.id;
+                document.getElementById('nombre').value = unidadMedida.nombre;
+                document.getElementById('simbolo').value = unidadMedida.simbolo;
+                document.getElementById('modalUnidadLabel').textContent = 'Editar Unidad de Medida';
 
-                new bootstrap.Modal(document.getElementById('modalTipo')).show();
+                new bootstrap.Modal(document.getElementById('modalUnidad')).show();
             } catch (error) {
-                console.error("Error al obtener tipo de insumo para editar:", error);
-                alert("No se pudo cargar el tipo de insumo para editar: " + error.message);
+                console.error("Error al obtener unidad de medida para editar:", error);
+                alert("No se pudo cargar la unidad de medida para editar: " + error.message);
             }
         }
 
-        // 4. Guardar tipo de insumo (crear o editar)
-        document.getElementById('formTipo').addEventListener('submit', async function (e) {
+        // 4. Guardar unidad de medida (crear o editar)
+        document.getElementById('formUnidad').addEventListener('submit', async function (e) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -285,17 +309,20 @@
                 return;
             }
 
-            const id = document.getElementById('tipoInsumoId').value;
+            const id = document.getElementById('unidadMedidaId').value;
             const nombre = document.getElementById('nombre').value;
-            // const estado = document.getElementById('estadoTipoInsumo').value;
+            const simbolo = document.getElementById('simbolo').value;
 
-            const tipoInsumo = {
+            const unidadMedida = {
                 id: id ? parseInt(id) : null,
-                nombre: nombre
+                nombre: nombre,
+                simbolo: simbolo
             };
 
             const method = id ? 'PUT' : 'POST';
             const url = id ? `${API_URL}/${id}` : API_URL;
+
+            console.log(`Enviando ${method} a ${url} con datos:`, unidadMedida);
 
             try {
                 const response = await fetch(url, {
@@ -303,68 +330,55 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(tipoInsumo)
+                    body: JSON.stringify(unidadMedida)
                 });
 
                 if (response.ok) {
-                    console.log('Tipo de insumo guardado exitosamente.');
-                    document.getElementById('formTipo').reset();
-                    document.getElementById('formTipo').classList.remove('was-validated');
-                    bootstrap.Modal.getInstance(document.getElementById('modalTipo')).hide();
-                    await cargarTiposInsumo(); // Recargar la tabla
+                    console.log('Unidad de medida guardada exitosamente.');
+                    document.getElementById('formUnidad').reset();
+                    document.getElementById('formUnidad').classList.remove('was-validated');
+                    bootstrap.Modal.getInstance(document.getElementById('modalUnidad')).hide();
+                    await cargarUnidadesMedida();
                 } else {
                     const errorText = await response.text();
-                    throw new Error(errorText || `Error al guardar tipo de insumo: ${response.status} ${response.statusText || 'Error desconocido'}`);
+                    throw new Error(errorText || `Error al guardar unidad de medida: ${response.status} ${response.statusText || 'Error desconocido'}`);
                 }
             } catch (error) {
-                console.error("Error al guardar tipo de insumo:", error);
-                alert("No se pudo guardar el tipo de insumo: " + error.message);
-                bootstrap.Modal.getInstance(document.getElementById('modalTipo')).hide();
+                console.error("Error al guardar unidad de medida:", error);
+                alert("No se pudo guardar la unidad de medida: " + error.message);
+                bootstrap.Modal.getInstance(document.getElementById('modalUnidad')).hide();
             }
         });
 
         // 5. Mostrar modal para confirmar eliminación
-        function abrirModalEliminarTipoInsumo(id) {
-            tipoInsumoActualId = id; // Guarda el ID del tipo de insumo a eliminar
-            const modal = new bootstrap.Modal(document.getElementById('modalEliminarTipo'));
+        function abrirModalEliminarUnidad(id) {
+            unidadMedidaActualId = id; // Guarda el ID de la unidad de medida a eliminar
+            const modal = new bootstrap.Modal(document.getElementById('modalEliminarUnidad'));
             modal.show();
         }
 
-        // 6. Confirmar y eliminar tipo de insumo
-        document.querySelector('#btnEliminar').addEventListener('click', async () => {
+        // 6. Confirmar y eliminar unidad de medida
+        document.querySelector('#modalEliminarUnidad .btn-danger').addEventListener('click', async () => {
             try {
-                const response = await fetch(`${API_URL}/${tipoInsumoActualId}`, { method: 'DELETE' });
+                const response = await fetch(`${API_URL}/${unidadMedidaActualId}`, { method: 'DELETE' });
 
                 if (response.ok) {
-                    console.log('Tipo de insumo eliminado exitosamente.');
-                    bootstrap.Modal.getInstance(document.getElementById('modalEliminarTipo')).hide();
-                    await cargarTiposInsumo();
+                    console.log('Unidad de medida eliminada exitosamente.');
+                    bootstrap.Modal.getInstance(document.getElementById('modalEliminarUnidad')).hide();
+                    await cargarUnidadesMedida(); // Recargar la tabla
                 } else {
                     const errorText = await response.text();
-                    throw new Error(errorText || `Error al eliminar tipo de insumo: ${response.status} ${response.statusText || 'Error desconocido'}`);
+                    throw new Error(errorText || `Error al eliminar unidad de medida: ${response.status} ${response.statusText || 'Error desconocido'}`);
                 }
             } catch (error) {
-                console.error("Error al eliminar tipo de insumo:", error);
-                alert("No se pudo eliminar el tipo de insumo: " + error.message);
-                bootstrap.Modal.getInstance(document.getElementById('modalEliminarTipo')).hide();
+                console.error("Error al eliminar unidad de medida:", error);
+                alert("No se pudo eliminar la unidad de medida: " + error.message);
+                bootstrap.Modal.getInstance(document.getElementById('modalEliminarUnidad')).hide();
             }
         });
 
         // 7. Cargar etiquetas al iniciar
-        document.addEventListener('DOMContentLoaded', cargarTiposInsumo);
-
-        // 8. Validación de formularios de Bootstrap
-        const forms = document.querySelectorAll('.needs-validation')
-
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-                form.classList.add('was-validated')
-            }, false)
-        })
+        document.addEventListener('DOMContentLoaded', cargarUnidadesMedida);
 
 
     </script>
