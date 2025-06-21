@@ -25,7 +25,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- Tipo de Usuario
 CREATE TABLE TipoUsuario (
                              id INT PRIMARY KEY AUTO_INCREMENT,
-                             nombre VARCHAR(50) NOT NULL
+                             nombre VARCHAR(50) NOT NULL -- ADMIN, CLIENTE
     -- estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo'
 );
 

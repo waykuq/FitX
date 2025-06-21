@@ -20,6 +20,6 @@ public class EtiquetaServiceImpl extends GenericServiceImpl<EtiquetaEntity, Inte
 	}
 
 	public List<EtiquetaEntity> listarPorUsuario(Integer usuarioId) {
-		return ((EtiquetaRepository) repository).findByUsuarioIdOrEsDelSistemaTrue (usuarioId);
+		return ((EtiquetaRepository) repository).findVisiblesPorUsuario(usuarioId);
 	}
 }

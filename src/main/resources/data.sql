@@ -12,7 +12,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 INSERT INTO TipoUsuario (id, nombre) VALUES
                                          (1, 'Administrador'),
                                          (2, 'Nutricionista'),
-                                         (3, 'Usuario Regular');
+                                         (3, 'Cliente');
 
 -- ----------------------------------------------------
 -- Usuario
