@@ -50,20 +50,7 @@ public class EtiquetaServiceImpl extends GenericServiceImpl<EtiquetaEntity, Inte
 //			dto.setNombreUsuario(etiquetaEntity.getUsuario().getNombreUsuario());
 		}
 
-		// Mapea la colección de Recetas a su versión simplificada (RecetaMinDTO)
-//		if (etiquetaEntity.getRecetas() != null && !etiquetaEntity.getRecetas().isEmpty()) {
-//			dto.setRecetas(etiquetaEntity.getRecetas().stream().map(receta -> {
-//				RecetaMinDTO recetaMinDto = new RecetaMinDTO();
-//				recetaMinDto.setId(receta.getId());
-//				recetaMinDto.setNombre(receta.getNombre());
-//				return recetaMinDto;
-//			}).collect(Collectors.toSet()));
-//		}
-
 		return dto;
 	}
 
-	// Nota: Los métodos guardarGet, buscarPorId, eliminar del CrudService/GenericService
-	// seguirán operando con EtiquetaEntity directamente, lo cual es correcto para la persistencia.
-	// Solo la capa de presentación (controlador) se encarga de los DTOs.
 }

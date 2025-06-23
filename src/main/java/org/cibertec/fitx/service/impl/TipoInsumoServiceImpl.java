@@ -44,7 +44,6 @@ public class TipoInsumoServiceImpl extends GenericServiceImpl<TipoInsumoEntity, 
 		dto.setId(tipoInsumoEntity.getId());
 		dto.setNombre(tipoInsumoEntity.getNombre());
 
-
 		return dto;
 	}
 }

@@ -29,7 +29,7 @@
         #etiquetasTable th:nth-child(3),
         #etiquetasTable td:nth-child(3),
         #etiquetasTable th:nth-child(4),
-        #etiquetasTable td:nth-child(4){
+        #etiquetasTable td:nth-child(4) {
             text-align: center;
         }
 
@@ -225,67 +225,7 @@
             return 2; // ajustar según el usuario autenticado
         }
 
-        function mostrarEtiquetas(datos) {
-            const tableBody = document.querySelector('#etiquetasTable tbody');
-            tableBody.innerHTML = ''; 
-            datos.forEach(etiqueta => {
-                // const row = tableBody.insertRow();
-                // row.insertCell().textContent = etiqueta.nombre;
-                //
-                // const colorCell = row.insertCell();
-                // colorCell.className = "text-center";
-                // colorCell.innerHTML = `<span style="display:inline-block; width:20px; height:20px; background-color:#${etiqueta.color}; border:1px solid #ccc;"></span>`;
-                //
-                // const tipoEtiqueta = row.insertCell();
-                // tipoEtiqueta.className = "text-center";
-                // tipoEtiqueta.textContent = (etiqueta.usuarioId === obtenerUsuarioId()) ? "Editable" : 'Sistema';
-                //
-                // const actionsCell = row.insertCell();
-                // if (etiqueta.usuarioId === obtenerUsuarioId()) {
-                //     actionsCell.className = "text-center";
-                //
-                //     const editButton = document.createElement('button');
-                //     editButton.textContent = 'Editar';
-                //     editButton.className = 'btn btn-warning btn-sm me-2';
-                //     editButton.onclick = () => abrirModalEditarEtiqueta(etiqueta.id);
-                //     actionsCell.appendChild(editButton);
-                //
-                //     const deleteButton = document.createElement('button');
-                //     deleteButton.textContent = 'Eliminar';
-                //     deleteButton.className = 'btn btn-danger btn-sm';
-                //     deleteButton.onclick = () => abrirModalEliminarEtiqueta(etiqueta.id);
-                //     actionsCell.appendChild(deleteButton);
-                // }
-                const color = `<span style="display:inline-block; width:20px; height:20px; background-color:#${etiqueta.color}; border:1px solid #ccc;"></span>`;
-                const tipo = (etiqueta.usuarioId === obtenerUsuarioId()) ? "Editable" : 'Sistema';
-                const actionsHtml = `
-                        <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarEtiqueta(${etiqueta.id})">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="abrirModalEliminarEtiqueta(${etiqueta.id})">Eliminar</button>
-                    `;
-                data.data.push([
-                    etiqueta.nombre,
-                    color,
-                    tipo,
-                    actionsHtml
-                ]);
-            });
-        }
-
         function inicializarTabla() {
-            // if (!dataTable) {
-            //     dataTable = new simpleDatatables.DataTable("#etiquetasTable", {
-            //         labels: {
-            //             placeholder: "Buscar...",
-            //             perPage: " Registros por página",
-            //             noRows: "No se encontraron datos",
-            //             info: "Mostrando {start} a {end} de {rows} registros"
-            //         }
-            //     });
-            // } else {
-            //    // dataTable.refresh();
-            //    dataTable.destroy();
-            //    dataTable = init();
-            // }
             if (dataTable) {
                 dataTable.destroy();
                 dataTable = null;
@@ -334,9 +274,9 @@
                     ]);
                 });
 
-                // mostrarEtiquetas(etiquetas);
                 inicializarTabla();
                 dataTable.insert(data);
+
             } catch (error) {
                 console.error("Error al cargar etiquetas:", error);
                 alert("No se pudieron cargar las etiquetas: " + error.message);
