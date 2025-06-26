@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de la receta - FitX</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Summernote -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            position: fixed;
+        }
+
+        .img-thumbnail {
+            width: 800px;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        #imagenAmpliada {
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-white sidebar p-3 border-end">
+                <h5 class="mb-4">FitX</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="dashboard.html">🏠 Dashboard Usuario</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="dashboard_admin.html">📊 Dashboard Admin</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">📋 Menús</a></li>
+                    <li class="nav-item"><a class="nav-link" href="perfil.html">👤 Perfil</a></li>
+                    <hr class="mt-4">
+                    <h4>Mantenimiento</h4>
+                    <li class="nav-item"><a class="nav-link" href="receta.html">🍽️ Recetas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="etiquetas.html">🏷️ Etiquetas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="insumo.html">🧂 Insumos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tipos_insumo.html">📦 Tipos de Insumo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">📏 Unidades de Medida</a></li>
+                    <hr class="mt-4">
+                    <li class="nav-item mt-4"><a class="nav-link text-danger" href="login.html">🚪Cerrar sesión</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+                <!-- Header -->
+                <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
+                    <h2>Receta: Ensalada saludable</h2>
+                    <button class="btn btn-light text-dark border-dark favorito" onclick="alternarFavorito(this)"
+                        title="Favorito">
+                        ❤️ Favorito
+                    </button>
+                </div>
+
+                <!-- Datos generales -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-2">
+                        <label class="form-label">Fecha de creación</label>
+                        <input type="date" class="form-control" value="2025-06-12" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" value="Ensalada saludable">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Porciones</label>
+                        <input type="number" class="form-control" value="4">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Peso por porción (g)</label>
+                        <input type="number" class="form-control" value="250">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Tiempo estimado (min)</label>
+                        <input type="number" class="form-control" value="20">
+                    </div>
+                    <div class="col-md-10">
+                        <label class="form-label">Procedimiento</label>
+                        <div id="descripcionEditor">
+                            <ol>
+                                <li>Lava bien los tomates, y si deseas, remójalos con agua y un poco de vinagre blanco
+                                    para desinfectarlos.</li>
+                                <li>Corta los tomates en rodajas finas y colócalos en un plato o bol grande.</li>
+                                <li>Pela y pica el ajo en trocitos muy pequeños o tritúralo.</li>
+                                <li>Distribuye el ajo sobre las rodajas de tomate, procurando que quede bien repartido.
+                                </li>
+                                <li>Espolvorea el orégano, la sal y la pimienta al gusto.</li>
+                                <li>Rocía con aceite de oliva y, si lo deseas, añade un chorrito de vinagre balsámico.
+                                </li>
+                                <li>Sirve inmediatamente o deja reposar unos minutos para que los sabores se integren.
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Imagen -->
+                <div class="mb-4">
+                    <label class="form-label d-block">Foto de la receta</label>
+                    <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2024/12/refreshing-lemon-cheesecake-slice-with-mint-garnish.jpg"
+                        alt="Foto receta" class="img-thumbnail mb-2" style="cursor:pointer"
+                        onclick="mostrarImagenModal(this.src)">
+
+                    <input type="file" class="form-control" accept="image/*">
+                </div>
+
+                <!-- Etiquetas -->
+                <div class="mb-5">
+                    <label class="form-label">Etiquetas</label>
+                    <div class="d-flex flex-wrap gap-2 mb-2">
+                        <span class="badge text-bg-primary">Vegetariana <button
+                                class="btn-close btn-close-white btn-sm ms-2" title="Eliminar etiqueta"></button></span>
+                        <span class="badge text-bg-success">Ligera <button class="btn-close btn-close-white btn-sm ms-2"
+                                title="Eliminar etiqueta"></button></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Agregar nueva etiqueta...">
+                </div>
+                <hr>
+
+                <!-- Insumos -->
+                <div class="mb-5">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5>Insumos</h5>
+                        <button class="btn btn-sm btn-success" onclick="abrirModalInsumo()">➕ Agregar insumo</button>
+                    </div>
+                    <table class="table table-bordered bg-white">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Insumo</th>
+                                <th>Cantidad</th>
+                                <th>Unidad</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lechuga</td>
+                                <td>200</td>
+                                <td>g</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo()">✏️
+                                            Editar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="alert('Insumo eliminado de la lista')">🗑️ Eliminar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tomate</td>
+                                <td>150</td>
+                                <td>g</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo()">✏️
+                                            Editar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="alert('Insumo eliminado de la lista')">🗑️ Eliminar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pepino</td>
+                                <td>100</td>
+                                <td>g</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo()">✏️
+                                            Editar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="alert('Insumo eliminado de la lista')">🗑️ Eliminar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Aceite de oliva</td>
+                                <td>30</td>
+                                <td>ml</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo()">✏️
+                                            Editar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="alert('Insumo eliminado de la lista')">🗑️ Eliminar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sal</td>
+                                <td>5</td>
+                                <td>g</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo()">✏️
+                                            Editar</button>
+                                        <button class="btn btn-outline-danger"
+                                            onclick="alert('Insumo eliminado de la lista')">🗑️ Eliminar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+
+                <!-- Información nutricional -->
+                <div class="mb-4">
+                    <h5>Información nutricional por porción</h5>
+                    <table class="table table-bordered bg-white">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Calorías (Kcal)</th>
+                                <th>Proteínas (g)</th>
+                                <th>Grasas (g)</th>
+                                <th>Carbohidratos (g)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>230</td>
+                                <td>10</td>
+                                <td>8</td>
+                                <td>28</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <!-- Guardar -->
+                <div class="text-end mt-4">
+                    <button class="btn btn-primary" onclick="alert('Receta guardada')">💾 Guardar receta</button>
+                </div>
+
+                <!-- Footer -->
+                <footer class="mt-5">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="mb-0">Desarrollado por FitX © 2025. Todos los derechos reservados.</p>
+                        <a href="#" class="text-decoration-none">Política de privacidad</a>
+                    </div>
+                </footer>
+            </main>
+
+        </div>
+    </div>
+
+    <!-- Modal Insumo -->
+    <div class="modal fade" id="modalInsumo" tabindex="-1" aria-labelledby="modalInsumoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formInsumo">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalInsumoLabel">Agregar insumo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="buscarInsumo" class="form-label">Buscar insumo</label>
+                            <input type="text" id="buscarInsumo" class="form-control"
+                                placeholder="Ej. Tomate, Pollo...">
+                        </div>
+                        <div class="mb-3">
+                            <label for="cantidad" class="form-label">Cantidad</label>
+                            <input type="number" id="cantidad" class="form-control" value="1" min="0.01" step="0.01">
+                        </div>
+                        <div class="mb-3">
+                            <label for="unidad" class="form-label">Unidad de medida</label>
+                            <select id="unidad" class="form-select">
+                                <option value="g">g</option>
+                                <option value="kg">kg</option>
+                                <option value="ml">ml</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Agregar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Imagen Ampliada -->
+    <div class="modal fade" id="modalImagen" tabindex="-1" aria-labelledby="modalImagenLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body text-center">
+                    <img id="imagenAmpliada" src="" alt="Imagen completa" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            $('#descripcionEditor').summernote({
+                height: 250,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link']]//,
+                    // ['view', ['codeview']]
+                ]
+            });
+        });
+
+        function abrirModalInsumo() {
+            new bootstrap.Modal(document.getElementById('modalInsumo')).show();
+        }
+
+        function mostrarImagenModal(src) {
+            document.getElementById('imagenAmpliada').src = src;
+            new bootstrap.Modal(document.getElementById('modalImagen')).show();
+        }
+
+        function alternarFavorito(btn) {
+            const esFavorito = btn.classList.contains('btn-danger');
+            if (esFavorito) {
+                btn.classList.remove('btn-danger');
+                btn.classList.remove('text-white');
+                btn.classList.remove('border-0');
+                btn.classList.add('btn-light');
+                btn.classList.add('text-dark');
+                btn.classList.add('border-dark');
+                btn.innerHTML = '❤️ Favorito';
+            } else {
+                btn.classList.remove('btn-light');
+                btn.classList.remove('text-dark');
+                btn.classList.remove('border-dark');
+                btn.classList.add('btn-danger');
+                btn.classList.add('text-white');
+                btn.classList.add('border-0');
+                btn.innerHTML = '🤍 Favorito';
+            }
+            // Aquí podrías enviar una petición AJAX para guardar el cambio
+        }
+
+        // Obtener el contenido del editor de Summernote
+        // const contenido = $('#descripcionEditor').summernote('code');
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

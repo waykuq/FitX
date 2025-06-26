@@ -27,4 +27,14 @@ public class HtmlController {
     String insumos() {
         return "insumo";
     }
+
+    @GetMapping("/recetas")
+    String recetas() {
+        return "receta";
+    }
+
+    @GetMapping("/recetas/detalle")
+    String recetaDetalle() {
+        return "receta_detalle";
+    }
 }

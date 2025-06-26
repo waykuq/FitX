@@ -22,7 +22,7 @@ public class EtiquetaServiceImpl extends GenericServiceImpl<EtiquetaEntity, Inte
 	public List<EtiquetaDTO> listarPorUsuario(Integer usuarioId) {
 		List<EtiquetaEntity> etiquetas = ((EtiquetaRepository) repository).findVisiblesPorUsuario(usuarioId);
 		return etiquetas.stream()
-				.map(this::mapearEntidadADto) // Reutiliza el método de mapeo
+				.map(this::mapearEntidadADto)
 				.collect(Collectors.toList());
 	}
 

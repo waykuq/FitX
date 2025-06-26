@@ -14,10 +14,10 @@ public class RecetaDTO {
     private double pesoPorcion;
     private String unidadMedidaSimbolo;
     private LocalTime tiempoEstimado;
-    private String estado;
+//    private String estado;
     private String foto;
     private Integer usuarioId; // Solo el ID del usuario
-    //private String nombreUsuario; // Opcional: el nombre del usuario
+    private String nombreUsuario; // Opcional: el nombre del usuario
 
     // Aquí es donde defines la "referencia bidireccional"
     // Usamos un DTO simplificado para Etiqueta para evitar el ciclo.
