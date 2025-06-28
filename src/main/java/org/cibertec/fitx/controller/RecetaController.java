@@ -53,9 +53,14 @@ public class RecetaController {
 
     // 2. Obtener un insumo por ID
     @GetMapping("/{id}")
-    public ResponseEntity<RecetaDTO> obtenerReceta(@PathVariable Integer id) {
+    public ResponseEntity<RecetaDTO> obtenerReceta(@PathVariable Integer id, HttpSession session) {
         try {
             RecetaDTO recetaDto = recetaService.buscarRecetaDtoPorId(id);
+
+            UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("usuario");
+            boolean editable = usuario.getRolId() == 1 || recetaDto.getUsuarioId().equals(usuario.getId());
+            recetaDto.setEditable(editable);
+
             return recetaDto != null ? ResponseEntity.ok(recetaDto) : ResponseEntity.notFound().build();
         } catch (Exception e) {
             System.err.println("Error inesperado al obtener receta por ID: " + e.getMessage());

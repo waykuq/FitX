@@ -15,4 +15,5 @@ public class RecetaDetalleDTO {
     private Integer unidadMedidaId;
     private String unidadMedidaSimbolo;
     private Double cantidad;
+    private boolean editable = false;
 }
