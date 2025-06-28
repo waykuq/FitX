@@ -1,12 +1,28 @@
 package org.cibertec.fitx.controller;
 
+import jakarta.servlet.http.HttpSession;
+import org.cibertec.fitx.dto.UsuarioDTO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping({"/web"})
 public class HtmlController {
+
+    @GetMapping("/login")
+    String login() {
+        return "login";
+    }
+
+    @GetMapping("/dashboard")
+    String dashboard(HttpSession session) {
+        UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("usuario");
+        if (usuario.getRolId() == 1) return "dashboard_admin";
+        else return "dashboard";
+    }
 
     @GetMapping("/etiquetas")
     String etiquetas() {
@@ -33,8 +49,10 @@ public class HtmlController {
         return "receta";
     }
 
-    @GetMapping("/recetas/detalle")
-    String recetaDetalle() {
+    @GetMapping("/recetas/{id}")
+    String recetaDetalle(@PathVariable Integer id, Model model) {
+        model.addAttribute("recetaId", id);
         return "receta_detalle";
     }
+
 }

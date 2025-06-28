@@ -1,7 +1,7 @@
 package org.cibertec.fitx.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
@@ -9,7 +9,11 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+//@Data
+@Getter
+@Setter
+@ToString(exclude = {"etiquetas", "usuario"})
+@EqualsAndHashCode(exclude = {"etiquetas", "usuario"})
 @Entity
 @Table(name = "Receta")
 public class RecetaEntity {
@@ -62,5 +66,8 @@ public class RecetaEntity {
             inverseJoinColumns = @JoinColumn(name = "id_etiqueta")
     )
     private Set<EtiquetaEntity> etiquetas = new HashSet<>();
+
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RecetaDetalleEntity> detalles = new HashSet<>();
 
 }

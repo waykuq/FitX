@@ -14,8 +14,17 @@ import java.util.stream.Collectors;
 @Service
 public class EtiquetaServiceImpl extends GenericServiceImpl<EtiquetaEntity, Integer> implements EtiquetaService {
 
+
 	public EtiquetaServiceImpl(JpaRepository<EtiquetaEntity, Integer> repositorio) {
 		this.repository = repositorio;
+	}
+
+	@Override
+	public List<EtiquetaDTO> listarTodas() {
+		List<EtiquetaEntity> etiquetas = ((EtiquetaRepository) repository).findAll();
+		return etiquetas.stream()
+				.map(this::mapearEntidadADto)
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -43,7 +52,7 @@ public class EtiquetaServiceImpl extends GenericServiceImpl<EtiquetaEntity, Inte
 		dto.setId(etiquetaEntity.getId());
 		dto.setNombre(etiquetaEntity.getNombre());
 		dto.setColor(etiquetaEntity.getColor());
-		dto.setEstado(etiquetaEntity.getEstado());
+//		dto.setEstado(etiquetaEntity.getEstado());
 
 		if (etiquetaEntity.getUsuario() != null) {
 			dto.setUsuarioId(etiquetaEntity.getUsuario().getId());

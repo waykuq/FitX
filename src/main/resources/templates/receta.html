@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Receta - FitX</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" />
 
     <style>
         body {
@@ -17,10 +18,27 @@
             position: fixed;
         }
 
-        /* .card img {
-            height: 200px;
-            object-fit: cover;
-        } */
+        /* Alinea al centro las columnas 2 y 3 */
+        #recetasTable th:nth-child(2),
+        #recetasTable td:nth-child(2),
+        #recetasTable th:nth-child(3),
+        #recetasTable td:nth-child(3),
+        #recetasTable th:nth-child(4),
+        #recetasTable td:nth-child(4),
+        #recetasTable th:nth-child(5),
+        #recetasTable td:nth-child(5),
+        #recetasTable th:nth-child(6),
+        #recetasTable td:nth-child(6) {
+            text-align: center;
+        }
+
+        span.etiqueta {
+            color: #fff;
+            padding: 0.4em 0.7em;
+            borderRadius: 0.5em;
+            fontSize: 0.9em;
+        }
+
         footer {
             background-color: #f8f9fa;
             padding: 1rem;
@@ -65,54 +83,54 @@
                 </div>
 
                 <!-- Filtros -->
-                <form class="row g-3 mb-5">
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" placeholder="Buscar por nombre..." name="nombre" />
-                        <p class="text-muted ps-3">Nombre</p>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-select" name="etiqueta">
-                            <option value="">Todas las etiquetas</option>
-                            <option value="1">Vegetariana</option>
-                            <option value="2">Alta proteína</option>
-                        </select>
-                        <p class="text-muted ps-3">Etiquetas</p>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-select" name="insumo">
-                            <option value="">Todos los insumos</option>
-                            <option value="pollo">Pollo</option>
-                            <option value="espinaca">Espinaca</option>
-                        </select>
-                        <p class="text-muted ps-3">Insumos</p>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-select" name="favorito">
-                            <option value="">Todos</option>
-                            <option value="1">Solo favoritos</option>
-                            <option value="0">No favoritos</option>
-                        </select>
-                        <p class="text-muted ps-3">Recetas favoritas</p>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-secondary w-100">🔍 Filtrar</button>
-                    </div>
-                </form>
+<!--                <form class="row g-3 mb-5">-->
+<!--                <div class="col-md-4">-->
+<!--                    <input type="text" class="form-control" placeholder="Buscar por nombre..." name="nombre" />-->
+<!--                    <p class="text-muted ps-3">Nombre</p>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <select class="form-select" name="etiqueta">-->
+<!--                        <option value="">Todas las etiquetas</option>-->
+<!--                        <option value="1">Vegetariana</option>-->
+<!--                        <option value="2">Alta proteína</option>-->
+<!--                    </select>-->
+<!--                    <p class="text-muted ps-3">Etiquetas</p>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <select class="form-select" name="insumo">-->
+<!--                        <option value="">Todos los insumos</option>-->
+<!--                        <option value="pollo">Pollo</option>-->
+<!--                        <option value="espinaca">Espinaca</option>-->
+<!--                    </select>-->
+<!--                    <p class="text-muted ps-3">Insumos</p>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <select class="form-select" name="favorito">-->
+<!--                        <option value="">Todos</option>-->
+<!--                        <option value="1">Solo favoritos</option>-->
+<!--                        <option value="0">No favoritos</option>-->
+<!--                    </select>-->
+<!--                    <p class="text-muted ps-3">Recetas favoritas</p>-->
+<!--                </div>-->
+<!--                <div class="col-md-2">-->
+<!--                    <button type="submit" class="btn btn-secondary w-100">🔍 Filtrar</button>-->
+<!--                </div>-->
+<!--            </form>-->
 
                 <!-- Selector de cantidad de recetas por página -->
-                <div class="d-flex justify-content-end align-items-center mb-3">
-                    <label for="porPagina" class="me-2 mb-0">Recetas por página:</label>
-                    <select id="porPagina" class="form-select w-auto" onchange="cambiarCantidadPorPagina()">
-                        <option value="5">5</option>
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                    </select>
-                </div>
+<!--                <div class="d-flex justify-content-end align-items-center mb-3">-->
+<!--                    <label for="porPagina" class="me-2 mb-0">Recetas por página:</label>-->
+<!--                    <select id="porPagina" class="form-select w-auto" onchange="cambiarCantidadPorPagina()">-->
+<!--                        <option value="5">5</option>-->
+<!--                        <option value="10" selected>10</option>-->
+<!--                        <option value="20">20</option>-->
+<!--                        <option value="50">50</option>-->
+<!--                    </select>-->
+<!--                </div>-->
 
                 <!-- Tabla de recetas -->
                 <div class="table-responsive">
-                    <table class="table table-bordered bg-white align-middle">
+                    <table class="table table-bordered bg-white align-middle" id="recetasTable">
                         <thead class="table-light">
                             <tr>
                                 <th>Nombre</th>
@@ -154,293 +172,23 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Pollo al horno</td>
-                                <td class="text-center">6</td>
-                                <td class="text-center">300 g</td>
-                                <td class="text-center">1 hora</td>
-                                <td class="text-center">
-                                    <span class="badge bg-primary">Alta proteína</span>
-                                    <span class="badge bg-secondary">Sin gluten</span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-primary"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button>
-                                        <!-- <button class="btn btn-sm btn-outline-warning"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button> -->
-                                        <button class="btn btn-sm btn-outline-danger" onclick="abrirModalEliminar()">
-                                            🗑️ Eliminar
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary me-1 favorito"
-                                            onclick="alternarFavorito(this)" title="Favorito">
-                                            ❤️
-                                        </button>
-
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Batido de frutas</td>
-                                <td class="text-center">2</td>
-                                <td class="text-center">500 ml</td>
-                                <td class="text-center">5 min</td>
-                                <td class="text-center">
-                                    <span class="badge bg-success">Vegetariana</span>
-                                    <span class="badge bg-info">Baja en calorías</span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-primary"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button>
-                                        <!-- <button class="btn btn-sm btn-outline-warning"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button> -->
-                                        <button class="btn btn-sm btn-outline-danger" onclick="abrirModalEliminar()">
-                                            🗑️ Eliminar
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary me-1 favorito"
-                                            onclick="alternarFavorito(this)" title="Favorito">
-                                            ❤️
-                                        </button>
-
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Ensalada César</td>
-                                <td class="text-center">4</td>
-                                <td class="text-center">200 g</td>
-                                <td class="text-center">15 min</td>
-                                <td class="text-center">
-                                    <span class="badge bg-success">Vegetariana</span>
-                                    <span class="badge bg-info">Baja en calorías</span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-primary"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button>
-                                        <!-- <button class="btn btn-sm btn-outline-warning"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button> -->
-                                        <button class="btn btn-sm btn-outline-danger" onclick="abrirModalEliminar()">
-                                            🗑️ Eliminar
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary me-1 favorito"
-                                            onclick="alternarFavorito(this)" title="Favorito">
-                                            ❤️
-                                        </button>
-
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Guiso de lentejas</td>
-                                <td class="text-center">5</td>
-                                <td class="text-center">350 g</td>
-                                <td class="text-center">1 hora 30 min</td>
-                                <td class="text-center">
-                                    <span class="badge bg-primary">Alta proteína</span>
-                                    <span class="badge bg-secondary">Sin gluten</span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-primary"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button>
-                                        <!-- <button class="btn btn-sm btn-outline-warning"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button> -->
-                                        <button class="btn btn-sm btn-outline-danger" onclick="abrirModalEliminar()">
-                                            🗑️ Eliminar
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary me-1 favorito"
-                                            onclick="alternarFavorito(this)" title="Favorito">
-                                            ❤️
-                                        </button>
-
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Wrap de pollo</td>
-                                <td class="text-center">3</td>
-                                <td class="text-center">200 g</td>
-                                <td class="text-center">10 min</td>
-                                <td class="text-center">
-                                    <span class="badge bg-success">Vegetariana</span>
-                                    <span class="badge bg-info">Baja en calorías</span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-primary"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button>
-                                        <!-- <button class="btn btn-sm btn-outline-warning"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button> -->
-                                        <button class="btn btn-sm btn-outline-danger" onclick="abrirModalEliminar()">
-                                            🗑️ Eliminar
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary me-1 favorito"
-                                            onclick="alternarFavorito(this)" title="Favorito">
-                                            ❤️
-                                        </button>
-
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Pizza integral</td>
-                                <td class="text-center">8</td>
-                                <td class="text-center">150 g</td>
-                                <td class="text-center">45 min</td>
-                                <td class="text-center">
-                                    <span class="badge bg-primary">Alta proteína</span>
-                                    <span class="badge bg-secondary">Sin gluten</span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-primary"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button>
-                                        <!-- <button class="btn btn-sm btn-outline-warning"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button> -->
-                                        <button class="btn btn-sm btn-outline-danger" onclick="abrirModalEliminar()">
-                                            🗑️ Eliminar
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary me-1 favorito"
-                                            onclick="alternarFavorito(this)" title="Favorito">
-                                            ❤️
-                                        </button>
-
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sopa de verduras</td>
-                                <td class="text-center">4</td>
-                                <td class="text-center">300 ml</td>
-                                <td class="text-center">30 min</td>
-                                <td class="text-center">
-                                    <span class="badge bg-success">Vegetariana</span>
-                                    <span class="badge bg-info">Baja en calorías</span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-primary"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button>
-                                        <!-- <button class="btn btn-sm btn-outline-warning"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button> -->
-                                        <button class="btn btn-sm btn-outline-danger" onclick="abrirModalEliminar()">
-                                            🗑️ Eliminar
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary me-1 favorito"
-                                            onclick="alternarFavorito(this)" title="Favorito">
-                                            ❤️
-                                        </button>
-
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Batata asada</td>
-                                <td class="text-center">2</td>
-                                <td class="text-center">400 g</td>
-                                <td class="text-center">40 min</td>
-                                <td class="text-center">
-                                    <span class="badge bg-primary">Alta proteína</span>
-                                    <span class="badge bg-secondary">Sin gluten</span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-primary"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button>
-                                        <!-- <button class="btn btn-sm btn-outline-warning"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button> -->
-                                        <button class="btn btn-sm btn-outline-danger" onclick="abrirModalEliminar()">
-                                            🗑️ Eliminar
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary me-1 favorito"
-                                            onclick="alternarFavorito(this)" title="Favorito">
-                                            ❤️
-                                        </button>
-
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Wrap de pollo</td>
-                                <td class="text-center">3</td>
-                                <td class="text-center">200 g</td>
-                                <td class="text-center">10 min</td>
-                                <td class="text-center">
-                                    <span class="badge bg-success">Vegetariana</span>
-                                    <span class="badge bg-info">Baja en calorías</span>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-primary"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button>
-                                        <!-- <button class="btn btn-sm btn-outline-warning"
-                                            onclick="location.href='receta_detalle.html'">
-                                            📝 Detalle
-                                        </button> -->
-                                        <button class="btn btn-sm btn-outline-danger" onclick="abrirModalEliminar()">
-                                            🗑️ Eliminar
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary me-1 favorito"
-                                            onclick="alternarFavorito(this)" title="Favorito">
-                                            ❤️
-                                        </button>
-
-                                    </div>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
 
                     <!-- Paginación -->
-                    <nav>
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link">Anterior</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Siguiente</a>
-                            </li>
-                        </ul>
-                    </nav>
+<!--                    <nav>-->
+<!--                        <ul class="pagination justify-content-center">-->
+<!--                            <li class="page-item disabled">-->
+<!--                                <a class="page-link">Anterior</a>-->
+<!--                            </li>-->
+<!--                            <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+<!--                            <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                            <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                            <li class="page-item">-->
+<!--                                <a class="page-link" href="#">Siguiente</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </nav>-->
 
                 </div>
 
@@ -480,35 +228,122 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function abrirModalEliminar() {
-            new bootstrap.Modal(
-                document.getElementById("modalEliminarReceta")
-            ).show();
+        const API_URL = 'http://localhost:8080/api/recetas';
+        let recetaActualId = null;
+        let dataTable;
+
+        function formatearTiempo(tiempo) {
+            const [horas, minutos, segundos] = tiempo.split(":").map(Number);
+            let totalMinutos = horas * 60 + minutos;
+            if (segundos > 0) totalMinutos += 1;
+
+            const h = Math.floor(totalMinutos / 60);
+            const m = totalMinutos % 60;
+
+            return (h > 0 ? `${h} h ` : "") + (m > 0 || h === 0 ? `${m} min` : "");
         }
 
-        function cambiarCantidadPorPagina() {
-            const valor = document.getElementById('porPagina').value;
-            console.log(`Cargando ${valor} recetas por página...`);
-            // Aquí se llamaría a la lógica para recargar la tabla
-        }
-
-        function alternarFavorito(btn) {
-            const esFavorito = btn.classList.contains('btn-danger');
-            if (esFavorito) {
-                btn.classList.remove('btn-danger');
-                btn.classList.add('btn-outline-secondary');
-                btn.innerHTML = '❤️';
-            } else {
-                btn.classList.remove('btn-outline-secondary');
-                btn.classList.add('btn-danger');
-                btn.innerHTML = '🤍';
+        function inicializarTabla() {
+            if (dataTable) {
+                dataTable.destroy();
+                dataTable = null;
             }
-            // Aquí podrías enviar una petición AJAX para guardar el cambio
+
+            dataTable = new simpleDatatables.DataTable("#recetasTable", {
+                labels: {
+                    placeholder: "Buscar...",
+                    perPage: " registros por página",
+                    noRows: "No se encontraron datos",
+                    info: "Mostrando {start} a {end} de {rows} registros"
+                }
+            });
         }
+
+        // 1. Cargar todas las recetas al iniciar la página
+        async function cargarRecetas() {
+            try {
+                const response = await fetch(API_URL);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error al cargar las recetas: ${response.status} - ${errorText}`);
+                }
+
+                const recetas = await response.json();
+
+                const data = {
+                    headings: ['Nombre', 'Porciones', 'Peso por porción (g)', 'Tiempo estimado', 'Etiquetas', 'Acciones'], // Encabezados de la tabla
+                    data: []
+                };
+
+                recetas.forEach(receta => {
+                    const peso_porcion = receta.pesoPorcion + ' ' + receta.unidadMedidaSimbolo;
+                    const tiempo_estimado = formatearTiempo(receta.tiempoEstimado);
+                    var etiquetas = "";
+                    receta.etiquetas.forEach(etiqueta => {
+                        etiquetas += `<span class="badge me-2 etiqueta" style="background-color: #${etiqueta.color};">${etiqueta.nombre}</span>`;
+                    })
+                    const actionsHtml = (receta.editable === true) ? `
+                        <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarReceta(${receta.id})">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="abrirModalEliminarReceta(${receta.id})">Eliminar</button>
+                    ` : '';
+                    data.data.push([
+                        receta.nombre,
+                        receta.porciones,
+                        peso_porcion,
+                        tiempo_estimado,
+                        etiquetas,
+                        actionsHtml
+                    ]);
+                });
+
+                inicializarTabla();
+                dataTable.insert(data);
+
+            } catch (error) {
+                console.error("Error al cargar recetas:", error);
+                alert("No se pudieron cargar las recetas: " + error.message);
+            }
+        }
+
+         function abrirModalEditarReceta(id) {
+             window.location.href = "/web/recetas/" + id;
+         }
+
+        // 10. Cargar recetas al cargar el DOM
+        document.addEventListener("DOMContentLoaded", cargarRecetas);
+
+        // function abrirModalEliminar() {
+        //     new bootstrap.Modal(
+        //         document.getElementById("modalEliminarReceta")
+        //     ).show();
+        // }
+        //
+        // function cambiarCantidadPorPagina() {
+        //     const valor = document.getElementById('porPagina').value;
+        //     console.log(`Cargando ${valor} recetas por página...`);
+        //     // Aquí se llamaría a la lógica para recargar la tabla
+        // }
+        //
+        // function alternarFavorito(btn) {
+        //     const esFavorito = btn.classList.contains('btn-danger');
+        //     if (esFavorito) {
+        //         btn.classList.remove('btn-danger');
+        //         btn.classList.add('btn-outline-secondary');
+        //         btn.innerHTML = '❤️';
+        //     } else {
+        //         btn.classList.remove('btn-outline-secondary');
+        //         btn.classList.add('btn-danger');
+        //         btn.innerHTML = '🤍';
+        //     }
+        //     // Aquí podrías enviar una petición AJAX para guardar el cambio
+        // }
+
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

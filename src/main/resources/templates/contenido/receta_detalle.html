@@ -26,8 +26,7 @@
         }
 
         .img-thumbnail {
-            width: 800px;
-            height: 400px;
+            width: 100%;
             object-fit: cover;
         }
 
@@ -82,56 +81,106 @@
                 </div>
 
                 <!-- Datos generales -->
+
                 <div class="row g-4 mb-4">
-                    <div class="col-md-2">
-                        <label class="form-label">Fecha de creación</label>
-                        <input type="date" class="form-control" value="2025-06-12" disabled>
+                    <div class="col-md-3">
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-12">
+                                <label class="form-label d-block">Foto</label>
+                                <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2024/12/refreshing-lemon-cheesecake-slice-with-mint-garnish.jpg"
+                                     alt="Foto receta" class="img-thumbnail mb-2" style="cursor:pointer"
+                                     onclick="mostrarImagenModal(this.src)">
+
+                                <input type="file" class="form-control" accept="image/*">
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" value="Ensalada saludable">
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label">Porciones</label>
-                        <input type="number" class="form-control" value="4">
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label">Peso por porción (g)</label>
-                        <input type="number" class="form-control" value="250">
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label">Tiempo estimado (min)</label>
-                        <input type="number" class="form-control" value="20">
-                    </div>
-                    <div class="col-md-10">
-                        <label class="form-label">Procedimiento</label>
-                        <div id="descripcionEditor">
-                            <ol>
-                                <li>Lava bien los tomates, y si deseas, remójalos con agua y un poco de vinagre blanco
-                                    para desinfectarlos.</li>
-                                <li>Corta los tomates en rodajas finas y colócalos en un plato o bol grande.</li>
-                                <li>Pela y pica el ajo en trocitos muy pequeños o tritúralo.</li>
-                                <li>Distribuye el ajo sobre las rodajas de tomate, procurando que quede bien repartido.
-                                </li>
-                                <li>Espolvorea el orégano, la sal y la pimienta al gusto.</li>
-                                <li>Rocía con aceite de oliva y, si lo deseas, añade un chorrito de vinagre balsámico.
-                                </li>
-                                <li>Sirve inmediatamente o deja reposar unos minutos para que los sabores se integren.
-                                </li>
-                            </ol>
+                    <div class="col-md-9">
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-12">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" value="Ensalada saludable">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Porciones</label>
+                                <input type="number" class="form-control" value="4">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Peso por porción (g)</label>
+                                <input type="number" class="form-control" value="250">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Tiempo estimado (min)</label>
+                                <input type="number" class="form-control" value="20">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Procedimiento</label>
+                                <div id="descripcionEditor">
+                                    <ol>
+                                        <li>Lava bien los tomates, y si deseas, remójalos con agua y un poco de vinagre blanco
+                                            para desinfectarlos.</li>
+                                        <li>Corta los tomates en rodajas finas y colócalos en un plato o bol grande.</li>
+                                        <li>Pela y pica el ajo en trocitos muy pequeños o tritúralo.</li>
+                                        <li>Distribuye el ajo sobre las rodajas de tomate, procurando que quede bien repartido.
+                                        </li>
+                                        <li>Espolvorea el orégano, la sal y la pimienta al gusto.</li>
+                                        <li>Rocía con aceite de oliva y, si lo deseas, añade un chorrito de vinagre balsámico.
+                                        </li>
+                                        <li>Sirve inmediatamente o deja reposar unos minutos para que los sabores se integren.
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Imagen -->
-                <div class="mb-4">
-                    <label class="form-label d-block">Foto de la receta</label>
-                    <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2024/12/refreshing-lemon-cheesecake-slice-with-mint-garnish.jpg"
-                        alt="Foto receta" class="img-thumbnail mb-2" style="cursor:pointer"
-                        onclick="mostrarImagenModal(this.src)">
 
-                    <input type="file" class="form-control" accept="image/*">
-                </div>
+<!--                <div class="row g-4 mb-4">-->
+<!--                    <div class="col-md-2">-->
+<!--                        <label class="form-label d-block">Foto</label>-->
+<!--                        <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2024/12/refreshing-lemon-cheesecake-slice-with-mint-garnish.jpg"-->
+<!--                             alt="Foto receta" class="img-thumbnail mb-2" style="cursor:pointer"-->
+<!--                             onclick="mostrarImagenModal(this.src)">-->
+<!--                        <input type="file" class="form-control" accept="image/*">-->
+<!--                    </div>-->
+
+
+<!--                    <div class="col-md-6">-->
+<!--                        <label class="form-label">Nombre</label>-->
+<!--                        <input type="text" class="form-control" value="Ensalada saludable">-->
+<!--                    </div>-->
+<!--                    <div class="col-md-2">-->
+<!--                        <label class="form-label">Porciones</label>-->
+<!--                        <input type="number" class="form-control" value="4">-->
+<!--                    </div>-->
+<!--                    <div class="col-md-2">-->
+<!--                        <label class="form-label">Peso por porción (g)</label>-->
+<!--                        <input type="number" class="form-control" value="250">-->
+<!--                    </div>-->
+<!--                    <div class="col-md-2">-->
+<!--                        <label class="form-label">Tiempo estimado (min)</label>-->
+<!--                        <input type="number" class="form-control" value="20">-->
+<!--                    </div>-->
+<!--                    <div class="col-md-10">-->
+<!--                        <label class="form-label">Procedimiento</label>-->
+<!--                        <div id="descripcionEditor">-->
+<!--                            <ol>-->
+<!--                                <li>Lava bien los tomates, y si deseas, remójalos con agua y un poco de vinagre blanco-->
+<!--                                    para desinfectarlos.</li>-->
+<!--                                <li>Corta los tomates en rodajas finas y colócalos en un plato o bol grande.</li>-->
+<!--                                <li>Pela y pica el ajo en trocitos muy pequeños o tritúralo.</li>-->
+<!--                                <li>Distribuye el ajo sobre las rodajas de tomate, procurando que quede bien repartido.-->
+<!--                                </li>-->
+<!--                                <li>Espolvorea el orégano, la sal y la pimienta al gusto.</li>-->
+<!--                                <li>Rocía con aceite de oliva y, si lo deseas, añade un chorrito de vinagre balsámico.-->
+<!--                                </li>-->
+<!--                                <li>Sirve inmediatamente o deja reposar unos minutos para que los sabores se integren.-->
+<!--                                </li>-->
+<!--                            </ol>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <!-- Etiquetas -->
                 <div class="mb-5">

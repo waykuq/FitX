@@ -1,20 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de la receta - FitX</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-    <!-- Summernote -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
-
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,9 +18,18 @@
         }
 
         .img-thumbnail {
-            width: 800px;
-            height: 400px;
+            width: 100%;
             object-fit: cover;
+        }
+
+        /* Alinea al centro las columnas 2 y 3 */
+        #insumosTable th:nth-child(2),
+        #insumosTable td:nth-child(2),
+        #insumosTable th:nth-child(3),
+        #insumosTable td:nth-child(3),
+        #insumosTable th:nth-child(4),
+        #insumosTable td:nth-child(4) {
+            text-align: center;
         }
 
         #imagenAmpliada {
@@ -45,7 +46,7 @@
     </style>
 </head>
 
-<body class="bg-light">
+<body class="bg-light" th:attr="data-receta-id=${recetaId}">
     <div class="container-fluid">
         <div class="row">
 
@@ -74,7 +75,7 @@
 
                 <!-- Header -->
                 <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
-                    <h2>Receta: Ensalada saludable</h2>
+                    <h2 id="titulo">Receta: Ensalada saludable</h2>
                     <button class="btn btn-light text-dark border-dark favorito" onclick="alternarFavorito(this)"
                         title="Favorito">
                         ❤️ Favorito
@@ -83,66 +84,76 @@
 
                 <!-- Datos generales -->
                 <div class="row g-4 mb-4">
-                    <div class="col-md-2">
-                        <label class="form-label">Fecha de creación</label>
-                        <input type="date" class="form-control" value="2025-06-12" disabled>
+                    <div class="col-md-3">
+                        <div class="row g-4 mb-4">
+<!--                            <div class="col-md-12">-->
+<!--                                <label class="form-label d-block">Foto</label>-->
+<!--                                <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2024/12/refreshing-lemon-cheesecake-slice-with-mint-garnish.jpg"-->
+<!--                                     alt="Foto receta" class="img-thumbnail mb-2" style="cursor:pointer"-->
+<!--                                     onclick="mostrarImagenModal(this.src)">-->
+
+<!--                                <input type="file" class="form-control" accept="image/*" id="foto" name="foto">-->
+<!--                            </div>-->
+                            <div class="col-md-12">
+                                <label class="form-label d-block">Foto URL</label>
+
+                                <!-- Imagen de vista previa -->
+                                <img id="vistaPreviaImagen"
+                                     src=""
+                                     alt="Foto receta"
+                                     class="img-thumbnail mb-2"
+                                     style="cursor:pointer"
+                                     onclick="mostrarImagenModal(this.src)">
+
+                                <!-- Campo para ingresar URL de imagen -->
+                                <input type="url" class="form-control" placeholder="https://ejemplo.com/imagen.jpg" id="foto" name="foto"
+                                       oninput="actualizarImagenDesdeURL(this.value)">
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" value="Ensalada saludable">
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label">Porciones</label>
-                        <input type="number" class="form-control" value="4">
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label">Peso por porción (g)</label>
-                        <input type="number" class="form-control" value="250">
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label">Tiempo estimado (min)</label>
-                        <input type="number" class="form-control" value="20">
-                    </div>
-                    <div class="col-md-10">
-                        <label class="form-label">Procedimiento</label>
-                        <div id="descripcionEditor">
-                            <ol>
-                                <li>Lava bien los tomates, y si deseas, remójalos con agua y un poco de vinagre blanco
-                                    para desinfectarlos.</li>
-                                <li>Corta los tomates en rodajas finas y colócalos en un plato o bol grande.</li>
-                                <li>Pela y pica el ajo en trocitos muy pequeños o tritúralo.</li>
-                                <li>Distribuye el ajo sobre las rodajas de tomate, procurando que quede bien repartido.
-                                </li>
-                                <li>Espolvorea el orégano, la sal y la pimienta al gusto.</li>
-                                <li>Rocía con aceite de oliva y, si lo deseas, añade un chorrito de vinagre balsámico.
-                                </li>
-                                <li>Sirve inmediatamente o deja reposar unos minutos para que los sabores se integren.
-                                </li>
-                            </ol>
+                    <div class="col-md-9">
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-12">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" value="Ensalada saludable" id="nombre" name="nombre">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Porciones</label>
+                                <input type="number" class="form-control" value="4" id="porciones" name="porciones">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Peso por porción</label>
+                                <input type="number" class="form-control" value="250" id="pesoPorcion" name="pesoPorcion">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Unidad de medida</label>
+                                <select class="form-select" id="unidadMedida" name="unidadMedida" required>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Tiempo estimado</label>
+<!--                                <input type="number" class="form-control" value="20" id="tiempoEstimado" name="tiempoEstimado">-->
+                                <input type="time" class="form-control" id="tiempoEstimado" name="tiempoEstimado" step="60">
+
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Procedimiento</label>
+                                <div id="descripcionEditor"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Imagen -->
-                <div class="mb-4">
-                    <label class="form-label d-block">Foto de la receta</label>
-                    <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2024/12/refreshing-lemon-cheesecake-slice-with-mint-garnish.jpg"
-                        alt="Foto receta" class="img-thumbnail mb-2" style="cursor:pointer"
-                        onclick="mostrarImagenModal(this.src)">
-
-                    <input type="file" class="form-control" accept="image/*">
-                </div>
-
+                <hr>
                 <!-- Etiquetas -->
                 <div class="mb-5">
-                    <label class="form-label">Etiquetas</label>
-                    <div class="d-flex flex-wrap gap-2 mb-2">
-                        <span class="badge text-bg-primary">Vegetariana <button
-                                class="btn-close btn-close-white btn-sm ms-2" title="Eliminar etiqueta"></button></span>
-                        <span class="badge text-bg-success">Ligera <button class="btn-close btn-close-white btn-sm ms-2"
-                                title="Eliminar etiqueta"></button></span>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5>Etiquetas</h5>
+                        <button class="btn btn-sm btn-success" onclick="abrirModalEtiqueta()">➕ Agregar etiqueta</button>
                     </div>
-                    <input type="text" class="form-control" placeholder="Agregar nueva etiqueta...">
+
+                    <div class="d-flex flex-wrap gap-2 mb-2" id="etiquetas">
+                    </div>
                 </div>
                 <hr>
 
@@ -152,7 +163,7 @@
                         <h5>Insumos</h5>
                         <button class="btn btn-sm btn-success" onclick="abrirModalInsumo()">➕ Agregar insumo</button>
                     </div>
-                    <table class="table table-bordered bg-white">
+                    <table class="table table-bordered bg-white" id="insumosTable">
                         <thead class="table-light">
                             <tr>
                                 <th>Insumo</th>
@@ -162,71 +173,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Lechuga</td>
-                                <td>200</td>
-                                <td>g</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo()">✏️
-                                            Editar</button>
-                                        <button class="btn btn-outline-danger"
-                                            onclick="alert('Insumo eliminado de la lista')">🗑️ Eliminar</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Tomate</td>
-                                <td>150</td>
-                                <td>g</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo()">✏️
-                                            Editar</button>
-                                        <button class="btn btn-outline-danger"
-                                            onclick="alert('Insumo eliminado de la lista')">🗑️ Eliminar</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Pepino</td>
-                                <td>100</td>
-                                <td>g</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo()">✏️
-                                            Editar</button>
-                                        <button class="btn btn-outline-danger"
-                                            onclick="alert('Insumo eliminado de la lista')">🗑️ Eliminar</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Aceite de oliva</td>
-                                <td>30</td>
-                                <td>ml</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo()">✏️
-                                            Editar</button>
-                                        <button class="btn btn-outline-danger"
-                                            onclick="alert('Insumo eliminado de la lista')">🗑️ Eliminar</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sal</td>
-                                <td>5</td>
-                                <td>g</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-warning" onclick="abrirModalInsumo()">✏️
-                                            Editar</button>
-                                        <button class="btn btn-outline-danger"
-                                            onclick="alert('Insumo eliminado de la lista')">🗑️ Eliminar</button>
-                                    </div>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -255,10 +201,13 @@
                     </table>
                 </div>
                 <hr>
-                <!-- Guardar -->
+                <!-- Botones -->
                 <div class="text-end mt-4">
-                    <button class="btn btn-primary" onclick="alert('Receta guardada')">💾 Guardar receta</button>
+                    <button class="btn btn-secondary" onclick="alert('Receta guardada')"> Regresar </button>
+                    <button class="btn btn-danger" onclick="alert('Receta eliminada')">️ Eliminar </button>
+                    <button class="btn btn-primary" onclick="alert('Receta guardada')"> Guardar </button>
                 </div>
+
 
                 <!-- Footer -->
                 <footer class="mt-5">
@@ -276,7 +225,6 @@
     <div class="modal fade" id="modalInsumo" tabindex="-1" aria-labelledby="modalInsumoLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="formInsumo">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalInsumoLabel">Agregar insumo</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -303,7 +251,30 @@
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Agregar</button>
                     </div>
-                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Etiquetas-->
+    <div class="modal fade" id="modalEtiqueta" tabindex="-1" aria-labelledby="modalEtiquetaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+<!--                <form id="formEtiqueta">-->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEtiquetaLabel">Agregar etiqueta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Etiqueta</label>
+                            <select id="etiqueta" name="etiqueta" class="form-select">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="agregarEtiquetaReceta()">Agregar</button>
+                    </div>
+<!--                </form>-->
             </div>
         </div>
     </div>
@@ -319,19 +290,247 @@
         </div>
     </div>
 
-    <script>
 
-        document.addEventListener('DOMContentLoaded', () => {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+
+    <script>
+        const API_URL = 'http://localhost:8080/api/recetas';
+        const API_URL_UNIDADES_MEDIDA = 'http://localhost:8080/api/unidadesMedida';
+        const API_URL_ETIQUETAS = 'http://localhost:8080/api/etiquetas';
+        const API_URL_INSUMOS = 'http://localhost:8080/api/insumos';
+        let unidadesMedida = null;
+        let etiquetas = null
+        let insumos = null;
+        let recetaDto = null;
+
+        document.addEventListener('DOMContentLoaded', async() => {
+            await cargarUnidadesMedida();
+            await cargarEtiquetas();
+            await cargarInsumos();
+            await cargarReceta(document.body.dataset.recetaId);
+        });
+
+
+
+        async function cargarUnidadesMedida() {
+            try {
+                const responseUM = await fetch(API_URL_UNIDADES_MEDIDA);
+                if (!responseUM.ok) {
+                    throw new Error(`Error al cargar las unidades de medida: ${responseUM.status} ${responseUM.statusText}`);
+                }
+                unidadesMedida = await responseUM.json();
+                const selectUM = document.getElementById('unidadMedida');
+                selectUM.innerHTML = '<option value="">-- Seleccione --</option>'; // Opción por defecto
+                unidadesMedida.forEach(um => {
+                    const option = document.createElement('option');
+                    option.value = um.id;
+                    option.textContent = um.simbolo;
+                    selectUM.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Error al cargar las unidades de medida:", error);
+                alert("No se pudieron cargar las opciones para unidades de medida: " + error.message);
+            }
+        }
+
+        async function cargarEtiquetas() {
+            try {
+                const responseE = await fetch(API_URL_ETIQUETAS + "/listarMinDTO");
+                if (!responseE.ok) {
+                    throw new Error(`Error al cargar las etiquetas: ${responseE.status} ${responseE.statusText}`);
+                }
+                etiquetas = await responseE.json();
+                // console.log('etiquetas: ' + JSON.stringify(etiquetas));
+            } catch (error) {
+                console.error("Error al cargar las etiquetas:", error);
+                alert("No se pudieron cargar las opciones para etiquetas: " + error.message);
+            }
+        }
+
+        async function cargarInsumos() {
+            try {
+                const responseI = await fetch(API_URL_INSUMOS);
+                if (!responseI.ok) {
+                    throw new Error(`Error al cargar los insumos: ${responseI.status} ${responseI.statusText}`);
+                }
+                insumos = await responseI.json();
+                // console.log('insumos: ' + JSON.stringify(insumos));
+            } catch (error) {
+                console.error("Error al cargar los insumos:", error);
+                alert("No se pudieron cargar las opciones para insumos: " + error.message);
+            }
+        }
+
+
+        function cargarEtiquetasReceta() {
+            var etiquetas = "";
+            // console.log('etiquetas receta: ' + JSON.stringify(recetaDto.etiquetas));
+            recetaDto.etiquetas.forEach(etiqueta => {
+                etiquetas += '<span class="badge text-bg-primary" style="background-color: #' + etiqueta.color + ' !important">' + etiqueta.nombre;
+                etiquetas += '<button class="btn-close btn-close-white btn-sm ms-2" title="Eliminar etiqueta" onclick="borrarEtiquetaReceta(' + etiqueta.id + ')"></button></span>';
+            });
+            document.getElementById('etiquetas').innerHTML = etiquetas;
+        }
+
+        function borrarEtiquetaReceta(id) {
+            if (recetaDto.etiquetas != null) {
+                recetaDto.etiquetas = recetaDto.etiquetas.filter(item => item.id !== id);
+                cargarEtiquetasReceta();
+            }
+        }
+
+        function cargarSelectEtiquetas() {
+            let etiquetasFaltantes = etiquetas.filter(objBase =>
+                !recetaDto.etiquetas.some(objEliminar => objEliminar.id === objBase.id)
+            );
+            // console.log('etiquetas select: ' + JSON.stringify(etiquetasFaltantes));
+
+            const selectE = document.getElementById('etiqueta');
+            selectE.innerHTML = '<option value="">-- Seleccione --</option>';
+            etiquetasFaltantes.forEach(e => {
+                const option = document.createElement('option');
+                option.value = e.id;
+                option.textContent = e.nombre;
+                selectE.appendChild(option);
+            });
+        }
+
+        function abrirModalEtiqueta() {
+            cargarSelectEtiquetas();
+            new bootstrap.Modal(document.getElementById('modalEtiqueta')).show();
+        }
+
+        function agregarEtiquetaReceta() {
+
+            if (recetaDto.etiquetas != null) {
+                const id = Number(document.getElementById("etiqueta").value);
+                const encontrado = etiquetas.find(e => e.id === id);
+                if (encontrado) {
+                    recetaDto.etiquetas.push(encontrado);
+                }
+                cargarEtiquetasReceta();
+                cargarSelectEtiquetas();
+            }
+        }
+
+
+        function autoResizeSummernote() {
+            const $note = $('#descripcionEditor');
+            const $editable = $note.next('.note-editor').find('.note-editable');
+
+            // Reiniciar height para permitir que crezca
+            $editable.css('height', 'auto');
+
+            // Ajustar altura al contenido
+            const scrollHeight = $editable[0].scrollHeight;
+            $editable.css('height', scrollHeight + 'px');
+        }
+
+        function cargarDescripcionEditor() {
             $('#descripcionEditor').summernote({
-                height: 250,
+                placeholder: 'Escribe aquí la preparación...',
+                minHeight: 100,
+                height: null,
+                maxHeight: null,
+                callbacks: {
+                    onInit: function() {
+                        autoResizeSummernote();
+                    },
+                    onChange: function(contents, $editable) {
+                        autoResizeSummernote();
+                    }
+                },
                 toolbar: [
                     ['style', ['bold', 'italic', 'underline']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['link']]//,
-                    // ['view', ['codeview']]
+                    ['insert', ['link']]
                 ]
             });
-        });
+        }
+
+
+        async function actualizarImagenDesdeURL(url) {
+            const img = document.getElementById('vistaPreviaImagen');
+            if (url && url.startsWith('http')) {
+                img.src = url;
+            }
+        }
+
+        function cargarIngredientesReceta() {
+            // console.log('ingredientes: ' + JSON.stringify(recetaDto.detalles));
+
+            const tbody = document.querySelector('#insumosTable tbody');
+            tbody.innerHTML = '';
+
+            recetaDto.detalles.forEach(d => {
+                const fila = document.createElement('tr');
+                const celdaNombre = document.createElement('td');
+                celdaNombre.textContent = d.insumoNombre;
+
+                const celdaCantidad = document.createElement('td');
+                celdaCantidad.textContent = d.cantidad;
+
+                const celdaUnidad = document.createElement('td');
+                celdaUnidad.textContent = d.unidadMedidaSimbolo;
+
+                const celdaAccion = document.createElement('td');
+                celdaAccion.innerHTML = `
+                        <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarInsumo(${d.id})">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="eliminarInsumoReceta(${d.id})">Eliminar</button>
+                    `;
+
+                fila.appendChild(celdaNombre);
+                fila.appendChild(celdaCantidad);
+                fila.appendChild(celdaUnidad);
+                fila.appendChild(celdaAccion);
+
+                tbody.appendChild(fila);
+            });
+        }
+
+        function eliminarInsumoReceta(id) {
+            if (recetaDto.detalles != null) {
+                recetaDto.detalles = recetaDto.detalles.filter(item => item.id !== id);
+                cargarIngredientesReceta();
+            }
+        }
+
+
+        async function cargarReceta(id) {
+            try {
+                const res = await fetch(API_URL + '/' + id);
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    throw new Error(`Error al obtener la receta: ${res.status} - ${errorText}`);
+                }
+
+                recetaDto = await res.json();
+                // console.log('receta: ' + JSON.stringify(recetaDto));
+
+                document.getElementById('foto').value = recetaDto.foto;
+                await actualizarImagenDesdeURL(recetaDto.foto);
+
+                document.getElementById('nombre').value = recetaDto.nombre;
+                document.getElementById('porciones').value = recetaDto.porciones;
+                document.getElementById('pesoPorcion').value = recetaDto.pesoPorcion;
+                document.getElementById('unidadMedida').value = recetaDto.unidadMedidaId;
+                document.getElementById('tiempoEstimado').value = recetaDto.tiempoEstimado;
+                // document.getElementById('editable').value = recetaDto.editable;
+                document.getElementById('descripcionEditor').innerHTML = recetaDto.descripcion;
+                cargarDescripcionEditor();
+                cargarEtiquetasReceta();
+                document.getElementById('titulo').innerText = (recetaDto.nombre != null) ? "Receta: " + recetaDto.nombre : "Registrar receta";
+
+                cargarIngredientesReceta();
+
+            } catch (error) {
+                console.error("Error al obtener la receta:", error);
+                alert("No se pudo cargar la receta: " + error.message);
+            }
+        }
+
 
         function abrirModalInsumo() {
             new bootstrap.Modal(document.getElementById('modalInsumo')).show();
@@ -364,12 +563,12 @@
             // Aquí podrías enviar una petición AJAX para guardar el cambio
         }
 
+
         // Obtener el contenido del editor de Summernote
         // const contenido = $('#descripcionEditor').summernote('code');
 
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

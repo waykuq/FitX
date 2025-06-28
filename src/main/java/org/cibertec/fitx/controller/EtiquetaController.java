@@ -1,14 +1,20 @@
 package org.cibertec.fitx.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.cibertec.fitx.dto.EtiquetaDTO;
+import org.cibertec.fitx.dto.EtiquetaMinDTO;
+import org.cibertec.fitx.dto.UsuarioDTO;
 import org.cibertec.fitx.entity.EtiquetaEntity;
+import org.cibertec.fitx.entity.UsuarioEntity;
 import org.cibertec.fitx.service.EtiquetaService;
+import org.cibertec.fitx.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,18 +23,47 @@ import java.util.List;
 public class EtiquetaController {
 
     private final EtiquetaService etiquetaService; // Mejor usar inyección por constructor
+    private final UsuarioService usuarioService;
 
     @Autowired
-    public EtiquetaController(EtiquetaService etiquetaService) {
+    public EtiquetaController(EtiquetaService etiquetaService, UsuarioService usuarioService) {
         this.etiquetaService = etiquetaService;
+        this.usuarioService = usuarioService;
     }
 
     // 1. Obtener todas las etiquetas (usuario + globales)
     @GetMapping({"/", ""})
-    public ResponseEntity<List<EtiquetaDTO>> listarEtiquetas(@RequestParam(required = false) Integer usuarioId) {
+    public ResponseEntity<List<EtiquetaDTO>> listarEtiquetas(HttpSession session) {
         try {
-            List<EtiquetaDTO> etiquetas = etiquetaService.listarPorUsuario(usuarioId);
+            UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("usuario");
+            List<EtiquetaDTO> etiquetas = (usuario.getRolId() == 1) ? etiquetaService.listarTodas() : etiquetaService.listarPorUsuario(usuario.getId());
+            for (EtiquetaDTO dto : etiquetas) {
+                boolean editable = usuario.getRolId() == 1 || dto.getUsuarioId().equals(usuario.getId());
+                dto.setEditable(editable);
+            }
             return ResponseEntity.ok(etiquetas);
+        } catch (Exception e) {
+            System.err.println("Error inesperado al listar etiquetas: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
+    @GetMapping({"/listarMinDTO", ""})
+    public ResponseEntity<List<EtiquetaMinDTO>> listarEtiquetasMinDTO(HttpSession session) {
+        try {
+            UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("usuario");
+            List<EtiquetaMinDTO> etiquetasMinDto = new ArrayList<>();
+            List<EtiquetaDTO> etiquetas = (usuario.getRolId() == 1) ? etiquetaService.listarTodas() : etiquetaService.listarPorUsuario(usuario.getId());
+            for (EtiquetaDTO dto : etiquetas) {
+                EtiquetaMinDTO e = new EtiquetaMinDTO();
+                e.setId(dto.getId());
+                e.setNombre(dto.getNombre());
+                e.setColor(dto.getColor());
+                etiquetasMinDto.add(e);
+            }
+            return ResponseEntity.ok(etiquetasMinDto);
         } catch (Exception e) {
             System.err.println("Error inesperado al listar etiquetas: " + e.getMessage());
             e.printStackTrace();
@@ -53,9 +88,12 @@ public class EtiquetaController {
 
     // 3. Crear nueva etiqueta
     @PostMapping
-    public ResponseEntity<String> crearEtiqueta(@RequestBody EtiquetaEntity etiqueta) {
+    public ResponseEntity<String> crearEtiqueta(@RequestBody EtiquetaEntity etiqueta, HttpSession session) {
         try {
             etiqueta.setEstado("Activo");
+            Integer usuarioId = ((UsuarioDTO) session.getAttribute("usuario")).getId();
+            etiqueta.setUsuario(usuarioService.buscarPorId(usuarioId));
+
             etiquetaService.guardar(etiqueta);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (DataIntegrityViolationException e) {

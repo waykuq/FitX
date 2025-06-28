@@ -1,70 +1,84 @@
 package org.cibertec.fitx.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.cibertec.fitx.dto.EtiquetaDTO;
-import org.cibertec.fitx.dto.InsumoDTO;
-import org.cibertec.fitx.dto.RecetaDTO;
+import org.cibertec.fitx.dto.LoginDTO;
 import org.cibertec.fitx.dto.UsuarioDTO;
-import org.cibertec.fitx.entity.InsumoEntity;
 import org.cibertec.fitx.entity.UsuarioEntity;
-import org.cibertec.fitx.service.InsumoService;
-import org.cibertec.fitx.service.RecetaService;
+import org.cibertec.fitx.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api/recetas")
+@RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
-public class RecetaController {
+public class AuthController {
 
-    private final RecetaService recetaService;
+    private UsuarioService usuarioService;
 
     @Autowired
-    public RecetaController(RecetaService recetaService) {
-        this.recetaService = recetaService;
+    public AuthController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
 
-    // 1. Obtener todos las recetas
-    @GetMapping({"/", ""})
-    public ResponseEntity<List<RecetaDTO>> listarRecetas(HttpSession session) {
-        try {
-            UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("usuario");
-            List<RecetaDTO> recetas = (usuario.getRolId() == 1) ? recetaService.listarRecetaDTO() : recetaService.listarPorUsuarioDTO(usuario.getId());
-//            List<RecetaDTO> recetas = recetaService.listarPorUsuarioDTO(usuario.getId());
-
-            for (RecetaDTO dto : recetas) {
-                boolean editable = usuario.getRolId() == 1 || dto.getUsuarioId().equals(usuario.getId());
-                dto.setEditable(editable);
-            }
-
-            return ResponseEntity.ok(recetas);
-        } catch (Exception e) {
-            System.err.println("Error inesperado al listar recetas: " + e.getMessage());
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDTO login, HttpSession session) {
+        UsuarioEntity usuario = usuarioService.autenticar(login.getCorreo(), login.getContraseña());
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }
+
+        session.setAttribute("usuario", usuarioService.mapearEntidadADto(usuario));
+//        session.setAttribute("usuario", usuario);
+        return ResponseEntity.ok("Login exitoso");
     }
 
-    // 2. Obtener un insumo por ID
-    @GetMapping("/{id}")
-    public ResponseEntity<RecetaDTO> obtenerReceta(@PathVariable Integer id) {
-        try {
-            RecetaDTO recetaDto = recetaService.buscarRecetaDtoPorId(id);
-            return recetaDto != null ? ResponseEntity.ok(recetaDto) : ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            System.err.println("Error inesperado al obtener receta por ID: " + e.getMessage());
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
+    @GetMapping("/usuario")
+    public ResponseEntity<?> getUsuario(HttpSession session) {
+        UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("usuario");
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No ha iniciado sesión");
         }
+        return ResponseEntity.ok(Map.of("usuarioId", usuario.getId()));
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
+        session.invalidate();
+        return ResponseEntity.ok("Sesión cerrada");
+    }
+
+//    // 1. Obtener todos los insumos
+//    @GetMapping({"/", ""})
+//    public ResponseEntity<List<InsumoDTO>> listarInsumos() {
+//        try {
+//            List<InsumoDTO> insumos = insumoService.listarInsumoDTO();
+//            return ResponseEntity.ok(insumos);
+//        } catch (Exception e) {
+//            System.err.println("Error inesperado al listar insumos: " + e.getMessage());
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(null);
+//        }
+//    }
+//
+//    // 2. Obtener un insumo por ID
+//    @GetMapping("/{id}")
+//    public ResponseEntity<InsumoDTO> obtenerInsumo(@PathVariable Integer id) {
+//        try {
+//            InsumoDTO insumoDto = insumoService.buscarInsumoDtoPorId(id);
+//            return insumoDto != null ? ResponseEntity.ok(insumoDto) : ResponseEntity.notFound().build();
+//        } catch (Exception e) {
+//            System.err.println("Error inesperado al obtener insumo por ID: " + e.getMessage());
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(null);
+//        }
+//    }
+//
 //    // 3. Crear nuevo insumo
 //    @PostMapping
 //    public ResponseEntity<String> crearInsumo(@RequestBody InsumoEntity insumo) {
