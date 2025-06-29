@@ -11,7 +11,12 @@ public interface RecetaService extends GenericService<RecetaEntity, Integer> {
 
     public RecetaDTO buscarRecetaDtoPorId(Integer id);
 
-    public RecetaDTO mapearEntidadADto(RecetaEntity etiquetaEntity);
+    public RecetaDTO mapearEntidadADto(RecetaEntity recetaEntity);
+
+//    public RecetaEntity mapearDtoAEntidad(RecetaDTO recetaDTO);
 
     public List<RecetaDTO> listarPorUsuarioDTO(Integer usuarioId);
+
+    public void guardarReceta(RecetaDTO recetaActualizadaDTO);
+
 }

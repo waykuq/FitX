@@ -20,7 +20,6 @@ public class RecetaDTO {
     private boolean editable = false;
     private String descripcion;
 
-
     private Set<EtiquetaMinDTO> etiquetas;
     private Set<RecetaDetalleDTO> detalles;
 }

@@ -12,8 +12,8 @@ import java.util.Set;
 //@Data
 @Getter
 @Setter
-@ToString(exclude = {"etiquetas", "usuario"})
-@EqualsAndHashCode(exclude = {"etiquetas", "usuario"})
+@ToString(exclude = {"usuario", "unidadMedida", "etiquetas", "detalles", "menuRecetas", "favoritas"})
+@EqualsAndHashCode(exclude = {"usuario", "unidadMedida", "etiquetas", "detalles", "menuRecetas", "favoritas"})
 @Entity
 @Table(name = "Receta")
 public class RecetaEntity {
@@ -67,7 +67,14 @@ public class RecetaEntity {
     )
     private Set<EtiquetaEntity> etiquetas = new HashSet<>();
 
-    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<RecetaDetalleEntity> detalles = new HashSet<>();
+
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MenuRecetaEntity> menuRecetas = new HashSet<>();
+
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RecetaFavoritaEntity> favoritas = new HashSet<>();
+
 
 }

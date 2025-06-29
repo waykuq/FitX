@@ -11,7 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString(exclude = "recetas")
-@EqualsAndHashCode(exclude = "recetas")
+@EqualsAndHashCode(exclude = {"usuario", "recetas"})
 @Entity
 @Table(name = "Etiqueta")
 public class EtiquetaEntity {

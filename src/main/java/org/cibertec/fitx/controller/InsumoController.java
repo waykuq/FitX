@@ -74,7 +74,7 @@ public class InsumoController {
     @PutMapping("/{id}")
     public ResponseEntity<String> editarInsumo(@PathVariable Integer id, @RequestBody InsumoEntity insumo) {
         try {
-            insumo.setEstado("Activo");
+//            insumo.setEstado("Activo");
             InsumoEntity actualEntity = insumoService.buscarPorId(id);
 
             if (actualEntity == null) {
@@ -83,7 +83,7 @@ public class InsumoController {
             }
 
             actualEntity.setNombre(insumo.getNombre());
-            actualEntity.setEstado("Activo");
+//            actualEntity.setEstado("Activo");
             actualEntity.setTipoInsumo(insumo.getTipoInsumo());
             actualEntity.setUnidadMedida(insumo.getUnidadMedida());
 

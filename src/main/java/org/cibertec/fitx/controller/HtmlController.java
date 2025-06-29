@@ -50,9 +50,15 @@ public class HtmlController {
     }
 
     @GetMapping("/recetas/{id}")
-    String recetaDetalle(@PathVariable Integer id, Model model) {
-        model.addAttribute("recetaId", id);
+    String recetaDetalle(@PathVariable Integer id) {
         return "receta_detalle";
     }
+
+    @GetMapping("/recetas/crear")
+    String recetaCrear() {
+        return "receta_detalle";
+    }
+
+
 
 }

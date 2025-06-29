@@ -1,10 +1,13 @@
 package org.cibertec.fitx.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"receta", "insumo", "unidadMedida"})
+@EqualsAndHashCode(exclude = {"receta", "insumo", "unidadMedida"})
 @Entity
 @Table(name = "RecetaDetalle")
 public class RecetaDetalleEntity {

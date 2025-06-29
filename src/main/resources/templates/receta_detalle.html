@@ -76,16 +76,17 @@
 
                 <!-- Header -->
                 <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
-                    <h2 id="titulo">Receta: Ensalada saludable</h2>
+                    <h2 id="titulo">Crear receta </h2>
                     <div class="d-flex gap-2">
                         <button class="btn btn-light text-dark border-dark favorito" onclick="alternarFavorito(this)"
-                            title="Favorito">
+                            title="Favorito" id="btn-favorito">
                             ❤️ Favorito
                         </button>
-                        <button class="btn btn-warning" onclick="habilitarEdicion()" id="btn-habilitar">✏️ Editar</button>
-                        <button class="btn btn-danger btn-editar" onclick="alert('Receta eliminada')">️ Eliminar </button>
-                        <button class="btn btn-primary btn-editar" onclick="alert('Receta guardada')"> Guardar </button>
-                        <button class="btn btn-secondary" onclick="alert('regresar')"> Regresar </button>
+                        <button class="btn btn-warning" onclick="habilitarEdicion()" id="btn-habilitar" style="display: none">✏️ Editar</button>
+                        <button class="btn btn-secondary" onclick="regresar()"> Regresar </button>
+                        <button class="btn btn-danger btn-editar" onclick="abrirModalEliminarReceta()" style="display: none">️ Eliminar </button>
+                        <button class="btn btn-primary btn-editar btn-crear" onclick="guardarReceta()" style="display: none"> Guardar </button>
+
                     </div>
                 </div>
 
@@ -93,14 +94,6 @@
                 <div class="row g-4 mb-4">
                     <div class="col-md-3">
                         <div class="row g-4 mb-4">
-<!--                            <div class="col-md-12">-->
-<!--                                <label class="form-label d-block">Foto</label>-->
-<!--                                <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2024/12/refreshing-lemon-cheesecake-slice-with-mint-garnish.jpg"-->
-<!--                                     alt="Foto receta" class="img-thumbnail mb-2" style="cursor:pointer"-->
-<!--                                     onclick="mostrarImagenModal(this.src)">-->
-
-<!--                                <input type="file" class="form-control" accept="image/*" id="foto" name="foto">-->
-<!--                            </div>-->
                             <div class="col-md-12">
                                 <label class="form-label d-block">Foto URL</label>
 
@@ -156,7 +149,7 @@
                 <div class="mb-5">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h5>Etiquetas</h5>
-                        <button class="btn btn-sm btn-success btn-editar" onclick="abrirModalEtiqueta()">➕ Agregar etiqueta</button>
+                        <button class="btn btn-sm btn-success btn-editar btn-crear" onclick="abrirModalEtiqueta()">➕ Agregar etiqueta</button>
                     </div>
 
                     <div class="d-flex flex-wrap gap-2 mb-2" id="etiquetas">
@@ -168,7 +161,7 @@
                 <div class="mb-5">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h5>Insumos</h5>
-                        <button class="btn btn-sm btn-success btn-editar" onclick="abrirModalAgregarInsumo()">➕ Agregar insumo</button>
+                        <button class="btn btn-sm btn-success btn-editar btn-crear" onclick="abrirModalAgregarInsumo()">➕ Agregar insumo</button>
                     </div>
                     <table class="table table-bordered bg-white" id="insumosTable">
                         <thead class="table-light">
@@ -186,33 +179,33 @@
                 <hr>
 
                 <!-- Información nutricional -->
-                <div class="mb-4">
-                    <h5>Información nutricional por porción</h5>
-                    <table class="table table-bordered bg-white">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Calorías (Kcal)</th>
-                                <th>Proteínas (g)</th>
-                                <th>Grasas (g)</th>
-                                <th>Carbohidratos (g)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>230</td>
-                                <td>10</td>
-                                <td>8</td>
-                                <td>28</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr>
+<!--                <div class="mb-4">-->
+<!--                    <h5>Información nutricional por porción</h5>-->
+<!--                    <table class="table table-bordered bg-white">-->
+<!--                        <thead class="table-light">-->
+<!--                            <tr>-->
+<!--                                <th>Calorías (Kcal)</th>-->
+<!--                                <th>Proteínas (g)</th>-->
+<!--                                <th>Grasas (g)</th>-->
+<!--                                <th>Carbohidratos (g)</th>-->
+<!--                            </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                            <tr>-->
+<!--                                <td>230</td>-->
+<!--                                <td>10</td>-->
+<!--                                <td>8</td>-->
+<!--                                <td>28</td>-->
+<!--                            </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--                <hr>-->
                 <!-- Botones -->
                 <div class="text-end mt-4">
-                    <button class="btn btn-secondary" onclick="alert('regresar')"> Regresar </button>
-                    <button class="btn btn-danger btn-editar" onclick="alert('Receta eliminada')">️ Eliminar </button>
-                    <button class="btn btn-primary btn-editar" onclick="alert('Receta guardada')"> Guardar </button>
+                    <button class="btn btn-secondary" onclick="regresar()"> Regresar </button>
+                    <button class="btn btn-danger btn-editar" onclick="abrirModalEliminarReceta()" style="display: none">️ Eliminar </button>
+                    <button class="btn btn-primary btn-editar btn-crear" onclick="guardarReceta()" style="display: none"> Guardar </button>
                 </div>
 
 
@@ -299,6 +292,31 @@
         </div>
     </div>
 
+    <!-- Modal Eliminar Receta -->
+    <div class="modal fade" id="modalEliminarReceta" tabindex="-1" aria-labelledby="modalEliminarLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEliminarLabel">Eliminar receta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro que deseas eliminar esta receta? <br />
+                    Se eliminará la receta de los menus y favoritos.<br />
+                    Esta acción no se
+                    puede deshacer.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -323,14 +341,34 @@
             const partes = window.location.pathname.split('/');
             const recetaId = partes[partes.length - 1];
 
-            if (!isNaN(recetaId) && recetaId.trim() !== '') {
+            // if (!isNaN(recetaId) && recetaId.trim() !== '') {
+            if (recetaId && !isNaN(Number(recetaId))) {
                 const id = Number(recetaId);
-                document.body.dataset.recetaId = id;
+                // document.body.dataset.recetaId = id;
                 await cargarReceta(id);
+            } else if (recetaId == 'crear') {
+                recetaDto = {
+                    id: -1,
+                    nombre: '',
+                    porciones: 0,
+                    pesoPorcion: 0,
+                    unidadMedidaId: null,
+                    unidadMedidaSimbolo: null,
+                    tiempoEstimado: 0,
+                    foto: '',
+                    descripcion: '',
+                    etiquetas: [],
+                    detalles: []
+                };
+                document.querySelectorAll('.btn-editar, #btn-habilitar, #btn-favorito').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.querySelectorAll('.btn-crear').forEach(el => {
+                    el.style.display = 'inline';
+                });
             } else {
-                console.error("El ID de la receta no es un número válido");
+                console.error("El ID de la receta no es válido");
             }
-
         });
 
 
@@ -387,7 +425,6 @@
                 insumos = await responseI.json();
 
                 cargarSelectIngredientes();
-                // console.log('insumos: ' + JSON.stringify(insumos));
             } catch (error) {
                 console.error("Error al cargar los insumos:", error);
                 alert("No se pudieron cargar las opciones para insumos: " + error.message);
@@ -490,8 +527,6 @@
         }
 
         function cargarIngredientesReceta() {
-            // console.log('ingredientes: ' + JSON.stringify(recetaDto.detalles));
-
             const tbody = document.querySelector('#insumosTable tbody');
             tbody.innerHTML = '';
 
@@ -567,7 +602,7 @@
             if (detalle.id == -1) {
                 //actualizo el id con uno mas bajo
                 let minId = recetaDto.detalles.length > 0 ? Math.min(...recetaDto.detalles.map(obj => obj.id)) - 1 : -2;
-                if (minId > 0) minId = -2;
+                if (minId > -2) minId = -2;
                 detalle.id = minId;
                 recetaDto.detalles.push(detalle);
             }
@@ -586,12 +621,10 @@
                 }
 
                 recetaDto = await res.json();
-                // console.log('receta: ' + JSON.stringify(recetaDto));
 
                 document.getElementById('foto').value = recetaDto.foto;
                 await actualizarImagenDesdeURL(recetaDto.foto);
 
-                // document.getElementById('insumoId').value = recetaDto.id;
                 document.getElementById('nombre').value = recetaDto.nombre;
                 document.getElementById('porciones').value = recetaDto.porciones;
                 document.getElementById('pesoPorcion').value = recetaDto.pesoPorcion;
@@ -606,7 +639,6 @@
                 cargarIngredientesReceta();
                 deshabilitarEdicion();
 
-                console.log(recetaDto.editable);
                 if (!(recetaDto.editable)) document.getElementById('btn-habilitar').style.display = 'none';
 
             } catch (error) {
@@ -659,14 +691,82 @@
                 btn.classList.add('border-0');
                 btn.innerHTML = '🤍 Favorito';
             }
-            // Aquí podrías enviar una petición AJAX para guardar el cambio
+            // Codigo para agregar a favoritos
         }
 
 
         // Obtener el contenido del editor de Summernote
         // const contenido = $('#descripcionEditor').summernote('code');
 
+        function abrirModalEliminarReceta() {
+            new bootstrap.Modal(
+                document.getElementById("modalEliminarReceta")
+            ).show();
+        }
+
+        // Confirmar y eliminar receta
+        document.querySelector('#modalEliminarReceta .btn-danger').addEventListener('click', async () => {
+            try {
+                const response = await fetch(`${API_URL}/${recetaDto.id}`, { method: 'DELETE' });
+
+                if (response.ok) {
+                    console.log('Receta eliminada exitosamente.');
+                    window.location.href = "/web/recetas";
+                } else {
+                    const errorText = await response.text();
+                    throw new Error(errorText || `Error al eliminar receta: ${response.status} ${response.statusText || 'Error desconocido'}`);
+                }
+            } catch (error) {
+                console.error("Error al eliminar receta:", error);
+                alert("No se pudo eliminar el receta: " + error.message);
+                bootstrap.Modal.getInstance(document.getElementById('modalEliminarReceta')).hide(); // Cerrar modal en caso de error también
+            }
+        });
+
+        // Guardar receta (crear o editar)
+        async function guardarReceta() {
+            recetaDto.nombre = document.getElementById('nombre').value;
+            recetaDto.porciones = document.getElementById('porciones').value;
+            recetaDto.pesoPorcion = document.getElementById('pesoPorcion').value;
+            recetaDto.unidadMedidaId = document.getElementById('unidadMedida').value;
+            // recetaDto.unidadMedidaSimbolo
+            recetaDto.tiempoEstimado = document.getElementById('tiempoEstimado').value;
+            recetaDto.foto = document.getElementById('foto').value;
+            recetaDto.descripcion = $('#descripcionEditor').summernote('code'); //document.getElementById('descripcionEditor').innerHTML;
+
+            console.log(recetaDto);
+
+            const method = (recetaDto.id > -1) ? 'PUT' : 'POST';
+            const url = recetaDto.id ? `${API_URL}/${recetaDto.id}` : API_URL;
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(recetaDto)
+                });
+
+                if (response.ok) {
+                    console.log('Receta guardada exitosamente.');
+                    window.location.href = "/web/recetas";
+                } else {
+                    const errorText = await response.text();
+                    throw new Error(errorText || `Error al guardar la receta: ${response.status} ${response.statusText || 'Error desconocido'}`);
+                }
+            } catch (error) {
+                console.error("Error al guardar la receta:", error);
+                alert("No se pudo guardar la receta: " + error.message);
+            }
+        }
+
+
+
         function deshabilitarEdicion() {
+            //mostrar boton editar
+            document.getElementById('btn-habilitar').style.display = '';
+
             // inhabilitar
             document.querySelectorAll('input, select, textarea, .btn-editar').forEach(el => {
                 if (!el.closest('.modal')) el.disabled = true;
@@ -712,6 +812,9 @@
             document.getElementById('btn-habilitar').style.display = 'none';
         }
 
+        function regresar() {
+            window.location.href = "/web/recetas";
+        }
 
 
     </script>

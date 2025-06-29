@@ -6,6 +6,7 @@ import org.cibertec.fitx.dto.InsumoDTO;
 import org.cibertec.fitx.dto.RecetaDTO;
 import org.cibertec.fitx.dto.UsuarioDTO;
 import org.cibertec.fitx.entity.InsumoEntity;
+import org.cibertec.fitx.entity.RecetaEntity;
 import org.cibertec.fitx.entity.UsuarioEntity;
 import org.cibertec.fitx.service.InsumoService;
 import org.cibertec.fitx.service.RecetaService;
@@ -51,7 +52,7 @@ public class RecetaController {
         }
     }
 
-    // 2. Obtener un insumo por ID
+    // 2. Obtener una receta por ID
     @GetMapping("/{id}")
     public ResponseEntity<RecetaDTO> obtenerReceta(@PathVariable Integer id, HttpSession session) {
         try {
@@ -70,74 +71,64 @@ public class RecetaController {
         }
     }
 
-//    // 3. Crear nuevo insumo
-//    @PostMapping
-//    public ResponseEntity<String> crearInsumo(@RequestBody InsumoEntity insumo) {
-//        try {
-//            insumo.setEstado("Activo");
-//            insumoService.guardar(insumo);
-//            return ResponseEntity.status(HttpStatus.CREATED).build();
-//        } catch (DataIntegrityViolationException e) {
-//            System.err.println("Error de integridad de datos al crear insumo: " + e.getMessage());
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                    .body("Error al crear insumo: Verifique los datos. Posiblemente el nombre ya existe o hay datos inválidos.");
-//        } catch (Exception e) {
-//            System.err.println("Error inesperado al crear insumo: " + e.getMessage());
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body("Ocurrió un error interno al crear el insumo. Inténtelo de nuevo más tarde.");
-//        }
-//    }
-//
-//    // 4. Editar insumo
-//    @PutMapping("/{id}")
-//    public ResponseEntity<String> editarInsumo(@PathVariable Integer id, @RequestBody InsumoEntity insumo) {
-//        try {
-//            insumo.setEstado("Activo");
-//            InsumoEntity actualEntity = insumoService.buscarPorId(id);
-//
-//            if (actualEntity == null) {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                        .body("Insumo con ID " + id + " no encontrado.");
-//            }
-//
-//            actualEntity.setNombre(insumo.getNombre());
-//            actualEntity.setEstado("Activo");
-//            actualEntity.setTipoInsumo(insumo.getTipoInsumo());
-//            actualEntity.setUnidadMedida(insumo.getUnidadMedida());
-//
-//            insumoService.guardar(actualEntity);
-//            return ResponseEntity.noContent().build();
-//        } catch (DataIntegrityViolationException e) {
-//            System.err.println("Error de integridad de datos al editar insumo: " + e.getMessage());
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                    .body("Error al editar insumo: Verifique los datos. Posiblemente el nombre ya existe o hay datos inválidos.");
-//        } catch (Exception e) {
-//            System.err.println("Error inesperado al editar insumo: " + e.getMessage());
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body("Ocurrió un error interno al editar el insumo. Inténtelo de nuevo más tarde.");
-//        }
-//    }
-//
-//    // 5. Eliminar insumo
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<String> eliminarInsumo(@PathVariable Integer id) {
-//        try {
-//            InsumoEntity insumoExistente = insumoService.buscarPorId(id);
-//            if (insumoExistente == null) {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                        .body("Insumo con ID " + id + " no encontrado para eliminar.");
-//            }
-//
-//            insumoService.eliminar(id);
-//
-//            return ResponseEntity.noContent().build();
-//        } catch (Exception e) {
-//            System.err.println("Error inesperado al eliminar insumo: " + e.getMessage());
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body("Ocurrió un error interno al eliminar el insumo. Inténtelo de nuevo más tarde.");
-//        }
-//    }
+    // 3. Crear nueva receta
+    @PostMapping
+    public ResponseEntity<String> crearReceta(@RequestBody RecetaDTO recetaDTO, HttpSession session) {
+        try {
+            UsuarioDTO usuario = (UsuarioDTO) session.getAttribute("usuario");
+            recetaDTO.setId(null);
+            recetaDTO.setUsuarioId(usuario.getId());
+            recetaService.guardarReceta(recetaDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (DataIntegrityViolationException e) {
+            System.err.println("Error de integridad de datos al crear receta: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error al crear receta: Verifique los datos. Posiblemente el nombre ya existe o hay datos inválidos.");
+        } catch (Exception e) {
+            System.err.println("Error inesperado al crear receta: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ocurrió un error interno al crear el receta. Inténtelo de nuevo más tarde.");
+        }
+    }
+
+    // 4. Editar receta
+    @PutMapping("/{id}")
+    public ResponseEntity<String> editarReceta(@PathVariable Integer id, @RequestBody RecetaDTO recetaDTO, HttpSession session) {
+        try {
+            recetaDTO.setId(id);
+            recetaService.guardarReceta(recetaDTO);
+            return ResponseEntity.noContent().build();
+        } catch (DataIntegrityViolationException e) {
+            System.err.println("Error de integridad de datos al editar receta: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error al editar receta: Verifique los datos.");
+        } catch (Exception e) {
+            System.err.println("Error inesperado al editar receta: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ocurrió un error interno al editar la receta. Inténtelo de nuevo más tarde.");
+        }
+    }
+
+    // 5. Eliminar receta
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarReceta(@PathVariable Integer id) {
+        try {
+            RecetaEntity recetaExistente = recetaService.buscarPorId(id);
+            if (recetaExistente == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Receta con ID " + id + " no encontrada para eliminar.");
+            }
+
+            recetaService.eliminar(id);
+
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            System.err.println("Error inesperado al eliminar la receta: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ocurrió un error interno al eliminar la receta. Inténtelo de nuevo más tarde.");
+        }
+    }
 }

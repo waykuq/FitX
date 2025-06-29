@@ -1,11 +1,15 @@
 package org.cibertec.fitx.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.Instant;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"receta", "usuario"})
+@EqualsAndHashCode(exclude = {"receta", "usuario"})
 @Entity
 @Table(name = "RecetaFavorita")
 public class RecetaFavoritaEntity {
@@ -14,10 +18,13 @@ public class RecetaFavoritaEntity {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne
+
     // @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_receta")
+    @JsonIgnore // si usas Jackson
     private RecetaEntity receta;
+
 
     @ManyToOne
     // @OnDelete(action = OnDeleteAction.CASCADE)
