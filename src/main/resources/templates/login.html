@@ -106,7 +106,7 @@
             });
 
             if (res.ok) {
-                location.href = "dashboard";
+                location.href = "/web/dashboard";
             } else {
                 const body = await res.json();
                 alert(body.mensaje || "No se pudo iniciar sesión");

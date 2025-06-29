@@ -1,6 +1,5 @@
 package org.cibertec.fitx.service.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.cibertec.fitx.dto.RecetaDTO;
 import org.cibertec.fitx.dto.EtiquetaMinDTO;
 import org.cibertec.fitx.dto.RecetaDetalleDTO;
@@ -9,8 +8,6 @@ import org.cibertec.fitx.entity.RecetaDetalleEntity;
 import org.cibertec.fitx.entity.RecetaEntity;
 import org.cibertec.fitx.entity.UsuarioEntity;
 import org.cibertec.fitx.repository.*;
-import org.cibertec.fitx.service.EtiquetaService;
-import org.cibertec.fitx.service.RecetaDetalleService;
 import org.cibertec.fitx.service.RecetaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,9 +24,6 @@ public class RecetaServiceImpl extends GenericServiceImpl<RecetaEntity, Integer>
 	@Autowired
 	private EtiquetaRepository etiquetaRepository;
 
-    @Autowired
-    private RecetaRepository recetaRepository;
-
 	@Autowired
 	private RecetaDetalleRepository detalleRepository;
 
@@ -41,10 +35,6 @@ public class RecetaServiceImpl extends GenericServiceImpl<RecetaEntity, Integer>
 
     @Autowired
     private InsumoRepository insumoRepository;
-
-
-//    @Autowired
-//    private RecetaDetalleService recetaDetalleService;
 
 
 
@@ -75,7 +65,6 @@ public class RecetaServiceImpl extends GenericServiceImpl<RecetaEntity, Integer>
 		return recetaOptional.map(this::mapearEntidadADto).orElse(null);
 	}
 
-	// Método de mapeo de entidad a DTO (implementación reusable)
 	@Override
 	public RecetaDTO mapearEntidadADto(RecetaEntity recetaEntity) {
 		if (recetaEntity == null) {
@@ -146,37 +135,6 @@ public class RecetaServiceImpl extends GenericServiceImpl<RecetaEntity, Integer>
 		return dto;
 	}
 
-//	@Override
-//	public RecetaEntity mapearDtoAEntidad(RecetaDTO recetaDTO) {
-//		if (recetaDTO == null) {
-//			return null;
-//		}
-//
-////		RecetaEntity receta = new RecetaEntity();
-//		RecetaEntity receta = recetaRepository.findById(recetaDTO.getId()).get();
-////		receta.setId(recetaDTO.getId());
-////		receta.setUsuario(
-////				usuarioRepository.findById(recetaDTO.getUsuarioId()).get()
-////		);
-//		receta.setNombre(recetaDTO.getNombre());
-//		receta.setPorciones(recetaDTO.getPorciones());
-//		receta.setPesoPorcion(recetaDTO.getPesoPorcion());
-//		receta.setFoto(recetaDTO.getFoto());
-//		receta.setDescripcion(recetaDTO.getDescripcion());
-//		receta.setUnidadMedida(
-//				unidadMedidaRepository.findById(recetaDTO.getUnidadMedidaId()).get()
-//		);
-////		etiquetas y detalle
-////		Identificar qué elementos de la colección deben ser eliminados: Aquellos que existen en la BD pero no vienen en el DTO del frontend.
-////		Identificar qué elementos deben ser añadidos: Aquellos que vienen en el DTO pero no existen en la BD.
-////		Identificar qué elementos deben ser actualizados: Aquellos que existen en ambos lados pero cuyos datos han cambiado.
-////				Aplicar los cambios y guardar la entidad RecetaEntity principal.
-//
-//
-//
-//		return receta;
-//	}
-
 	@Override
 	@Transactional
 	public void eliminar(Integer id) {
@@ -188,8 +146,6 @@ public class RecetaServiceImpl extends GenericServiceImpl<RecetaEntity, Integer>
 			repository.delete(receta);
 		}
 	}
-
-
 
 	@Override
 	@Transactional

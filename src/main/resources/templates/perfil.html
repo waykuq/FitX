@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html
+        lang="es"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout_main.html}" >
+<head>
+    <th:block th:fragment="cabera">
+        <title>Perfil - FitX</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.min.css" />
+
+        <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
+    </th:block>
+</head>
+
+<body>
+<main layout:fragment="content">
+
+    <!-- Header -->
+    <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
+        <h2>Perfil del Usuario</h2>
+    </div>
+
+    <!-- Info básica -->
+    <div class="row gx-3">
+        <div class="card mb-4 me-4 col-md-5">
+            <div class="card-body">
+                <h5 class="card-title">Información Personal</h5>
+                <hr>
+                <p><strong>Nombres:</strong> Juan</p>
+                <p><strong>Apellidos:</strong> Perez</p>
+                <p><strong>Correo:</strong> juan@example.com</p>
+                <p><strong>Teléfono:</strong> 987654321</p>
+                <p>
+                    <strong>Contraseña:</strong> ********
+                    <button class="btn btn-sm btn-outline-primary ms-2"
+                            onclick="abrirModalPassword()">Modificar
+                        contraseña
+                    </button>
+                </p>
+                <button class="btn btn-warning me-2" onclick="abrirModalPerfil()">Modificar perfil</button>
+                <button class="btn btn-outline-danger" onclick="abrirModalBaja()">Dar de baja</button>
+            </div>
+        </div>
+
+        <!-- Perfil nutricional -->
+        <div class="card mb-4 col-md-5">
+            <div class="card-body">
+                <h5 class="card-title">Perfil Nutricional</h5>
+                <hr>
+                <p><strong>Peso:</strong> 70 kg</p>
+                <p><strong>Fecha de nacimiento:</strong> 1990-05-10</p>
+                <p><strong>Sexo:</strong> M</p>
+                <p><strong>Talla:</strong> 1.75 m</p>
+                <p><strong>Estilo de vida:</strong> Activo</p>
+                <button class="btn btn-secondary" onclick="abrirModalNutricional()">Modificar perfil
+                    nutricional
+                </button>
+            </div>
+        </div>
+
+        <!-- Suscripción -->
+        <div class="card col-md-4">
+            <div class="card-body">
+                <h5 class="card-title">Suscripción</h5>
+                <hr>
+                <p><strong>Inicio:</strong> 2025-01-01</p>
+                <p><strong>Caducidad:</strong> 2025-06-30</p>
+                <button class="btn btn-success" onclick="abrirModalRenovar()">Renovar suscripción</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="mb-0">Desarrollado por FitX © 2025. Todos los derechos reservados.</p>
+            <a href="#" class="text-decoration-none">Política de privacidad</a>
+        </div>
+    </footer>
+</main>
+
+<th:block th:fragment="modales">
+
+    <!-- Modal Perfil -->
+    <div class="modal fade" id="modalPerfil" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modificar Perfil</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nombres" class="form-label">Nombres</label>
+                            <input type="text" class="form-control" id="nombres" placeholder="Nombres" value="Juan">
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellidos" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="apellidos" placeholder="Apellidos"
+                                   value="Pérez">
+                        </div>
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo</label>
+                            <input type="email" class="form-control" id="correo" placeholder="Correo electrónico"
+                                   value="juan@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input id="telefono" type="tel" class="form-control" name="telefono"
+                                   placeholder="Ej. +51 987654321">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Contraseña -->
+    <div class="modal fade" id="modalPassword" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modificar contraseña</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">Contraseña actual</label>
+                            <input type="password" class="form-control" id="currentPassword"
+                                   placeholder="Contraseña actual">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">Nueva contraseña</label>
+                            <input type="password" class="form-control" id="newPassword" placeholder="Nueva contraseña">
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+                            <input type="password" class="form-control" id="confirmPassword"
+                                   placeholder="Confirmar contraseña">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Baja -->
+    <div class="modal fade" id="modalBaja" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar baja</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas darte de baja? Esta acción no se puede deshacer.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-danger">Confirmar baja</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Perfil Nutricional -->
+    <div class="modal fade" id="modalNutricional" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modificar Perfil Nutricional</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="peso" class="form-label">Peso (kg)</label>
+                            <input type="number" class="form-control" id="peso" placeholder="Peso (kg)" value="70">
+                        </div>
+                        <div class="mb-3">
+                            <label for="altura" class="form-label">Altura (m)</label>
+                            <input type="number" step="0.01" class="form-control" id="altura" placeholder="Altura (m)"
+                                   value="1.75">
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                            <input type="date" class="form-control" id="fechaNacimiento" value="1990-01-01">
+                        </div>
+                        <div class="mb-3">
+                            <label for="genero" class="form-label">Género</label>
+                            <select class="form-select" id="genero">
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estiloVida" class="form-label">Estilo de vida</label>
+                            <input type="text" class="form-control" id="estiloVida" placeholder="Estilo de vida"
+                                   value="Activo">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Renovar Suscripcion -->
+    <div class="modal fade" id="modalRenovar" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Renovar Suscripción</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label class="form-label">Cantidad de meses</label>
+                        <input type="number" class="form-control mb-2" min="1" value="1">
+                        <p>Costo mensual: <strong>S/. 20.00</strong></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" onclick="alert('Renovación en proceso.')">Realizar pago</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block th:fragment="scripts">
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function abrirModalPerfil() {
+            new bootstrap.Modal(document.getElementById('modalPerfil')).show();
+
+            // Inicializar intl-tel-input
+            let iti;
+            const modal = document.getElementById('modalPerfil');
+            const input = modal.querySelector('#telefono');
+            if (!input) return;
+
+            // evita reinicializar si ya existe
+            if (!input.classList.contains('iti')) {
+                iti = window.intlTelInput(input, {
+                    initialCountry: 'auto',
+                    preferredCountries: ['pe', 'mx', 'co'],
+                    geoIpLookup: callback => {
+                        fetch('https://ipinfo.io/json')
+                            .then(res => res.json())
+                            .then(data => callback(data.country || 'us'));
+                    },
+                    utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js'
+                });
+            }
+        }
+
+        function abrirModalPassword() {
+            new bootstrap.Modal(document.getElementById('modalPassword')).show();
+        }
+
+        function abrirModalBaja() {
+            new bootstrap.Modal(document.getElementById('modalBaja')).show();
+        }
+
+        function abrirModalNutricional() {
+            new bootstrap.Modal(document.getElementById('modalNutricional')).show();
+        }
+
+        function abrirModalRenovar() {
+            new bootstrap.Modal(document.getElementById('modalRenovar')).show();
+        }
+    </script>
+</th:block>
+
+</body>
+
+</html>

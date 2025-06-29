@@ -12,8 +12,8 @@ public class FitXApplication {
         SpringApplication.run(FitXApplication.class, args);
     }
 
-//    @Bean
-//    public LayoutDialect layoutDialect() {
-//        return new LayoutDialect();
-//    }
+    @Bean
+    public LayoutDialect layoutDialect() {
+        return new LayoutDialect();
+    }
 }

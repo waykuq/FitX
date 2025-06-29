@@ -1,429 +1,333 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html
+        lang="es"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout_main.html}" >
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mantenimiento de Etiquetas - FitX</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" />
+    <th:block th:fragment="cabera">
+        <title>Mantenimiento de Etiquetas - FitX</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" />
 
-        .sidebar {
-            min-height: 100vh;
-            position: fixed;
-        }
+        <style>
+            input#color {
+                width: 5rem;
+                height: 3rem;
+            }
 
-        input#color {
-            width: 5rem;
-            height: 3rem;
-        }
-
-        /* Alinea al centro las columnas 2 y 3 */
-        #etiquetasTable th:nth-child(2),
-        #etiquetasTable td:nth-child(2),
-        #etiquetasTable th:nth-child(3),
-        #etiquetasTable td:nth-child(3),
-        #etiquetasTable th:nth-child(4),
-        #etiquetasTable td:nth-child(4) {
-            text-align: center;
-        }
-
-        footer {
-            background-color: #f8f9fa;
-            padding: 1rem;
-            text-align: center;
-            border-top: 1px solid #dee2e6;
-        }
-    </style>
+            /* Alinea al centro las columnas 2 y 3 */
+            #etiquetasTable th:nth-child(2),
+            #etiquetasTable td:nth-child(2),
+            #etiquetasTable th:nth-child(3),
+            #etiquetasTable td:nth-child(3),
+            #etiquetasTable th:nth-child(4),
+            #etiquetasTable td:nth-child(4) {
+                text-align: center;
+            }
+        </style>
+    </th:block>
 </head>
 
-<body class="bg-light">
-    <div class="container-fluid">
-        <div class="row">
-
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block bg-white sidebar p-3 border-end">
-                <h5 class="mb-4">FitX</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link active" href="dashboard.html">🏠 Dashboard Usuario</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="dashboard_admin.html">📊 Dashboard Admin</a></li>
-                    <li class="nav-item"><a class="nav-link" href="menu.html">📋 Menús</a></li>
-                    <li class="nav-item"><a class="nav-link" href="perfil.html">👤 Perfil</a></li>
-                    <hr class="mt-4">
-                    <h4>Mantenimiento</h4>
-                    <li class="nav-item"><a class="nav-link" href="receta.html">🍽️ Recetas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="etiquetas.html">🏷️ Etiquetas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="insumo.html">🧂 Insumos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="tipos_insumo.html">📦 Tipos de Insumo</a></li>
-                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">📏 Unidades de Medida</a></li>
-                    <hr class="mt-4">
-                    <li class="nav-item mt-4"><a class="nav-link text-danger" href="login.html">🚪Cerrar sesión</a></li>
-                </ul>
-            </nav>
-
-            <!-- Main Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
-                <!-- Header -->
-                <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
-                    <h2>Mantenimiento de Etiquetas</h2>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-primary" onclick="abrirModalCrearEtiqueta()">➕ Agregar Etiqueta</button>
-                    </div>
-                </div>
-
-                <!-- Filtros -->
-<!--                <form class="row g-3 mb-5">-->
-<!--                    <div class="col-md-6">-->
-<!--                        <input type="text" class="form-control" placeholder="Buscar por nombre...">-->
-<!--                        <p class="text-muted ps-3">Nombre</p>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-4">-->
-<!--                        <select class="form-select">-->
-<!--                            <option value="">Todos los tipos</option>-->
-<!--                            <option value="usuario">Usuario</option>-->
-<!--                            <option value="sistema">Sistema</option>-->
-<!--                        </select>-->
-<!--                        <p class="text-muted ps-3">Tipo</p>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-2">-->
-<!--                        <button class="btn btn-secondary w-100">🔍 Filtrar</button>-->
-<!--                    </div>-->
-<!--                </form>-->
-
-<!--                &lt;!&ndash; Selector cantidad por página &ndash;&gt;-->
-<!--                <div class="d-flex justify-content-end align-items-center mb-2">-->
-<!--                    <label for="porPagina" class="me-2 mb-0">Etiquetas por página:</label>-->
-<!--                    <select id="porPagina" class="form-select w-auto" onchange="cambiarCantidadPorPagina()">-->
-<!--                        <option value="5">5</option>-->
-<!--                        <option value="10" selected>10</option>-->
-<!--                        <option value="20">20</option>-->
-<!--                        <option value="50">50</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-
-                <!-- Tabla -->
-                <div class="table-responsive">
-                    <table class="table table-bordered bg-white align-middle" id="etiquetasTable">
-                        <thead class="table">
-                            <tr>
-                                <th>Nombre</th>
-                                <th class="text-center">Color</th>
-                                <th class="text-center">Tipo</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Paginación -->
-<!--                <nav>-->
-<!--                    <ul class="pagination justify-content-center">-->
-<!--                        <li class="page-item disabled"><a class="page-link">Anterior</a></li>-->
-<!--                        <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
-<!--                        <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-<!--                        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--                        <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>-->
-<!--                    </ul>-->
-<!--                </nav>-->
-
-                <!-- Footer -->
-                <footer class="mt-5">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="mb-0">Desarrollado por FitX © 2025. Todos los derechos reservados.</p>
-                        <a href="#" class="text-decoration-none">Política de privacidad</a>
-                    </div>
-                </footer>
-            </main>
-
+<body>
+    <main layout:fragment="content">
+        <!-- Header -->
+        <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
+            <h2>Mantenimiento de Etiquetas</h2>
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary" onclick="abrirModalCrearEtiqueta()">➕ Agregar Etiqueta</button>
+            </div>
         </div>
-    </div>
 
-    <!-- Modal Etiqueta -->
-    <div class="modal fade" id="modalEtiqueta" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="formEtiqueta" class="needs-validation" novalidate>
+        <!-- Tabla -->
+        <div class="table-responsive">
+            <table class="table table-striped align-middle table-hover mt-4" id="etiquetasTable">
+                <thead class="table">
+                    <tr>
+                        <th>Nombre</th>
+                        <th class="text-center">Color</th>
+                        <th class="text-center">Tipo</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0">Desarrollado por FitX © 2025. Todos los derechos reservados.</p>
+                <a href="#" class="text-decoration-none">Política de privacidad</a>
+            </div>
+        </footer>
+    </main>
+
+    <th:block th:fragment="modales">
+        <!-- Modal Etiqueta -->
+        <div class="modal fade" id="modalEtiqueta" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="formEtiqueta" class="needs-validation" novalidate>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalEtiquetaLabel">Agregar etiqueta</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <input type="hidden" name="etiquetaId" id="etiquetaId" />
+    <!--                    <input type="hidden" name="usuarioId" id="usuarioId" />-->
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre de la etiqueta</label>
+                                <input type="text" class="form-control" name="nombre" id="nombre" required />
+                                <div class="invalid-feedback">
+                                    Ingrese un nombre válido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="color">Color</label>
+                                <input type="color" class="form-control form-control-color" name="color" id="color"
+                                    value="#ff0000" list="coloresFavoritos" title="Elige un color" required>
+                                <datalist id="coloresFavoritos">
+                                    <option value="#ff0000"></option> <!-- Rojo -->
+                                    <option value="#00ff00"></option> <!-- Verde -->
+                                    <option value="#0000ff"></option> <!-- Azul -->
+                                    <option value="#f1c40f"></option> <!-- Amarillo -->
+                                    <option value="#9b59b6"></option> <!-- Morado -->
+                                    <option value="#e67e22"></option> <!-- Naranja -->
+                                    <option value="#2ecc71"></option> <!-- Verde claro -->
+                                    <option value="#3498db"></option> <!-- Azul claro -->
+                                    <option value="#e74c3c"></option> <!-- Rojo claro -->
+                                    <option value="#95a5a6"></option> <!-- Gris -->
+                                </datalist>
+                                <div class="invalid-feedback">
+                                    Seleccione un color.
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" id="guardarEtiquetaBtn">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Eliminar Etiqueta -->
+        <div class="modal fade" id="modalEliminarEtiqueta" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalEtiquetaLabel">Agregar etiqueta</h5>
+                        <h5 class="modal-title">Eliminar etiqueta</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <input type="hidden" name="etiquetaId" id="etiquetaId" />
-<!--                    <input type="hidden" name="usuarioId" id="usuarioId" />-->
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Nombre de la etiqueta</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" required />
-                            <div class="invalid-feedback">
-                                Ingrese un nombre válido.
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="color">Color</label>
-                            <input type="color" class="form-control form-control-color" name="color" id="color"
-                                value="#ff0000" list="coloresFavoritos" title="Elige un color" required>
-                            <datalist id="coloresFavoritos">
-                                <option value="#ff0000"></option> <!-- Rojo -->
-                                <option value="#00ff00"></option> <!-- Verde -->
-                                <option value="#0000ff"></option> <!-- Azul -->
-                                <option value="#f1c40f"></option> <!-- Amarillo -->
-                                <option value="#9b59b6"></option> <!-- Morado -->
-                                <option value="#e67e22"></option> <!-- Naranja -->
-                                <option value="#2ecc71"></option> <!-- Verde claro -->
-                                <option value="#3498db"></option> <!-- Azul claro -->
-                                <option value="#e74c3c"></option> <!-- Rojo claro -->
-                                <option value="#95a5a6"></option> <!-- Gris -->
-                            </datalist>
-                            <div class="invalid-feedback">
-                                Seleccione un color.
-                            </div>
-                        </div>
-
+                        ¿Estás seguro de que deseas eliminar esta etiqueta? <br />Esta acción no se puede deshacer.
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" id="guardarEtiquetaBtn">Guardar</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger">Eliminar</button>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Eliminar Etiqueta -->
-    <div class="modal fade" id="modalEliminarEtiqueta" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Eliminar etiqueta</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar esta etiqueta? <br />Esta acción no se puede deshacer.
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-danger">Eliminar</button>
                 </div>
             </div>
         </div>
-    </div>
+    </th:block>
 
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const API_URL = 'http://localhost:8080/api/etiquetas/';
-        let etiquetaActualId = null;
-        let dataTable;
+    <th:block th:fragment="scripts">
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            const API_URL = 'http://localhost:8080/api/etiquetas';
+            let etiquetaActualId = null;
+            let dataTable;
 
-        // function obtenerUsuarioId() {
-        //     return 2; // ajustar según el usuario autenticado
-        // }
-
-        function inicializarTabla() {
-            if (dataTable) {
-                dataTable.destroy();
-                dataTable = null;
-            }
-
-            dataTable = new simpleDatatables.DataTable("#etiquetasTable", {
-                labels: {
-                    placeholder: "Buscar...",
-                    perPage: " registros por página",
-                    noRows: "No se encontraron datos",
-                    info: "Mostrando {start} a {end} de {rows} registros"
-                }
-            });
-        }
-
-        // 1. Listar etiquetas
-        async function cargarEtiquetas() {
-            try {
-                // const usuarioId = obtenerUsuarioId();
-                // const response = await fetch(`${API_URL}?usuarioId=${usuarioId}`);
-                const response = await fetch(`${API_URL}`);
-
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Error al cargar etiquetas: ${response.status} - ${errorText}`);
+            function inicializarTabla() {
+                if (dataTable) {
+                    dataTable.destroy();
+                    dataTable = null;
                 }
 
-                const etiquetas = await response.json();
-
-                const data = {
-                    headings: ['Nombre', 'Color', 'Tipo', 'Acciones'], // Encabezados de la tabla
-                    data: []
-                };
-
-               etiquetas.forEach(etiqueta => {
-                    const color = `<span style="display:inline-block; width:20px; height:20px; background-color:#${etiqueta.color}; border:1px solid #ccc;"></span>`;
-                    const tipo = (etiqueta.editable === true) ? "Editable" : 'Sistema';
-                    const actionsHtml = (etiqueta.editable === true) ? `
-                        <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarEtiqueta(${etiqueta.id})">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="abrirModalEliminarEtiqueta(${etiqueta.id})">Eliminar</button>
-                    ` : '';
-                    data.data.push([
-                        etiqueta.nombre,
-                        color,
-                        tipo,
-                        actionsHtml
-                    ]);
+                dataTable = new simpleDatatables.DataTable("#etiquetasTable", {
+                    labels: {
+                        placeholder: "Buscar...",
+                        perPage: " registros por página",
+                        noRows: "No se encontraron datos",
+                        info: "Mostrando {start} a {end} de {rows} registros"
+                    }
                 });
-
-                inicializarTabla();
-                dataTable.insert(data);
-
-            } catch (error) {
-                console.error("Error al cargar etiquetas:", error);
-                alert("No se pudieron cargar las etiquetas: " + error.message);
             }
-        }
 
-        // 2. Abrir Modal para Crear Etiqueta
-        function abrirModalCrearEtiqueta() {
-            etiquetaActualId = null; 
-            document.getElementById('formEtiqueta').reset(); 
-            document.getElementById('etiquetaId').value = '';
+            // 1. Listar etiquetas
+            async function cargarEtiquetas() {
+                try {
+                    const response = await fetch(`${API_URL}/`);
 
-            //temporal
-            // document.getElementById('usuarioId').value = obtenerUsuarioId();
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`Error al cargar etiquetas: ${response.status} - ${errorText}`);
+                    }
 
-            document.getElementById('color').value = "#FFFFFF"; 
-            document.getElementById('modalEtiquetaLabel').textContent = 'Nueva Etiqueta';
-            const modal = new bootstrap.Modal(document.getElementById('modalEtiqueta'));
-            modal.show();
-        }
+                    const etiquetas = await response.json();
 
-        // 3. Abrir Modal para Editar Etiqueta
-        async function abrirModalEditarEtiqueta(id) {
-            etiquetaActualId = id;
-            try {
-                const res = await fetch(`${API_URL}/${id}`);
-                if (!res.ok) {
-                    const errorText = await res.text();
-                    throw new Error(`Error al obtener etiqueta para editar: ${res.status} - ${errorText}`);
+                    const data = {
+                        headings: ['Nombre', 'Color', 'Tipo', 'Acciones'],
+                        data: []
+                    };
+
+                   etiquetas.forEach(etiqueta => {
+                        const color = `<span style="display:inline-block; width:20px; height:20px; background-color:#${etiqueta.color}; border:1px solid #ccc;"></span>`;
+                        const tipo = (etiqueta.editable === true) ? "Editable" : 'Sistema';
+                        const actionsHtml = (etiqueta.editable === true) ? `
+                            <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarEtiqueta(${etiqueta.id})">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="abrirModalEliminarEtiqueta(${etiqueta.id})">Eliminar</button>
+                        ` : '';
+                        data.data.push([
+                            etiqueta.nombre,
+                            color,
+                            tipo,
+                            actionsHtml
+                        ]);
+                    });
+
+                    inicializarTabla();
+                    dataTable.insert(data);
+
+                } catch (error) {
+                    console.error("Error al cargar etiquetas:", error);
+                    alert("No se pudieron cargar las etiquetas: " + error.message);
                 }
-                
-                const etiquetaDto = await res.json();
+            }
 
-                document.getElementById('etiquetaId').value = etiquetaDto.id;
-                document.getElementById('nombre').value = etiquetaDto.nombre;
-                document.getElementById('color').value = '#' + etiquetaDto.color;
-
-                //temporal
-                // document.getElementById('usuarioId').value = etiquetaDto.usuarioId ? etiquetaDto.usuarioId : '';
-
-                document.getElementById('modalEtiquetaLabel').textContent = 'Editar Etiqueta';
-
+            // 2. Abrir Modal para Crear Etiqueta
+            function abrirModalCrearEtiqueta() {
+                etiquetaActualId = null;
+                document.getElementById('formEtiqueta').reset();
+                document.getElementById('etiquetaId').value = '';
+                document.getElementById('color').value = "#FFFFFF";
+                document.getElementById('modalEtiquetaLabel').textContent = 'Nueva Etiqueta';
                 const modal = new bootstrap.Modal(document.getElementById('modalEtiqueta'));
                 modal.show();
-            } catch (error) {
-                console.error("Error al obtener etiqueta para edición:", error);
-                alert("No se pudo cargar la etiqueta para editar: " + error.message);
-            }
-        }
-
-        // 4. Guardar Etiqueta (Crear o Editar)
-        document.getElementById('guardarEtiquetaBtn').addEventListener('click', async function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            // ****** ESTE ES EL CÓDIGO DE VALIDACIÓN DE BOOTSTRAP ******
-            formulario = document.getElementById('formEtiqueta')
-            if (!formulario.checkValidity()) {
-                formulario.classList.add('was-validated'); 
-                return; 
             }
 
-            const id = document.getElementById('etiquetaId').value;
-            const nombre = document.getElementById('nombre').value;
-            const color = document.getElementById('color').value.replace('#', '');
-            // const usuarioId = document.getElementById('usuarioId').value;
+            // 3. Abrir Modal para Editar Etiqueta
+            async function abrirModalEditarEtiqueta(id) {
+                etiquetaActualId = id;
+                try {
+                    const res = await fetch(`${API_URL}/${id}`);
+                    if (!res.ok) {
+                        const errorText = await res.text();
+                        throw new Error(`Error al obtener etiqueta para editar: ${res.status} - ${errorText}`);
+                    }
 
-            const etiquetaData = {
-                id: id ? parseInt(id) : null,
-                nombre: nombre,
-                color: color,
-                // usuario: usuarioId ? { id: parseInt(usuarioId) } : { id: obtenerUsuarioId() }
-            };
+                    const etiquetaDto = await res.json();
 
-            const method = id ? 'PUT' : 'POST';
-            const url = id ? `${API_URL}/${id}` : API_URL;
+                    document.getElementById('etiquetaId').value = etiquetaDto.id;
+                    document.getElementById('nombre').value = etiquetaDto.nombre;
+                    document.getElementById('color').value = '#' + etiquetaDto.color;
+                    document.getElementById('modalEtiquetaLabel').textContent = 'Editar Etiqueta';
 
-            try {
-                const response = await fetch(url, {
-                    method: method,
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(etiquetaData)
-                });
+                    const modal = new bootstrap.Modal(document.getElementById('modalEtiqueta'));
+                    modal.show();
+                } catch (error) {
+                    console.error("Error al obtener etiqueta para edición:", error);
+                    alert("No se pudo cargar la etiqueta para editar: " + error.message);
+                }
+            }
 
-                if (response.ok) { 
-                    console.log('Operación exitosa (sin datos de retorno explícitos).');
+            // 4. Guardar Etiqueta (Crear o Editar)
+            document.getElementById('guardarEtiquetaBtn').addEventListener('click', async function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                // ****** ESTE ES EL CÓDIGO DE VALIDACIÓN DE BOOTSTRAP ******
+                formulario = document.getElementById('formEtiqueta')
+                if (!formulario.checkValidity()) {
+                    formulario.classList.add('was-validated');
+                    return;
+                }
+
+                const id = document.getElementById('etiquetaId').value;
+                const nombre = document.getElementById('nombre').value;
+                const color = document.getElementById('color').value.replace('#', '');
+
+                const etiquetaData = {
+                    id: id ? parseInt(id) : null,
+                    nombre: nombre,
+                    color: color
+                };
+
+                const method = id ? 'PUT' : 'POST';
+                const url = id ? `${API_URL}/${id}` : API_URL;
+
+                try {
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(etiquetaData)
+                    });
+
+                    if (response.ok) {
+                        console.log('Operación exitosa (sin datos de retorno explícitos).');
+                        bootstrap.Modal.getInstance(document.getElementById('modalEtiqueta')).hide();
+                        cargarEtiquetas();
+                    } else {
+                        const errorMessage = await response.text();
+                        throw new Error(errorMessage || `Error del servidor: ${response.status} ${response.statusText || 'Unknown Error'}`);
+                    }
+                } catch (error) {
+                    console.error("Error al guardar etiqueta:", error);
+                    alert("No se pudo guardar la etiqueta: " + error.message);
                     bootstrap.Modal.getInstance(document.getElementById('modalEtiqueta')).hide();
-                    cargarEtiquetas(); 
-                } else {                    
-                    const errorMessage = await response.text();
-                    throw new Error(errorMessage || `Error del servidor: ${response.status} ${response.statusText || 'Unknown Error'}`);
                 }
-            } catch (error) {
-                console.error("Error al guardar etiqueta:", error);                
-                alert("No se pudo guardar la etiqueta: " + error.message);
-                bootstrap.Modal.getInstance(document.getElementById('modalEtiqueta')).hide();
+            });
+
+            // 5. Mostrar modal para confirmar eliminación
+            function abrirModalEliminarEtiqueta(id) {
+                etiquetaActualId = id;
+                const modal = new bootstrap.Modal(document.getElementById('modalEliminarEtiqueta'));
+                modal.show();
             }
-        });
 
-        // 5. Mostrar modal para confirmar eliminación
-        function abrirModalEliminarEtiqueta(id) {
-            etiquetaActualId = id;
-            const modal = new bootstrap.Modal(document.getElementById('modalEliminarEtiqueta'));
-            modal.show();
-        }
+            // 6. Confirmar y eliminar etiqueta
+            document.querySelector('#modalEliminarEtiqueta .btn-danger').addEventListener('click', async function (event) {
+                try {
+                    const response = await fetch(`${API_URL}/${etiquetaActualId}`, { method: 'DELETE' });
 
-        // 6. Confirmar y eliminar etiqueta
-        document.querySelector('#modalEliminarEtiqueta .btn-danger').addEventListener('click', async function (event) {
-            try {
-                const response = await fetch(`${API_URL}/${etiquetaActualId}`, { method: 'DELETE' });
-
-                if (response.ok) { 
-                    console.log('Etiqueta eliminada exitosamente.');
+                    if (response.ok) {
+                        console.log('Etiqueta eliminada exitosamente.');
+                        bootstrap.Modal.getInstance(document.getElementById('modalEliminarEtiqueta')).hide();
+                        await cargarEtiquetas();
+                    } else {
+                        const errorMessage = await response.text();
+                        throw new Error(errorMessage || `Error al eliminar etiqueta: ${response.status} ${response.statusText || 'Unknown Error'}`);
+                    }
+                } catch (error) {
+                    console.error("Error al eliminar etiqueta:", error);
+                    alert("No se pudo eliminar la etiqueta: " + error.message);
                     bootstrap.Modal.getInstance(document.getElementById('modalEliminarEtiqueta')).hide();
-                    await cargarEtiquetas();
-                } else {                    
-                    const errorMessage = await response.text();
-                    throw new Error(errorMessage || `Error al eliminar etiqueta: ${response.status} ${response.statusText || 'Unknown Error'}`);
                 }
-            } catch (error) {
-                console.error("Error al eliminar etiqueta:", error);
-                alert("No se pudo eliminar la etiqueta: " + error.message);
-                bootstrap.Modal.getInstance(document.getElementById('modalEliminarEtiqueta')).hide();
-            }
-        });
+            });
 
-        // 7. Cargar etiquetas al iniciar
-        document.addEventListener('DOMContentLoaded', cargarEtiquetas);
+            // 7. Cargar etiquetas al iniciar
+            document.addEventListener('DOMContentLoaded', cargarEtiquetas);
 
-        // 8. Validación de formularios de Bootstrap
-        const forms = document.querySelectorAll('.needs-validation')
+            // 8. Validación de formularios de Bootstrap
+            const forms = document.querySelectorAll('.needs-validation')
 
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-                form.classList.add('was-validated')
-            }, false)
-        })
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
 
-    </script>
-
+        </script>
+    </th:block>
 
 </body>
 

@@ -1,14 +1,9 @@
 package org.cibertec.fitx.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.cibertec.fitx.dto.EtiquetaDTO;
-import org.cibertec.fitx.dto.InsumoDTO;
 import org.cibertec.fitx.dto.RecetaDTO;
 import org.cibertec.fitx.dto.UsuarioDTO;
-import org.cibertec.fitx.entity.InsumoEntity;
 import org.cibertec.fitx.entity.RecetaEntity;
-import org.cibertec.fitx.entity.UsuarioEntity;
-import org.cibertec.fitx.service.InsumoService;
 import org.cibertec.fitx.service.RecetaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

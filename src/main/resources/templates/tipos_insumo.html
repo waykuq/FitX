@@ -1,373 +1,296 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html
+        lang="es"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout_main.html}" >
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mantenimiento de Tipos de Insumo - FitX</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" />
+    <th:block th:fragment="cabera">
+        <title>Mantenimiento de Tipos de Insumo - FitX</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" />
 
-        .sidebar {
-            min-height: 100vh;
-            position: fixed;
-        }
-
-        /* Alinea al centro las columnas 2 */
-        #tiposInsumoTable th:nth-child(2),
-        #tiposInsumoTable td:nth-child(2) {
-            text-align: center;
-        }
-
-        footer {
-            background-color: #f8f9fa;
-            padding: 1rem;
-            text-align: center;
-            border-top: 1px solid #dee2e6;
-        }
-    </style>
+        <style>
+            /* Alinea al centro las columnas 2 */
+            #tiposInsumoTable th:nth-child(2),
+            #tiposInsumoTable td:nth-child(2) {
+                text-align: center;
+            }
+        </style>
+    </th:block>
 </head>
 
-<body class="bg-light">
-    <div class="container-fluid">
-        <div class="row">
+<body>
+    <main layout:fragment="content">
 
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block bg-white sidebar p-3 border-end">
-                <h5 class="mb-4">FitX</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link active" href="dashboard.html">🏠 Dashboard Usuario</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="dashboard_admin.html">📊 Dashboard Admin</a></li>
-                    <li class="nav-item"><a class="nav-link" href="perfil.html">👤 Perfil</a></li>
-                    <hr class="mt-4">
-                    <h4>Mantenimiento</h4>
-                    <li class="nav-item"><a class="nav-link" href="usuarios.html">👥 Usuarios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="suscripciones.html">💳 Suscripciones</a></li>
-                    <li class="nav-item"><a class="nav-link" href="menu.html">📋 Menús</a></li>
-                    <li class="nav-item"><a class="nav-link" href="receta.html">🍽️ Recetas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="etiquetas.html">🏷️ Etiquetas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="insumo.html">🧂 Insumos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="tipos_insumo.html">📦 Tipos de Insumo</a></li>
-                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">📏 Unidades de Medida</a></li>
-                    <hr class="mt-4">
-                    <li class="nav-item mt-4"><a class="nav-link text-danger" href="login.html">🚪 Cerrar sesión</a></li>
-                </ul>
-            </nav>
+        <!-- Header -->
+        <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
+            <h2>Mantenimiento de Tipos de Insumo</h2>
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary" onclick="abrirModalCrearTipo()">➕ Agregar Tipo de Insumo</button>
 
-            <!-- Main Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
-                <!-- Header -->
-                <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
-                    <h2>Mantenimiento de Tipos de Insumo</h2>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-primary" onclick="abrirModalCrearTipo()">➕ Agregar Tipo de Insumo</button>
-
-                    </div>
-                </div>
-
-                <!-- Filtros -->
-<!--                <form class="row g-3 mb-5">-->
-<!--                    <div class="col-md-10">-->
-<!--                        <input type="text" class="form-control" placeholder="Buscar por nombre..." name="nombre" />-->
-<!--                        <p class="text-muted ps-3">Nombre</p>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-2">-->
-<!--                        <button class="btn btn-secondary w-100">🔍 Filtrar</button>-->
-<!--                    </div>-->
-<!--                </form>-->
-
-<!--                &lt;!&ndash; Selector cantidad por página &ndash;&gt;-->
-<!--                <div class="d-flex justify-content-end align-items-center mb-2">-->
-<!--                    <label for="porPagina" class="me-2 mb-0">Tipos por página:</label>-->
-<!--                    <select id="porPagina" class="form-select w-auto">-->
-<!--                        <option value="5">5</option>-->
-<!--                        <option value="10" selected>10</option>-->
-<!--                        <option value="20">20</option>-->
-<!--                        <option value="50">50</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-
-                <!-- Tabla -->
-                <div class="table-responsive">
-                    <table class="table table-bordered bg-white align-middle" id="tiposInsumoTable">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Nombre</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Paginación -->
-<!--                <nav>-->
-<!--                    <ul class="pagination justify-content-center">-->
-<!--                        <li class="page-item disabled"><a class="page-link">Anterior</a></li>-->
-<!--                        <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
-<!--                        <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-<!--                        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--                        <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>-->
-<!--                    </ul>-->
-<!--                </nav>-->
-
-                <!-- Footer -->
-                <footer class="mt-5">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="mb-0">Desarrollado por FitX © 2025. Todos los derechos reservados.</p>
-                        <a href="#" class="text-decoration-none">Política de privacidad</a>
-                    </div>
-                </footer>
-            </main>
-
+            </div>
         </div>
-    </div>
 
-    <!-- Modal Crear/Editar -->
-    <div class="modal fade" id="modalTipo" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="formTipo" class="needs-validation" novalidate>
-                    <input type="hidden" name="tipoInsumoId" id="tipoInsumoId" />
+        <!-- Tabla -->
+        <div class="table-responsive">
+            <table class="table table-striped align-middle mt-4 table-hover" id="tiposInsumoTable">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nombre</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0">Desarrollado por FitX © 2025. Todos los derechos reservados.</p>
+                <a href="#" class="text-decoration-none">Política de privacidad</a>
+            </div>
+        </footer>
+    </main>
+
+    <th:block th:fragment="modales">
+
+        <!-- Modal Crear/Editar -->
+        <div class="modal fade" id="modalTipo" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="formTipo" class="needs-validation" novalidate>
+                        <input type="hidden" name="tipoInsumoId" id="tipoInsumoId" />
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalTipoLabel">Agregar tipo de insumo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre del tipo de insumo</label>
+                                <input type="text" class="form-control" name="nombre" id="nombre" required />
+                                <div class="invalid-feedback">
+                                    Ingrese un nombre válido.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="submit">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Eliminar -->
+        <div class="modal fade" id="modalEliminarTipo" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalTipoLabel">Agregar tipo de insumo</h5>
+                        <h5 class="modal-title">Eliminar tipo de insumo</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Nombre del tipo de insumo</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" required />
-                            <div class="invalid-feedback">
-                                Ingrese un nombre válido.
-                            </div>
-                        </div>
+                        ¿Estás seguro que deseas eliminar este tipo de insumo? <br />
+                        Esta acción no se puede deshacer.
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="submit">Guardar</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger" id="btnEliminar">Eliminar</button>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Eliminar -->
-    <div class="modal fade" id="modalEliminarTipo" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Eliminar tipo de insumo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    ¿Estás seguro que deseas eliminar este tipo de insumo? <br />
-                    Esta acción no se puede deshacer.
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-danger" id="btnEliminar">Eliminar</button>
                 </div>
             </div>
         </div>
-    </div>
+    </th:block>
 
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const API_URL = 'http://localhost:8080/api/tiposInsumo'; // Cambia esto si tu API está en otra URL
-        let tipoInsumoActualId = null;
-        let dataTable;
+    <th:block th:fragment="scripts">
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            const API_URL = 'http://localhost:8080/api/tiposInsumo';
+            let tipoInsumoActualId = null;
+            let dataTable;
 
-        function obtenerUsuarioId() {
-            return 2; // ajustar según el usuario autenticado
-        }
+            function inicializarTabla() {
+                if (dataTable) {
+                    dataTable.destroy();
+                    dataTable = null;
+                }
 
-        function inicializarTabla() {
-            if (dataTable) {
-                dataTable.destroy();
-                dataTable = null;
+                dataTable = new simpleDatatables.DataTable("#tiposInsumoTable", {
+                    labels: {
+                        placeholder: "Buscar...",
+                        perPage: " registros por página",
+                        noRows: "No se encontraron datos",
+                        info: "Mostrando {start} a {end} de {rows} registros"
+                    }
+                });
             }
 
-            dataTable = new simpleDatatables.DataTable("#tiposInsumoTable", {
-                labels: {
-                    placeholder: "Buscar...",
-                    perPage: " registros por página",
-                    noRows: "No se encontraron datos",
-                    info: "Mostrando {start} a {end} de {rows} registros"
+            // 1. Cargar y mostrar tipos de insumo en la tabla
+            async function cargarTiposInsumo() {
+                try {
+                    const response = await fetch(API_URL);
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`Error al cargar tipos de insumo: ${response.status} ${response.statusText || ''} - ${errorText}`);
+                    }
+                    const tiposInsumo = await response.json();
+                    console.log("Tipos de insumo cargados:", tiposInsumo);
+
+                    const tbody = document.querySelector('#tiposInsumoTable tbody');
+                    tbody.innerHTML = '';
+
+                    const data = {
+                        headings: ['Nombre', 'Acciones'],
+                        data: []
+                    };
+
+                    tiposInsumo.forEach(tipo => {
+                        const actionsHtml = `
+                            <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarTipoInsumo(${tipo.id})">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="abrirModalEliminarTipoInsumo(${tipo.id})">Eliminar</button>
+                        `;
+                        data.data.push([
+                            tipo.nombre,
+                            actionsHtml
+                        ]);
+                    });
+
+                    inicializarTabla();
+                    dataTable.insert(data);
+
+
+                } catch (error) {
+                    console.error("Error al cargar tipos de insumo:", error);
+                    alert("No se pudieron cargar los tipos de insumo: " + error.message);
                 }
-            });
-        }
+            }
 
-        // 1. Cargar y mostrar tipos de insumo en la tabla
-        async function cargarTiposInsumo() {
-            try {
-                const response = await fetch(API_URL);
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Error al cargar tipos de insumo: ${response.status} ${response.statusText || ''} - ${errorText}`);
+            // 2. Abrir modal para crear nuevo tipo de insumo
+            function abrirModalCrearTipo() {
+                tipoInsumoActualId = null;
+                document.getElementById('formTipo').reset();
+                document.getElementById('tipoInsumoId').value = '';
+                document.getElementById('modalTipoLabel').textContent = 'Nuevo Tipo de Insumo';
+                new bootstrap.Modal(document.getElementById('modalTipo')).show();
+            }
+
+            // 3. Abrir modal para editar tipo de insumo y cargar datos
+            async function abrirModalEditarTipoInsumo(id) {
+                try {
+                    const response = await fetch(`${API_URL}/${id}`);
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`Error al cargar tipo de insumo para editar: ${response.status} ${response.statusText || ''} - ${errorText}`);
+                    }
+                    const tipoInsumo = await response.json();
+
+                    document.getElementById('tipoInsumoId').value = tipoInsumo.id;
+                    document.getElementById('nombre').value = tipoInsumo.nombre;
+                    document.getElementById('modalTipoLabel').textContent = 'Editar Tipo de Insumo';
+
+                    new bootstrap.Modal(document.getElementById('modalTipo')).show();
+                } catch (error) {
+                    console.error("Error al obtener tipo de insumo para editar:", error);
+                    alert("No se pudo cargar el tipo de insumo para editar: " + error.message);
                 }
-                const tiposInsumo = await response.json();
-                console.log("Tipos de insumo cargados:", tiposInsumo);
+            }
 
-                const tbody = document.querySelector('#tiposInsumoTable tbody');
-                tbody.innerHTML = '';
+            // 4. Guardar tipo de insumo (crear o editar)
+            document.getElementById('formTipo').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                e.stopPropagation();
 
-                const data = {
-                    headings: ['Nombre', 'Acciones'], // Encabezados de la tabla
-                    data: []
+                // Validación de Bootstrap 5
+                if (!this.checkValidity()) {
+                    this.classList.add('was-validated');
+                    return;
+                }
+
+                const id = document.getElementById('tipoInsumoId').value;
+                const nombre = document.getElementById('nombre').value;
+
+                const tipoInsumo = {
+                    id: id ? parseInt(id) : null,
+                    nombre: nombre
                 };
 
-                tiposInsumo.forEach(tipo => {
-                    const actionsHtml = `
-                        <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarTipoInsumo(${tipo.id})">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="abrirModalEliminarTipoInsumo(${tipo.id})">Eliminar</button>
-                    `;
-                    data.data.push([
-                        tipo.nombre,
-                        actionsHtml
-                    ]);
-                });
+                const method = id ? 'PUT' : 'POST';
+                const url = id ? `${API_URL}/${id}` : API_URL;
 
-                inicializarTabla();
-                dataTable.insert(data);
+                try {
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(tipoInsumo)
+                    });
 
-
-            } catch (error) {
-                console.error("Error al cargar tipos de insumo:", error);
-                alert("No se pudieron cargar los tipos de insumo: " + error.message);
-            }
-        }
-
-        // 2. Abrir modal para crear nuevo tipo de insumo
-        function abrirModalCrearTipo() {
-            tipoInsumoActualId = null;
-            document.getElementById('formTipo').reset();
-            document.getElementById('tipoInsumoId').value = '';
-            document.getElementById('modalTipoLabel').textContent = 'Nuevo Tipo de Insumo';
-            new bootstrap.Modal(document.getElementById('modalTipo')).show();
-        }
-
-        // 3. Abrir modal para editar tipo de insumo y cargar datos
-        async function abrirModalEditarTipoInsumo(id) {
-            try {
-                const response = await fetch(`${API_URL}/${id}`);
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Error al cargar tipo de insumo para editar: ${response.status} ${response.statusText || ''} - ${errorText}`);
-                }
-                const tipoInsumo = await response.json();
-
-                document.getElementById('tipoInsumoId').value = tipoInsumo.id;
-                document.getElementById('nombre').value = tipoInsumo.nombre;
-                document.getElementById('modalTipoLabel').textContent = 'Editar Tipo de Insumo';
-
-                new bootstrap.Modal(document.getElementById('modalTipo')).show();
-            } catch (error) {
-                console.error("Error al obtener tipo de insumo para editar:", error);
-                alert("No se pudo cargar el tipo de insumo para editar: " + error.message);
-            }
-        }
-
-        // 4. Guardar tipo de insumo (crear o editar)
-        document.getElementById('formTipo').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            // Validación de Bootstrap 5
-            if (!this.checkValidity()) {
-                this.classList.add('was-validated');
-                return;
-            }
-
-            const id = document.getElementById('tipoInsumoId').value;
-            const nombre = document.getElementById('nombre').value;
-            // const estado = document.getElementById('estadoTipoInsumo').value;
-
-            const tipoInsumo = {
-                id: id ? parseInt(id) : null,
-                nombre: nombre
-            };
-
-            const method = id ? 'PUT' : 'POST';
-            const url = id ? `${API_URL}/${id}` : API_URL;
-
-            try {
-                const response = await fetch(url, {
-                    method: method,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(tipoInsumo)
-                });
-
-                if (response.ok) {
-                    console.log('Tipo de insumo guardado exitosamente.');
-                    document.getElementById('formTipo').reset();
-                    document.getElementById('formTipo').classList.remove('was-validated');
+                    if (response.ok) {
+                        console.log('Tipo de insumo guardado exitosamente.');
+                        document.getElementById('formTipo').reset();
+                        document.getElementById('formTipo').classList.remove('was-validated');
+                        bootstrap.Modal.getInstance(document.getElementById('modalTipo')).hide();
+                        await cargarTiposInsumo();
+                    } else {
+                        const errorText = await response.text();
+                        throw new Error(errorText || `Error al guardar tipo de insumo: ${response.status} ${response.statusText || 'Error desconocido'}`);
+                    }
+                } catch (error) {
+                    console.error("Error al guardar tipo de insumo:", error);
+                    alert("No se pudo guardar el tipo de insumo: " + error.message);
                     bootstrap.Modal.getInstance(document.getElementById('modalTipo')).hide();
-                    await cargarTiposInsumo(); // Recargar la tabla
-                } else {
-                    const errorText = await response.text();
-                    throw new Error(errorText || `Error al guardar tipo de insumo: ${response.status} ${response.statusText || 'Error desconocido'}`);
                 }
-            } catch (error) {
-                console.error("Error al guardar tipo de insumo:", error);
-                alert("No se pudo guardar el tipo de insumo: " + error.message);
-                bootstrap.Modal.getInstance(document.getElementById('modalTipo')).hide();
+            });
+
+            // 5. Mostrar modal para confirmar eliminación
+            function abrirModalEliminarTipoInsumo(id) {
+                tipoInsumoActualId = id;
+                const modal = new bootstrap.Modal(document.getElementById('modalEliminarTipo'));
+                modal.show();
             }
-        });
 
-        // 5. Mostrar modal para confirmar eliminación
-        function abrirModalEliminarTipoInsumo(id) {
-            tipoInsumoActualId = id; // Guarda el ID del tipo de insumo a eliminar
-            const modal = new bootstrap.Modal(document.getElementById('modalEliminarTipo'));
-            modal.show();
-        }
+            // 6. Confirmar y eliminar tipo de insumo
+            document.querySelector('#btnEliminar').addEventListener('click', async () => {
+                try {
+                    const response = await fetch(`${API_URL}/${tipoInsumoActualId}`, { method: 'DELETE' });
 
-        // 6. Confirmar y eliminar tipo de insumo
-        document.querySelector('#btnEliminar').addEventListener('click', async () => {
-            try {
-                const response = await fetch(`${API_URL}/${tipoInsumoActualId}`, { method: 'DELETE' });
-
-                if (response.ok) {
-                    console.log('Tipo de insumo eliminado exitosamente.');
+                    if (response.ok) {
+                        console.log('Tipo de insumo eliminado exitosamente.');
+                        bootstrap.Modal.getInstance(document.getElementById('modalEliminarTipo')).hide();
+                        await cargarTiposInsumo();
+                    } else {
+                        const errorText = await response.text();
+                        throw new Error(errorText || `Error al eliminar tipo de insumo: ${response.status} ${response.statusText || 'Error desconocido'}`);
+                    }
+                } catch (error) {
+                    console.error("Error al eliminar tipo de insumo:", error);
+                    alert("No se pudo eliminar el tipo de insumo: " + error.message);
                     bootstrap.Modal.getInstance(document.getElementById('modalEliminarTipo')).hide();
-                    await cargarTiposInsumo();
-                } else {
-                    const errorText = await response.text();
-                    throw new Error(errorText || `Error al eliminar tipo de insumo: ${response.status} ${response.statusText || 'Error desconocido'}`);
                 }
-            } catch (error) {
-                console.error("Error al eliminar tipo de insumo:", error);
-                alert("No se pudo eliminar el tipo de insumo: " + error.message);
-                bootstrap.Modal.getInstance(document.getElementById('modalEliminarTipo')).hide();
-            }
-        });
+            });
 
-        // 7. Cargar etiquetas al iniciar
-        document.addEventListener('DOMContentLoaded', cargarTiposInsumo);
+            // 7. Cargar etiquetas al iniciar
+            document.addEventListener('DOMContentLoaded', cargarTiposInsumo);
 
-        // 8. Validación de formularios de Bootstrap
-        const forms = document.querySelectorAll('.needs-validation')
+            // 8. Validación de formularios de Bootstrap
+            const forms = document.querySelectorAll('.needs-validation')
 
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-                form.classList.add('was-validated')
-            }, false)
-        })
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
 
-
-    </script>
+        </script>
+    </th:block>
 </body>
 
 </html>

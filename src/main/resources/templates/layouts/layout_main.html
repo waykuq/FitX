@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <th:block th:replace="~{::cabera}">
+        <title>FitX</title>
+    </th:block>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-white sidebar p-3 border-end">
+                <h5 class="mb-4">FitX</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item" th:if="${rol != '1'}">
+                        <a class="nav-link active" href="/web/dashboard">🏠 Dashboard</a>
+                    </li>
+                    <li class="nav-item" th:if="${rol == '1'}">
+                        <a class="nav-link active" href="/web/dashboard_admin">📊 Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/web/perfil">👤 Perfil</a>
+                    </li>
+                    <hr class="mt-4">
+                    <h4>Mantenimiento</h4>
+                    <li class="nav-item" th:if="${rol == '1'}">
+                        <a class="nav-link" href="/web/usuarios">👥 Usuarios</a>
+                    </li>
+                    <li class="nav-item" th:if="${rol == '1'}">
+                        <a class="nav-link" href="/web/suscripciones">💳 Suscripciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/web/menus">📋 Menús</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/web/recetas">🍽️ Recetas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/web/etiquetas">🏷️ Etiquetas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/web/insumos">🧂 Insumos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/web/tiposInsumo">📦 Tipos de Insumo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/web/unidadesMedida">📏 Unidades de Medida</a>
+                    </li>
+                    <hr class="mt-4">
+                    <li class="nav-item mt-4">
+                        <a class="nav-link text-danger" href="#" onclick="cerrarSesion()">🚪 Cerrar sesión</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main layout:fragment="content" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            </main>
+
+        </div>
+    </div>
+
+    <th:block th:replace="~{::modales}"></th:block>
+
+    <th:block th:replace="~{::scripts}"></th:block>
+
+    <script>
+        const API_URL_AUTH = 'http://localhost:8080/api/auth/logout';
+        async function cerrarSesion() {
+            try {
+                const response = await fetch(`${API_URL_AUTH}`, { method: 'POST' });
+
+                if (response.ok) {
+                    console.log('La sesión se cerró.');
+                    window.location.href = "/web/login";
+                } else {
+                    const errorText = await response.text();
+                    throw new Error(errorText || `No se pudo cerrar la sesión: ${response.status} ${response.statusText || 'Error desconocido'}`);
+                }
+            } catch (error) {
+                console.error("Error al cerrar sesión:", error);
+                alert("No se pudo cerrar la sesión: " + error.message);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
