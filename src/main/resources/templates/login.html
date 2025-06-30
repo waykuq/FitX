@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Iniciar sesión - FitX</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -52,35 +56,61 @@
 <!-- Modal de Registro -->
 <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="registroForm" class="modal-content">
+        <form id="registroForm" class="modal-content needs-validation" novalidate>
             <div class="modal-header">
                 <h5 class="modal-title" id="modalRegistroLabel">Registro de usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-2">
+                    <label for="dni" class="form-label">DNI</label>
+                    <input type="number" class="form-control" id="dni" required minlength="8" maxlength="8"/>
+                    <div class="invalid-feedback">
+                        Ingrese un dni válido.
+                    </div>
+                </div>
+                <div class="mb-2">
                     <label for="nombres" class="form-label">Nombres</label>
                     <input type="text" class="form-control" id="nombres" required />
+                    <div class="invalid-feedback">
+                        Ingrese un nombre válido.
+                    </div>
                 </div>
                 <div class="mb-2">
                     <label for="apellidos" class="form-label">Apellidos</label>
                     <input type="text" class="form-control" id="apellidos" required />
+                    <div class="invalid-feedback">
+                        Ingrese un apellido válido.
+                    </div>
                 </div>
                 <div class="mb-2">
                     <label for="correoRegistro" class="form-label">Correo</label>
                     <input type="email" class="form-control" id="correoRegistro" required />
+                    <div class="invalid-feedback">
+                        Ingrese un correo válido.
+                    </div>
                 </div>
                 <div class="mb-2">
                     <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="tel" class="form-control" id="telefono" />
+                    <input id="telefono" type="tel" class="form-control" name="telefono" value="+51 987654321"
+                           placeholder="Ej. +51 987654321">
+                    <div class="invalid-feedback">
+                        Ingrese un teléfono válido.
+                    </div>
                 </div>
                 <div class="mb-2">
                     <label for="passwordRegistro" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="passwordRegistro" required />
+                    <input type="password" class="form-control" id="passwordRegistro" value="" required />
+                    <div class="invalid-feedback">
+                        Ingrese una contraseña.
+                    </div>
                 </div>
                 <div class="mb-2">
                     <label for="confirmacion" class="form-label">Confirmar contraseña</label>
                     <input type="password" class="form-control" id="confirmacion" required />
+                    <div class="invalid-feedback">
+                        La contraseña de confirmación no es válida.
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -91,7 +121,30 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
+    window.onload = function() {
+        // Inicializar intl-tel-input
+        let iti;
+        const input = document.querySelector('#telefono');
+        if (!input) return;
+
+        // evita reinicializar si ya existe
+        if (!input.classList.contains('iti')) {
+            iti = window.intlTelInput(input, {
+                initialCountry: 'auto',
+                preferredCountries: ['pe', 'mx', 'co'],
+                geoIpLookup: callback => {
+                    fetch('https://ipinfo.io/json')
+                        .then(res => res.json())
+                        .then(data => callback(data.country || 'us'));
+                },
+                utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js'
+            });
+        }
+    };
+
     document.getElementById("loginForm").addEventListener("submit", async function(e) {
         e.preventDefault();
         const correo = document.getElementById("correo").value;
@@ -117,12 +170,59 @@
         }
     });
 
-    document.getElementById("registroForm").addEventListener("submit", function (e) {
+    document.getElementById("registroForm").addEventListener("submit", async function (e) {
         e.preventDefault();
-        alert("Usuario registrado");
-        const modal = bootstrap.Modal.getInstance(document.getElementById("modalRegistro"));
-        modal.hide();
+
+        const form = e.target;
+        form.classList.add("was-validated");
+
+        if (!form.checkValidity()) {
+            return; // No continuar si hay errores de validación HTML5
+        }
+
+        const dni = document.getElementById("dni").value;
+        const nombres = document.getElementById("nombres").value;
+        const apellidos = document.getElementById("apellidos").value;
+        const correo = document.getElementById("correoRegistro").value;
+        const telefono = document.getElementById("telefono").value;
+        const contraseña = document.getElementById("passwordRegistro").value;
+        const confirmacion = document.getElementById("confirmacion").value;
+
+        if (contraseña !== confirmacion) {
+            alert("Las contraseñas no coinciden");
+            return;
+        }
+
+        const usuario = {
+            dni,
+            nombres,
+            apellidos,
+            correo,
+            telefono,
+            contraseña
+        };
+
+        try {
+            const res = await fetch("http://localhost:8080/api/usuarios", {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(usuario)
+            });
+
+            if (res.status === 201) {
+                alert("Usuario registrado correctamente");
+                location.href = "/web/dashboard"
+            } else {
+                const errorText = await res.text();
+                alert("Error al registrar usuario: " + errorText);
+            }
+        } catch (error) {
+            console.error("Error al enviar solicitud de registro", error);
+            alert("Ocurrió un error de red");
+        }
     });
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

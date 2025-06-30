@@ -1,27 +1,29 @@
 package org.cibertec.fitx.service.impl;
 
-import org.cibertec.fitx.dto.EtiquetaMinDTO;
 import org.cibertec.fitx.dto.UsuarioDTO;
 import org.cibertec.fitx.entity.UsuarioEntity;
-import org.cibertec.fitx.entity.UsuarioEntity;
 import org.cibertec.fitx.repository.UsuarioRepository;
-import org.cibertec.fitx.repository.UsuarioRepository;
+import org.cibertec.fitx.service.TipoUsuarioService;
 import org.cibertec.fitx.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class UsuarioServiceImpl extends GenericServiceImpl<UsuarioEntity, Integer> implements UsuarioService {
 
-	public UsuarioServiceImpl(JpaRepository<UsuarioEntity, Integer> repositorio) {
+	private final TipoUsuarioService tipoUsuarioService;
+
+	@Autowired
+	public UsuarioServiceImpl(JpaRepository<UsuarioEntity, Integer> repositorio, TipoUsuarioService tipoUsuarioService) {
 		this.repository = repositorio;
+		this.tipoUsuarioService = tipoUsuarioService;
 	}
 
 	@Override
@@ -61,5 +63,43 @@ public class UsuarioServiceImpl extends GenericServiceImpl<UsuarioEntity, Intege
 		dto.setTelefono(usuarioEntity.getTelefono());
 
 		return dto;
+	}
+
+	@Override
+	public Integer guardarUsuarioDTO(UsuarioDTO usuarioDTO) {
+		Integer usuarioId = usuarioDTO.getId();
+		UsuarioEntity usuarioExistente = null;
+
+		if (usuarioId == null) {
+			usuarioExistente = new UsuarioEntity();
+
+			usuarioExistente.setNombres("Temp");
+			usuarioExistente.setDni("temp");
+			usuarioExistente.setApellidos("Temp");
+			usuarioExistente.setCorreo("temp@temp.temp");
+			usuarioExistente.setContraseña("temp");
+			usuarioExistente.setNombreUsuario(usuarioDTO.getCorreo());
+
+			usuarioExistente.setFechaInscripcion(LocalDate.now());
+			usuarioExistente.setEstado("Activo");
+			usuarioExistente.setTipoUsuario(tipoUsuarioService.buscarPorId(3));
+
+			repository.save(usuarioExistente);
+		} else {
+			usuarioExistente = repository.findById(usuarioId)
+					.orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + usuarioId));
+		}
+
+		usuarioExistente.setNombres(usuarioDTO.getNombres());
+		usuarioExistente.setDni(usuarioDTO.getDni());
+		usuarioExistente.setApellidos(usuarioDTO.getApellidos());
+		usuarioExistente.setCorreo(usuarioDTO.getCorreo());
+		usuarioExistente.setContraseña(usuarioDTO.getContraseña());
+		usuarioExistente.setTelefono(usuarioDTO.getTelefono());
+
+		// TODO: perfil nutricional
+		repository.save(usuarioExistente);
+
+		return usuarioExistente.getId();
 	}
 }

@@ -16,8 +16,8 @@ public class HtmlController {
 
     private final SesionHelper sesionHelper;
 
-    @Autowired
-    private AuthController authController;
+//    @Autowired
+//    private AuthController authController;
 
     @Autowired
     public HtmlController(SesionHelper sesionHelper) {
@@ -26,7 +26,8 @@ public class HtmlController {
 
     private String cargarRol(Model model, HttpSession session) {
         if (!sesionHelper.estaLogueado(session)) {
-            return "login";
+            //return "login";
+            return "redirect:/web/login";
         }
         UsuarioDTO usuario = sesionHelper.obtenerUsuario(session);
         model.addAttribute("rol", usuario.getRolId());

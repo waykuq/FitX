@@ -15,4 +15,6 @@ public interface UsuarioService extends GenericService<UsuarioEntity, Integer> {
 
     public UsuarioDTO mapearEntidadADto(UsuarioEntity etiquetaEntity);
 
+    public Integer guardarUsuarioDTO(UsuarioDTO usuarioDTO);
+
 }

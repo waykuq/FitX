@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de la receta - FitX</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            position: fixed;
+        }
+
+        .img-thumbnail {
+            width: 100%;
+            object-fit: cover;
+        }
+
+        /* Alinea al centro las columnas 2 y 3 */
+        #insumosTable th:nth-child(2),
+        #insumosTable td:nth-child(2),
+        #insumosTable th:nth-child(3),
+        #insumosTable td:nth-child(3),
+        #insumosTable th:nth-child(4),
+        #insumosTable td:nth-child(4) {
+            text-align: center;
+        }
+
+        #imagenAmpliada {
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+
+<!--<body class="bg-light" th:attr="data-receta-id=${recetaId}">-->
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-white sidebar p-3 border-end">
+                <h5 class="mb-4">FitX</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="dashboard.html">🏠 Dashboard Usuario</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="dashboard_admin.html">📊 Dashboard Admin</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">📋 Menús</a></li>
+                    <li class="nav-item"><a class="nav-link" href="perfil.html">👤 Perfil</a></li>
+                    <hr class="mt-4">
+                    <h4>Mantenimiento</h4>
+                    <li class="nav-item"><a class="nav-link" href="receta.html">🍽️ Recetas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="etiquetas.html">🏷️ Etiquetas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="insumo.html">🧂 Insumos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tipos_insumo.html">📦 Tipos de Insumo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">📏 Unidades de Medida</a></li>
+                    <hr class="mt-4">
+                    <li class="nav-item mt-4"><a class="nav-link text-danger" href="../login.html">🚪Cerrar sesión</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+                <!-- Header -->
+                <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
+                    <h2 id="titulo">Crear receta </h2>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-light text-dark border-dark favorito" onclick="alternarFavorito(this)"
+                            title="Favorito" id="btn-favorito">
+                            ❤️ Favorito
+                        </button>
+                        <button class="btn btn-warning" onclick="habilitarEdicion()" id="btn-habilitar" style="display: none">✏️ Editar</button>
+                        <button class="btn btn-secondary" onclick="regresar()"> Regresar </button>
+                        <button class="btn btn-danger btn-editar" onclick="abrirModalEliminarReceta()" style="display: none">️ Eliminar </button>
+                        <button class="btn btn-primary btn-editar btn-crear" onclick="guardarReceta()" style="display: none"> Guardar </button>
+
+                    </div>
+                </div>
+
+                <!-- Datos generales -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3">
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-12">
+                                <label class="form-label d-block">Foto URL</label>
+
+                                <!-- Imagen de vista previa -->
+                                <img id="vistaPreviaImagen"
+                                     src=""
+                                     alt="Foto receta"
+                                     class="img-thumbnail mb-2"
+                                     style="cursor:pointer"
+                                     onclick="mostrarImagenModal(this.src)">
+
+                                <!-- Campo para ingresar URL de imagen -->
+                                <input type="url" class="form-control" placeholder="https://ejemplo.com/imagen.jpg" id="foto" name="foto"
+                                       oninput="actualizarImagenDesdeURL(this.value)">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-12">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Porciones</label>
+                                <input type="number" class="form-control" id="porciones" name="porciones">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Peso por porción</label>
+                                <input type="number" class="form-control" id="pesoPorcion" name="pesoPorcion">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Unidad de medida</label>
+                                <select class="form-select" id="unidadMedida" name="unidadMedida" required>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Tiempo estimado</label>
+<!--                                <input type="number" class="form-control" value="20" id="tiempoEstimado" name="tiempoEstimado">-->
+                                <input type="time" class="form-control" id="tiempoEstimado" name="tiempoEstimado" step="60">
+
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Procedimiento</label>
+                                <div id="descripcionEditor"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!-- Etiquetas -->
+                <div class="mb-5">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5>Etiquetas</h5>
+                        <button class="btn btn-sm btn-success btn-editar btn-crear" onclick="abrirModalEtiqueta()">➕ Agregar etiqueta</button>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 mb-2" id="etiquetas">
+                    </div>
+                </div>
+                <hr>
+
+                <!-- Insumos -->
+                <div class="mb-5">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5>Insumos</h5>
+                        <button class="btn btn-sm btn-success btn-editar btn-crear" onclick="abrirModalAgregarInsumo()">➕ Agregar insumo</button>
+                    </div>
+                    <table class="table table-bordered bg-white" id="insumosTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Insumo</th>
+                                <th>Cantidad</th>
+                                <th>Unidad</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+
+                <!-- Información nutricional -->
+<!--                <div class="mb-4">-->
+<!--                    <h5>Información nutricional por porción</h5>-->
+<!--                    <table class="table table-bordered bg-white">-->
+<!--                        <thead class="table-light">-->
+<!--                            <tr>-->
+<!--                                <th>Calorías (Kcal)</th>-->
+<!--                                <th>Proteínas (g)</th>-->
+<!--                                <th>Grasas (g)</th>-->
+<!--                                <th>Carbohidratos (g)</th>-->
+<!--                            </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                            <tr>-->
+<!--                                <td>230</td>-->
+<!--                                <td>10</td>-->
+<!--                                <td>8</td>-->
+<!--                                <td>28</td>-->
+<!--                            </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--                <hr>-->
+                <!-- Botones -->
+                <div class="text-end mt-4">
+                    <button class="btn btn-secondary" onclick="regresar()"> Regresar </button>
+                    <button class="btn btn-danger btn-editar" onclick="abrirModalEliminarReceta()" style="display: none">️ Eliminar </button>
+                    <button class="btn btn-primary btn-editar btn-crear" onclick="guardarReceta()" style="display: none"> Guardar </button>
+                </div>
+
+
+                <!-- Footer -->
+                <footer class="mt-5">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="mb-0">Desarrollado por FitX © 2025. Todos los derechos reservados.</p>
+                        <a href="#" class="text-decoration-none">Política de privacidad</a>
+                    </div>
+                </footer>
+            </main>
+
+        </div>
+    </div>
+
+    <!-- Modal Insumo -->
+    <div class="modal fade" id="modalInsumo" tabindex="-1" aria-labelledby="modalInsumoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formInsumo">
+                    <input type="hidden" id="detalleId">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalInsumoLabel">Agregar insumo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Insumo</label>
+<!--                            <input type="text" id="buscarInsumo" class="form-control"-->
+<!--                                placeholder="Ej. Tomate, Pollo...">-->
+                            <select id="insumo" name="insumo" class="form-select">
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cantidad</label>
+                            <input type="number" id="insumoCantidad" class="form-control" min="0.01" step="0.1">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Unidad de medida</label>
+                            <select id="insumoUnidad" class="form-select">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnGuardarInsumo" onclick="guardarInsumoReceta(event)">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Etiquetas-->
+    <div class="modal fade" id="modalEtiqueta" tabindex="-1" aria-labelledby="modalEtiquetaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+<!--                <form id="formEtiqueta">-->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEtiquetaLabel">Agregar etiqueta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Etiqueta</label>
+                            <select id="etiqueta" name="etiqueta" class="form-select">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="agregarEtiquetaReceta()">Agregar</button>
+                    </div>
+<!--                </form>-->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Imagen Ampliada -->
+    <div class="modal fade" id="modalImagen" tabindex="-1" aria-labelledby="modalImagenLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body text-center">
+                    <img id="imagenAmpliada" src="" alt="Imagen completa" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Eliminar Receta -->
+    <div class="modal fade" id="modalEliminarReceta" tabindex="-1" aria-labelledby="modalEliminarLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEliminarLabel">Eliminar receta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro que deseas eliminar esta receta? <br />
+                    Se eliminará la receta de los menus y favoritos.<br />
+                    Esta acción no se
+                    puede deshacer.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+
+    <script>
+        const API_URL = 'http://localhost:8080/api/recetas';
+        const API_URL_UNIDADES_MEDIDA = 'http://localhost:8080/api/unidadesMedida';
+        const API_URL_ETIQUETAS = 'http://localhost:8080/api/etiquetas';
+        const API_URL_INSUMOS = 'http://localhost:8080/api/insumos';
+        let unidadesMedida = null;
+        let etiquetas = null
+        let insumos = null;
+        let recetaDto = null;
+
+        document.addEventListener('DOMContentLoaded', async() => {
+            await cargarUnidadesMedida();
+            await cargarEtiquetas();
+            await cargarInsumos();
+
+            // Si se ve el detalle de una receta en la url, cargar receta
+            const partes = window.location.pathname.split('/');
+            const recetaId = partes[partes.length - 1];
+
+            // if (!isNaN(recetaId) && recetaId.trim() !== '') {
+            if (recetaId && !isNaN(Number(recetaId))) {
+                const id = Number(recetaId);
+                // document.body.dataset.recetaId = id;
+                await cargarReceta(id);
+            } else if (recetaId == 'crear') {
+                recetaDto = {
+                    id: -1,
+                    nombre: '',
+                    porciones: 0,
+                    pesoPorcion: 0,
+                    unidadMedidaId: null,
+                    unidadMedidaSimbolo: null,
+                    tiempoEstimado: 0,
+                    foto: '',
+                    descripcion: '',
+                    etiquetas: [],
+                    detalles: []
+                };
+                document.querySelectorAll('.btn-editar, #btn-habilitar, #btn-favorito').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.querySelectorAll('.btn-crear').forEach(el => {
+                    el.style.display = 'inline';
+                });
+            } else {
+                console.error("El ID de la receta no es válido");
+            }
+        });
+
+
+
+        async function cargarUnidadesMedida() {
+            try {
+                const responseUM = await fetch(API_URL_UNIDADES_MEDIDA);
+                if (!responseUM.ok) {
+                    throw new Error(`Error al cargar las unidades de medida: ${responseUM.status} ${responseUM.statusText}`);
+                }
+                unidadesMedida = await responseUM.json();
+                const selectUM = document.getElementById('unidadMedida');
+                selectUM.innerHTML = '<option value="">-- Seleccione --</option>';
+                unidadesMedida.forEach(um => {
+                    const option = document.createElement('option');
+                    option.value = um.id;
+                    option.textContent = um.simbolo;
+                    selectUM.appendChild(option);
+                });
+
+                document.getElementById('insumoUnidad').innerHTML = '';
+
+                Array.from(selectUM.options).forEach(opcion => {
+                    const nuevaOpcion = opcion.cloneNode(true);
+                    document.getElementById('insumoUnidad').appendChild(nuevaOpcion);
+                });
+
+            } catch (error) {
+                console.error("Error al cargar las unidades de medida:", error);
+                alert("No se pudieron cargar las opciones para unidades de medida: " + error.message);
+            }
+        }
+
+        async function cargarEtiquetas() {
+            try {
+                const responseE = await fetch(API_URL_ETIQUETAS + "/listarMinDTO");
+                if (!responseE.ok) {
+                    throw new Error(`Error al cargar las etiquetas: ${responseE.status} ${responseE.statusText}`);
+                }
+                etiquetas = await responseE.json();
+                // console.log('etiquetas: ' + JSON.stringify(etiquetas));
+            } catch (error) {
+                console.error("Error al cargar las etiquetas:", error);
+                alert("No se pudieron cargar las opciones para etiquetas: " + error.message);
+            }
+        }
+
+        async function cargarInsumos() {
+            try {
+                const responseI = await fetch(API_URL_INSUMOS);
+                if (!responseI.ok) {
+                    throw new Error(`Error al cargar los insumos: ${responseI.status} ${responseI.statusText}`);
+                }
+                insumos = await responseI.json();
+
+                cargarSelectIngredientes();
+            } catch (error) {
+                console.error("Error al cargar los insumos:", error);
+                alert("No se pudieron cargar las opciones para insumos: " + error.message);
+            }
+        }
+
+
+        function cargarEtiquetasReceta() {
+            var etiquetas = "";
+            // console.log('etiquetas receta: ' + JSON.stringify(recetaDto.etiquetas));
+            recetaDto.etiquetas.forEach(etiqueta => {
+                etiquetas += '<span class="badge text-bg-primary" style="background-color: #' + etiqueta.color + ' !important">' + etiqueta.nombre;
+                etiquetas += '<button class="btn-close btn-close-white btn-sm ms-2 btn-editar" title="Eliminar etiqueta" onclick="borrarEtiquetaReceta(' + etiqueta.id + ')"></button></span>';
+            });
+            document.getElementById('etiquetas').innerHTML = etiquetas;
+        }
+
+        function borrarEtiquetaReceta(id) {
+            if (recetaDto.etiquetas != null) {
+                recetaDto.etiquetas = recetaDto.etiquetas.filter(item => item.id !== id);
+                cargarEtiquetasReceta();
+            }
+        }
+
+        function cargarSelectEtiquetas() {
+            let etiquetasFaltantes = etiquetas.filter(objBase =>
+                !recetaDto.etiquetas.some(objEliminar => objEliminar.id === objBase.id)
+            );
+            // console.log('etiquetas select: ' + JSON.stringify(etiquetasFaltantes));
+
+            const selectE = document.getElementById('etiqueta');
+            selectE.innerHTML = '<option value="">-- Seleccione --</option>';
+            etiquetasFaltantes.forEach(e => {
+                const option = document.createElement('option');
+                option.value = e.id;
+                option.textContent = e.nombre;
+                selectE.appendChild(option);
+            });
+        }
+
+        function abrirModalEtiqueta() {
+            cargarSelectEtiquetas();
+            new bootstrap.Modal(document.getElementById('modalEtiqueta')).show();
+        }
+
+        function agregarEtiquetaReceta() {
+
+            if (recetaDto.etiquetas != null) {
+                const id = Number(document.getElementById("etiqueta").value);
+                const encontrado = etiquetas.find(e => e.id === id);
+                if (encontrado) {
+                    recetaDto.etiquetas.push(encontrado);
+                }
+                cargarEtiquetasReceta();
+                cargarSelectEtiquetas();
+            }
+        }
+
+
+        function autoResizeSummernote() {
+            const $note = $('#descripcionEditor');
+            const $editable = $note.next('.note-editor').find('.note-editable');
+
+            // Reiniciar height para permitir que crezca
+            $editable.css('height', 'auto');
+
+            // Ajustar altura al contenido
+            const scrollHeight = $editable[0].scrollHeight;
+            $editable.css('height', scrollHeight + 'px');
+        }
+
+        function cargarDescripcionEditor() {
+            $('#descripcionEditor').summernote({
+                placeholder: 'Escribe aquí la preparación...',
+                minHeight: 100,
+                height: null,
+                maxHeight: null,
+                callbacks: {
+                    onInit: function() {
+                        autoResizeSummernote();
+                    },
+                    onChange: function(contents, $editable) {
+                        autoResizeSummernote();
+                    }
+                },
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link']]
+                ]
+            });
+        }
+
+
+        async function actualizarImagenDesdeURL(url) {
+            const img = document.getElementById('vistaPreviaImagen');
+            if (url && url.startsWith('http')) {
+                img.src = url;
+            }
+        }
+
+        function cargarIngredientesReceta() {
+            const tbody = document.querySelector('#insumosTable tbody');
+            tbody.innerHTML = '';
+
+            recetaDto.detalles.forEach(d => {
+                const fila = document.createElement('tr');
+                const celdaNombre = document.createElement('td');
+                celdaNombre.textContent = d.insumoNombre;
+
+                const celdaCantidad = document.createElement('td');
+                celdaCantidad.textContent = d.cantidad;
+
+                const celdaUnidad = document.createElement('td');
+                celdaUnidad.textContent = d.unidadMedidaSimbolo;
+
+                const celdaAccion = document.createElement('td');
+                celdaAccion.innerHTML = `
+                        <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarInsumo(${d.id})">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="eliminarInsumoReceta(${d.id})">Eliminar</button>
+                    `;
+
+                fila.appendChild(celdaNombre);
+                fila.appendChild(celdaCantidad);
+                fila.appendChild(celdaUnidad);
+                fila.appendChild(celdaAccion);
+
+                if (d.id < 0) fila.classList.add('table-success');//style.backgroundColor = '#d4edda';
+                tbody.appendChild(fila);
+            });
+        }
+
+        function cargarSelectIngredientes() {
+            const selectI = document.getElementById('insumo');
+            selectI.innerHTML = '<option value="">-- Seleccione --</option>';
+            insumos.sort((a, b) =>
+                a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })
+            ).forEach(e => {
+                const option = document.createElement('option');
+                option.value = e.id;
+                option.textContent = e.nombre;
+                selectI.appendChild(option);
+            });
+        }
+
+        function eliminarInsumoReceta(id) {
+            if (recetaDto.detalles != null) {
+                recetaDto.detalles = recetaDto.detalles.filter(item => item.id !== id);
+                cargarIngredientesReceta();
+            }
+        }
+
+        function guardarInsumoReceta(event) {
+            event.preventDefault();
+            let detalle = null;
+
+            if (document.getElementById('detalleId').value != '') {
+                detalle = recetaDto.detalles.find(obj => obj.id === Number(document.getElementById('detalleId').value));
+            } else {
+                detalle = {
+                    id: -1,
+                };
+            }
+            const insumo = insumos.find(obj => obj.id === Number(document.getElementById('insumo').value));
+
+            detalle.insumoId = insumo.id;
+            detalle.insumoNombre = insumo.nombre;
+            detalle.insumoMedidaId = insumo.unidadId;
+            detalle.unidadMedidaId = document.getElementById('insumoUnidad').value;
+
+            const select = document.getElementById('insumoUnidad');
+            detalle.unidadMedidaSimbolo = select.options[select.selectedIndex].text;
+            detalle.cantidad = document.getElementById('insumoCantidad').value;
+
+            if (detalle.id == -1) {
+                //actualizo el id con uno mas bajo
+                let minId = recetaDto.detalles.length > 0 ? Math.min(...recetaDto.detalles.map(obj => obj.id)) - 1 : -2;
+                if (minId > -2) minId = -2;
+                detalle.id = minId;
+                recetaDto.detalles.push(detalle);
+            }
+
+            cargarIngredientesReceta();
+            bootstrap.Modal.getInstance(document.getElementById('modalInsumo')).hide();
+        }
+
+
+        async function cargarReceta(id) {
+            try {
+                const res = await fetch(API_URL + '/' + id);
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    throw new Error(`Error al obtener la receta: ${res.status} - ${errorText}`);
+                }
+
+                recetaDto = await res.json();
+
+                document.getElementById('foto').value = recetaDto.foto;
+                await actualizarImagenDesdeURL(recetaDto.foto);
+
+                document.getElementById('nombre').value = recetaDto.nombre;
+                document.getElementById('porciones').value = recetaDto.porciones;
+                document.getElementById('pesoPorcion').value = recetaDto.pesoPorcion;
+                document.getElementById('unidadMedida').value = recetaDto.unidadMedidaId;
+                document.getElementById('tiempoEstimado').value = recetaDto.tiempoEstimado;
+                // document.getElementById('editable').value = recetaDto.editable;
+                document.getElementById('descripcionEditor').innerHTML = recetaDto.descripcion;
+                cargarDescripcionEditor();
+                cargarEtiquetasReceta();
+                document.getElementById('titulo').innerText = (recetaDto.nombre != null) ? "Receta: " + recetaDto.nombre : "Registrar receta";
+
+                cargarIngredientesReceta();
+                deshabilitarEdicion();
+
+                if (!(recetaDto.editable)) document.getElementById('btn-habilitar').style.display = 'none';
+
+            } catch (error) {
+                console.error("Error al obtener la receta:", error);
+                alert("No se pudo cargar la receta: " + error.message);
+            }
+        }
+
+
+        function abrirModalAgregarInsumo() {
+            document.getElementById('formInsumo').reset();
+            document.getElementById('detalleId').value = "";
+            document.getElementById('modalInsumoLabel').textContent = 'Agregar Insumo';
+
+            new bootstrap.Modal(document.getElementById('modalInsumo')).show();
+        }
+
+        function abrirModalEditarInsumo(id) {
+            document.getElementById('formInsumo').reset();
+            const detalle = recetaDto.detalles.find(obj => obj.id === id);
+            document.getElementById('detalleId').value = detalle?.id;
+            document.getElementById('insumo').value = detalle?.insumoId;
+            document.getElementById('insumoCantidad').value = detalle?.cantidad;
+            document.getElementById('insumoUnidad').value = detalle?.unidadMedidaId;
+            document.getElementById('modalInsumoLabel').textContent = 'Editar insumo';
+            new bootstrap.Modal(document.getElementById('modalInsumo')).show();
+        }
+
+        function mostrarImagenModal(src) {
+            document.getElementById('imagenAmpliada').src = src;
+            new bootstrap.Modal(document.getElementById('modalImagen')).show();
+        }
+
+        function alternarFavorito(btn) {
+            const esFavorito = btn.classList.contains('btn-danger');
+            if (esFavorito) {
+                btn.classList.remove('btn-danger');
+                btn.classList.remove('text-white');
+                btn.classList.remove('border-0');
+                btn.classList.add('btn-light');
+                btn.classList.add('text-dark');
+                btn.classList.add('border-dark');
+                btn.innerHTML = '❤️ Favorito';
+            } else {
+                btn.classList.remove('btn-light');
+                btn.classList.remove('text-dark');
+                btn.classList.remove('border-dark');
+                btn.classList.add('btn-danger');
+                btn.classList.add('text-white');
+                btn.classList.add('border-0');
+                btn.innerHTML = '🤍 Favorito';
+            }
+            // Codigo para agregar a favoritos
+        }
+
+
+        // Obtener el contenido del editor de Summernote
+        // const contenido = $('#descripcionEditor').summernote('code');
+
+        function abrirModalEliminarReceta() {
+            new bootstrap.Modal(
+                document.getElementById("modalEliminarReceta")
+            ).show();
+        }
+
+        // Confirmar y eliminar receta
+        document.querySelector('#modalEliminarReceta .btn-danger').addEventListener('click', async () => {
+            try {
+                const response = await fetch(`${API_URL}/${recetaDto.id}`, { method: 'DELETE' });
+
+                if (response.ok) {
+                    console.log('Receta eliminada exitosamente.');
+                    window.location.href = "/web/recetas";
+                } else {
+                    const errorText = await response.text();
+                    throw new Error(errorText || `Error al eliminar receta: ${response.status} ${response.statusText || 'Error desconocido'}`);
+                }
+            } catch (error) {
+                console.error("Error al eliminar receta:", error);
+                alert("No se pudo eliminar el receta: " + error.message);
+                bootstrap.Modal.getInstance(document.getElementById('modalEliminarReceta')).hide(); // Cerrar modal en caso de error también
+            }
+        });
+
+        // Guardar receta (crear o editar)
+        async function guardarReceta() {
+            recetaDto.nombre = document.getElementById('nombre').value;
+            recetaDto.porciones = document.getElementById('porciones').value;
+            recetaDto.pesoPorcion = document.getElementById('pesoPorcion').value;
+            recetaDto.unidadMedidaId = document.getElementById('unidadMedida').value;
+            // recetaDto.unidadMedidaSimbolo
+            recetaDto.tiempoEstimado = document.getElementById('tiempoEstimado').value;
+            recetaDto.foto = document.getElementById('foto').value;
+            recetaDto.descripcion = $('#descripcionEditor').summernote('code'); //document.getElementById('descripcionEditor').innerHTML;
+
+            console.log(recetaDto);
+
+            const method = (recetaDto.id > -1) ? 'PUT' : 'POST';
+            const url = recetaDto.id ? `${API_URL}/${recetaDto.id}` : API_URL;
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(recetaDto)
+                });
+
+                if (response.ok) {
+                    console.log('Receta guardada exitosamente.');
+                    window.location.href = "/web/recetas";
+                } else {
+                    const errorText = await response.text();
+                    throw new Error(errorText || `Error al guardar la receta: ${response.status} ${response.statusText || 'Error desconocido'}`);
+                }
+            } catch (error) {
+                console.error("Error al guardar la receta:", error);
+                alert("No se pudo guardar la receta: " + error.message);
+            }
+        }
+
+
+
+        function deshabilitarEdicion() {
+            //mostrar boton editar
+            document.getElementById('btn-habilitar').style.display = '';
+
+            // inhabilitar
+            document.querySelectorAll('input, select, textarea, .btn-editar').forEach(el => {
+                if (!el.closest('.modal')) el.disabled = true;
+            });
+            $('#descripcionEditor').summernote('disable');
+
+            // ocultar
+            document.querySelectorAll('.btn-editar').forEach(el => {
+                el.style.display = 'none';
+            });
+
+            const tabla = document.getElementById('insumosTable');
+            const indiceColumna = 3;
+            for (const fila of tabla.rows) {
+                if (fila.cells.length > indiceColumna) {
+                    fila.cells[indiceColumna].style.display = 'none';
+                }
+            }
+        }
+
+        function habilitarEdicion() {
+
+            //habilitar
+            document.querySelectorAll('input, select, textarea, .btn-editar').forEach(el => {
+                if (!el.closest('.modal')) el.disabled = false;
+            });
+            $('#descripcionEditor').summernote('enable');
+
+            //mostrar
+            document.querySelectorAll('.btn-editar').forEach(el => {
+                el.style.display = 'inline';
+            });
+
+            const tabla = document.getElementById('insumosTable');
+            const indiceColumna = 3;
+            for (const fila of tabla.rows) {
+                if (fila.cells.length > indiceColumna) {
+                    fila.cells[indiceColumna].style.display = '';
+                }
+            }
+
+            //ocultar boton editar
+            document.getElementById('btn-habilitar').style.display = 'none';
+        }
+
+        function regresar() {
+            window.location.href = "/web/recetas";
+        }
+
+
+    </script>
+
+</body>
+
+</html>

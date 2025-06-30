@@ -35,7 +35,7 @@ CREATE TABLE Usuario (
                          id INT PRIMARY KEY AUTO_INCREMENT,
                          id_tipo_usuario INT NOT NULL,
                          nombre_usuario VARCHAR(50) NOT NULL,
-                         dni VARCHAR(8) NOT NULL,
+                         dni VARCHAR(8) NOT NULL UNIQUE,
                          nombres VARCHAR(100) NOT NULL,
                          apellidos VARCHAR(100) NOT NULL,
                          correo VARCHAR(100) NOT NULL UNIQUE,

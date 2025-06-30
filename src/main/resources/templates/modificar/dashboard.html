@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FitX</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            position: fixed;
+        }
+
+        .card img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-white sidebar p-3 border-end">
+                <h5 class="mb-4">FitX</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="dashboard.html">🏠 Dashboard Usuario</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="dashboard_admin.html">📊 Dashboard Admin</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">📋 Menús</a></li>
+                    <li class="nav-item"><a class="nav-link" href="perfil.html">👤 Perfil</a></li>
+                    <hr class="mt-4">
+                    <h4>Mantenimiento</h4>
+                    <li class="nav-item"><a class="nav-link" href="receta.html">🍽️ Recetas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="etiquetas.html">🏷️ Etiquetas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="insumo.html">🧂 Insumos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tipos_insumo.html">📦 Tipos de Insumo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="unidad_medida.html">📏 Unidades de Medida</a></li>
+                    <hr class="mt-4">
+                    <li class="nav-item mt-4"><a class="nav-link text-danger" href="../login.html">🚪Cerrar sesión</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+                <!-- Header -->
+                <div class="pt-4 pb-2 mb-4 border-bottom d-flex justify-content-between align-items-center">
+                    <h2>Menú del día 07/06/2025</h2>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary" onclick="location.href='menu_detalle.html'">🔄
+                            Personalizar menú</button>
+                        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalLista">📋
+                            Lista de compras</button>
+                    </div>                    
+                </div>
+
+                <!-- Recetas Cards -->
+                <h4 class="mb-3 mt-5">Recetas</h4>
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100">
+                            <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2024/12/refreshing-lemon-cheesecake-slice-with-mint-garnish.jpg"
+                                class="card-img-top" alt="Bavarois de Guanabana">
+                            <div class="card-body">
+                                <h5 class="card-title">Bavarois de Guanabana</h5>
+                                <p class="card-text">Un delicioso postre tropical con un toque cremoso.</p>
+                                <ul class="list-unstyled">
+                                    <li>🍽️ 4 porciones</li>
+                                    <li>⚖️ 300 g</li>
+                                    <li>🕰️ 30 min</li>
+                                </ul>
+                                <!-- <div class="d-flex justify-content-between">
+                                    <button class="btn btn-sm btn-warning">Editar</button>
+                                    <button class="btn btn-sm btn-danger">Eliminar</button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100">
+                            <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2025/01/colorful-bowl-of-deliciousness-with-fried-egg.png"
+                                class="card-img-top" alt="Roll Criollo">
+                            <div class="card-body">
+                                <h5 class="card-title">Roll Criollo</h5>
+                                <p class="card-text">Un plato típico con un sabor auténtico y delicioso.</p>
+                                <ul class="list-unstyled">
+                                    <li>🍽️ 2 porciones</li>
+                                    <li>⚖️ 200 g</li>
+                                    <li>🕰️ 45 min</li>
+                                </ul>
+                                <!-- <div class="d-flex justify-content-between">
+                                    <button class="btn btn-sm btn-warning">Editar</button>
+                                    <button class="btn btn-sm btn-danger">Eliminar</button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100">
+                            <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/07/butter-chicken-in-a-pan.jpg"
+                                class="card-img-top" alt="Ensalada Fresca">
+                            <div class="card-body">
+                                <h5 class="card-title">Ensalada Fresca</h5>
+                                <p class="card-text">Una ensalada ligera y nutritiva con pollo y aguacate.</p>
+                                <ul class="list-unstyled">
+                                    <li>🍽️ 2 porciones</li>
+                                    <li>⚖️ 150 g</li>
+                                    <li>🕰️ 20 min</li>
+                                </ul>
+                                <!-- <div class="d-flex justify-content-between">
+                                    <button class="btn btn-sm btn-warning">Editar</button>
+                                    <button class="btn btn-sm btn-danger">Eliminar</button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100">
+                            <img src="https://www.foodiesfeed.com/wp-content/uploads/ff-images/2025/05/grilled-lemon-herb-chicken-breasts-on-a-rustic-tray.webp"
+                                class="card-img-top" alt="Tostada de Aguacate">
+                            <div class="card-body">
+                                <h5 class="card-title">Tostada de Aguacate</h5>
+                                <p class="card-text">Una opción saludable y deliciosa para el desayuno.</p>
+                                <ul class="list-unstyled">
+                                    <li>🍽️ 1 porción</li>
+                                    <li>⚖️ 100 g</li>
+                                    <li>🕰️ 10 min</li>
+                                </ul>
+                                <!-- <div class="d-flex justify-content-between">
+                                    <button class="btn btn-sm btn-warning">Editar</button>
+                                    <button class="btn btn-sm btn-danger">Eliminar</button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mt-4">
+
+                <!-- Información nutricional -->
+                <h4 class="mb-3 mt-5">Información nutricional del menú</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Plato</th>
+                                <th class="text-center">Peso (g)</th>
+                                <th class="text-center">Calorías (Kcal)</th>
+                                <th class="text-center">Proteínas (g)</th>
+                                <th class="text-center">Grasas (g)</th>
+                                <th class="text-center">Carbohidratos (g)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Roll Criollo</td>
+                                <td class="text-center">200</td>
+                                <td class="text-center">450</td>
+                                <td class="text-center">30</td>
+                                <td class="text-center">15</td>
+                                <td class="text-center">40</td>
+                            </tr>
+                            <tr>
+                                <td>Bavarois de Guanabana</td>
+                                <td class="text-center">200</td>
+                                <td class="text-center">300</td>
+                                <td class="text-center">5</td>
+                                <td class="text-center">20</td>
+                                <td class="text-center">35</td>
+                            </tr>
+                            <tr>
+                                <td>Ensalada Fresca</td>
+                                <td class="text-center">150</td>
+                                <td class="text-center">200</td>
+                                <td class="text-center">20</td>
+                                <td class="text-center">10</td>
+                                <td class="text-center">15</td>
+                            </tr>
+                            <tr>
+                                <td>Tostada de Aguacate</td>
+                                <td class="text-center">100</td>
+                                <td class="text-center">150</td>
+                                <td class="text-center">10</td>
+                                <td class="text-center">5</td>
+                                <td class="text-center">10</td>
+                            </tr>
+                            <!-- Total del menú -->
+                            <tr class="table-secondary">
+                                <td><strong>Total menú</strong></td>
+                                <td class="text-center">650</td>
+                                <td class="text-center"><strong>1100</strong></td>
+                                <td class="text-center"><strong>65</strong></td>
+                                <td class="text-center"><strong>50</strong></td>
+                                <td class="text-center"><strong>100</strong></td>
+                            </tr>
+                            <!-- Recomendación del sistema -->
+                            <tr class="table-secondary">
+                                <td><strong>Recomendación diaria</strong></td>
+                                <td class="text-center">650</td>
+                                <td class="text-center"><strong>2000</strong></td>
+                                <td class="text-center"><strong>75</strong></td>
+                                <td class="text-center"><strong>70</strong></td>
+                                <td class="text-center"><strong>260</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Recomendación del sistema -->
+                <!-- <div class="mt-4">
+                    <h5>Recomendación del sistema (diaria)</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">Calorías recomendadas: <strong>2000 Kcal</strong></li>
+                        <li class="list-group-item">Proteínas recomendadas: <strong>75 g</strong></li>
+                        <li class="list-group-item">Grasas recomendadas: <strong>70 g</strong></li>
+                        <li class="list-group-item">Carbohidratos recomendados: <strong>260 g</strong></li>
+                    </ul>
+                </div> -->
+
+                <!-- Footer -->
+                <footer class="mt-5">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="mb-0">Desarrollado por FitX © 2025. Todos los derechos reservados.</p>
+                        <a href="#" class="text-decoration-none">Política de privacidad</a>
+                    </div>
+                </footer>
+            </main>
+
+        </div>
+    </div>
+
+    <!-- Modal Lista de compras -->
+    <div class="modal fade" id="modalLista" tabindex="-1" aria-labelledby="modalListaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalListaLabel">Lista de Insumos del Menú</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Cantidad</th>
+                                <th>Unidad</th>
+                                <th>Insumo</th>
+                                <th>Usado en</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>kg</td>
+                                <td>Pechuga de pollo</td>
+                                <td>Rollo de Cordon Bleu</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>g</td>
+                                <td>Queso mozzarella</td>
+                                <td>Rollo de Cordon Bleu</td>
+                            </tr>
+                            <tr>
+                                <td>200</td>
+                                <td>g</td>
+                                <td>Lechuga</td>
+                                <td>Ensalada César</td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>g</td>
+                                <td>Queso parmesano</td>
+                                <td>Ensalada César</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>unidades</td>
+                                <td>Limones</td>
+                                <td>Rollo de Cordon Bleu</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>kg</td>
+                                <td>Tomates cherry</td>
+                                <td>Ensalada César</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>kg</td>
+                                <td>Aguacate</td>
+                                <td>Tostada de Aguacate</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-secondary" onclick="window.print()">🖨️ Imprimir</button>
+                    <button class="btn btn-outline-danger">📥 Descargar PDF</button>
+                    <button class="btn btn-success" onclick="enviarWhatsApp()">📲 Enviar por WhatsApp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function enviarWhatsApp() {
+            const mensaje = encodeURIComponent('Lista de compras del menú:\n- 1 kg Pechuga de pollo');
+            window.open(`https://wa.me/?text=${mensaje}`, '_blank');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

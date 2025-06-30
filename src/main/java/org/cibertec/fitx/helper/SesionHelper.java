@@ -16,4 +16,8 @@ public class SesionHelper {
         return obtenerUsuario(session) != null;
     }
 
+    public void postRegistroUsuario(UsuarioDTO usuario, HttpSession session) {
+        session.setAttribute("usuario", usuario);
+    }
+
 }

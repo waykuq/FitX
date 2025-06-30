@@ -20,4 +20,7 @@ public class UsuarioDTO {
     private String apellidos;
     private String correo;
     private String telefono;
+
+    // Solo se usa en el registro
+    private String contraseña;
 }
