@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html
+        lang="es"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout_main.html}" >
+<head>
+    <th:block th:fragment="cabera">
+        <title>Mantenimiento de Suscripciones</title>
+    </th:block>
+</head>
+
+<body>
+<main layout:fragment="content">
+    <!-- Header -->
+    <div class="pt-4 pb-2 mb-5 border-bottom d-flex justify-content-between align-items-center">
+        <h2>Mantenimiento de Suscripciones</h2>
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary" onclick="abrirModalSuscripcion(false)">➕ Agregar Suscripción</button>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <form class="row g-2 mb-5">
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="DNI cliente">
+            <p class="text-muted ps-3">DNI</p>
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Nombre cliente">
+            <p class="text-muted ps-3">Nombre o Apellido</p>
+        </div>
+        <div class="col-md-2">
+            <input type="date" class="form-control">
+            <p class="text-muted ps-3">Fecha inicio</p>
+        </div>
+        <div class="col-md-2">
+            <input type="date" class="form-control">
+            <p class="text-muted ps-3">Fecha fin</p>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select">
+                <option value="">Estado</option>
+                <option>Activo</option>
+                <option>Inactivo</option>
+                <option>Cancelado</option>
+            </select>
+            <p class="text-muted ps-3">Estado</p>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-secondary w-100">🔍 Filtrar</button>
+        </div>
+    </form>
+
+    <!-- Selector por página -->
+    <div class="d-flex justify-content-end align-items-center mb-2">
+        <label for="porPagina" class="me-2 mb-0">Por página:</label>
+        <select id="porPagina" class="form-select w-auto">
+            <option>5</option>
+            <option selected>10</option>
+            <option>20</option>
+        </select>
+    </div>
+
+    <!-- Tabla -->
+    <div class="table-responsive">
+        <table class="table table-bordered bg-white">
+            <thead class="table-light">
+            <tr>
+                <th class="text-center">DNI</th>
+                <th>Nombre</th>
+                <th class="text-center">Inicio</th>
+                <th class="text-center">Final</th>
+                <th class="text-center">Precio S/</th>
+                <th class="text-center">Estado</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="text-center">12345678</td>
+                <td>Ana García</td>
+                <td class="text-center">2024-01-01</td>
+                <td class="text-center">2024-06-30</td>
+                <td class="text-center">120</td>
+                <td class="text-center">Activo</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-warning"
+                                onclick="abrirModalSuscripcion(true)">✏️
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                onclick="abrirModalBaja()">⛔
+                        </button>
+                        <button class="btn btn-outline-danger"
+                                onclick="abrirModalEliminar()">🗑️
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">23456789</td>
+                <td>Pedro López</td>
+                <td class="text-center">2023-05-01</td>
+                <td class="text-center">2023-10-31</td>
+                <td class="text-center">100</td>
+                <td class="text-center">Cancelado</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-warning"
+                                onclick="abrirModalSuscripcion(true)">✏️
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                onclick="abrirModalBaja()">⛔
+                        </button>
+                        <button class="btn btn-outline-danger"
+                                onclick="abrirModalEliminar()">🗑️
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">34567890</td>
+                <td>María Torres</td>
+                <td class="text-center">2024-03-01</td>
+                <td class="text-center">2024-09-01</td>
+                <td class="text-center">90</td>
+                <td class="text-center">Activo</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-warning"
+                                onclick="abrirModalSuscripcion(true)">✏️
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                onclick="abrirModalBaja()">⛔
+                        </button>
+                        <button class="btn btn-outline-danger"
+                                onclick="abrirModalEliminar()">🗑️
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">45678901</td>
+                <td>Carlos Ruiz</td>
+                <td class="text-center">2023-01-01</td>
+                <td class="text-center">2023-06-01</td>
+                <td class="text-center">80</td>
+                <td class="text-center">Finalizado</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-warning"
+                                onclick="abrirModalSuscripcion(true)">✏️
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                onclick="abrirModalBaja()">⛔
+                        </button>
+                        <button class="btn btn-outline-danger"
+                                onclick="abrirModalEliminar()">🗑️
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">56789012</td>
+                <td>Lucía Salas</td>
+                <td class="text-center">2024-04-10</td>
+                <td class="text-center">2024-10-10</td>
+                <td class="text-center">120</td>
+                <td class="text-center">Activo</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-warning"
+                                onclick="abrirModalSuscripcion(true)">✏️
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                onclick="abrirModalBaja()">⛔
+                        </button>
+                        <button class="btn btn-outline-danger"
+                                onclick="abrirModalEliminar()">🗑️
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">67890123</td>
+                <td>Mario Díaz</td>
+                <td class="text-center">2024-05-01</td>
+                <td class="text-center">2024-11-01</td>
+                <td class="text-center">140</td>
+                <td class="text-center">Activo</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-warning"
+                                onclick="abrirModalSuscripcion(true)">✏️
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                onclick="abrirModalBaja()">⛔
+                        </button>
+                        <button class="btn btn-outline-danger"
+                                onclick="abrirModalEliminar()">🗑️
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">78901234</td>
+                <td>Rosa Paredes</td>
+                <td class="text-center">2023-02-01</td>
+                <td class="text-center">2023-08-01</td>
+                <td class="text-center">70</td>
+                <td class="text-center">Cancelado</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-warning"
+                                onclick="abrirModalSuscripcion(true)">✏️
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                onclick="abrirModalBaja()">⛔
+                        </button>
+                        <button class="btn btn-outline-danger"
+                                onclick="abrirModalEliminar()">🗑️
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">89012345</td>
+                <td>Elena Herrera</td>
+                <td class="text-center">2023-06-01</td>
+                <td class="text-center">2023-12-01</td>
+                <td class="text-center">110</td>
+                <td class="text-center">Finalizado</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-warning"
+                                onclick="abrirModalSuscripcion(true)">✏️
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                onclick="abrirModalBaja()">⛔
+                        </button>
+                        <button class="btn btn-outline-danger"
+                                onclick="abrirModalEliminar()">🗑️
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">90123456</td>
+                <td>Jorge Castillo</td>
+                <td class="text-center">2024-02-15</td>
+                <td class="text-center">2024-08-15</td>
+                <td class="text-center">130</td>
+                <td class="text-center">Activo</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-warning"
+                                onclick="abrirModalSuscripcion(true)">✏️
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                onclick="abrirModalBaja()">⛔
+                        </button>
+                        <button class="btn btn-outline-danger"
+                                onclick="abrirModalEliminar()">🗑️
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">01234567</td>
+                <td>Diego Ramos</td>
+                <td class="text-center">2023-09-01</td>
+                <td class="text-center">2024-03-01</td>
+                <td class="text-center">115</td>
+                <td class="text-center">Finalizado</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-warning"
+                                onclick="abrirModalSuscripcion(true)">✏️
+                        </button>
+                        <button
+                                class="btn btn-outline-secondary"
+                                onclick="abrirModalBaja()">⛔
+                        </button>
+                        <button class="btn btn-outline-danger"
+                                onclick="abrirModalEliminar()">🗑️
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Paginación -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled"><a class="page-link">Anterior</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+        </ul>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="mb-0">Desarrollado por FitX © 2025. Todos los derechos reservados.</p>
+            <a href="#" class="text-decoration-none">Política de privacidad</a>
+        </div>
+    </footer>
+</main>
+
+<th:block th:fragment="modales">
+
+    <!-- Modal Crear/Editar Suscripción -->
+    <div class="modal fade" id="modalSuscripcion" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Suscripción</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control mb-2" placeholder="Cliente (DNI o nombre)">
+                        <input type="date" class="form-control mb-2" placeholder="Fecha inicio">
+                        <input type="date" class="form-control mb-2" placeholder="Fecha fin">
+                        <input type="number" class="form-control mb-2" placeholder="Precio">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Dar de baja -->
+    <div class="modal fade" id="modalBaja" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Dar de baja</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">¿Deseas dar de baja esta suscripción?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-warning">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Eliminar Suscripción -->
+    <div class="modal fade" id="modalEliminar" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Eliminar Suscripción</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">¿Deseas eliminar esta suscripción? Esta acción no se puede deshacer.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block th:fragment="scripts">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function abrirModalSuscripcion(editar = false) {
+            new bootstrap.Modal(document.getElementById('modalSuscripcion')).show();
+        }
+
+        function abrirModalBaja() {
+            new bootstrap.Modal(document.getElementById('modalBaja')).show();
+        }
+
+        function abrirModalEliminar() {
+            new bootstrap.Modal(document.getElementById('modalEliminar')).show();
+        }
+    </script>
+</th:block>
+
+
+</body>
+
+</html>

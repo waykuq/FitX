@@ -141,4 +141,20 @@ public class HtmlController {
         return "perfil";
     }
 
+    @GetMapping({"/usuarios", "/usuarios/"})
+    String usuarios(Model model, HttpSession session) {
+        String redirect = cargarRol(model, session);
+        if (redirect != null) return redirect;
+
+        return "usuarios";
+    }
+
+    @GetMapping({"/suscripciones", "/suscripciones/"})
+    String suscripciones(Model model, HttpSession session) {
+        String redirect = cargarRol(model, session);
+        if (redirect != null) return redirect;
+
+        return "suscripciones";
+    }
+
 }
