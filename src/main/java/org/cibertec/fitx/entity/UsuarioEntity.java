@@ -2,6 +2,7 @@ package org.cibertec.fitx.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.cibertec.fitx.dto.DietaDto;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
@@ -48,5 +49,8 @@ public class UsuarioEntity {
 
     @Column(name = "telefono")//, length = 15)
     private String telefono;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private PerfilNutricionalEntity perfilNutricional;
 
 }

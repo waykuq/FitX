@@ -10,13 +10,12 @@ import java.time.LocalDate;
 @Table(name = "PerfilNutricional")
 public class PerfilNutricionalEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne
-    // @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_usuario")
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
     private UsuarioEntity usuario;
 
     @Column(name = "peso")
@@ -27,7 +26,7 @@ public class PerfilNutricionalEntity {
 
     // @Lob
     @Column(name = "sexo")
-    private String sexo;
+    private char sexo;
 
     @Column(name = "talla")//, precision = 5, scale = 2)
     private double talla;

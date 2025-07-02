@@ -48,15 +48,13 @@ CREATE TABLE Usuario (
 
 -- Perfil Nutricional
 CREATE TABLE PerfilNutricional (
-                                   id INT PRIMARY KEY AUTO_INCREMENT,
-                                   id_usuario INT NOT NULL,
+                               id INT PRIMARY KEY,
                                    peso DECIMAL(5,2) NOT NULL,
                                    fecha_nacimiento DATE NOT NULL,
                                    sexo ENUM('M', 'F') NOT NULL,
                                    talla DECIMAL(5,2) NOT NULL,
                                    nivel_actividad ENUM('Sedentario', 'Moderadamente activo', 'Activo', 'Muy Activo', 'Enfocado en pérdida de peso', 'Enfocado en ganancia muscular') NOT NULL,
-    -- estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo',
-                                   FOREIGN KEY (id_usuario) REFERENCES Usuario(id) ON DELETE CASCADE
+                                   FOREIGN KEY (id) REFERENCES Usuario(id)
 );
 
 -- Suscripción

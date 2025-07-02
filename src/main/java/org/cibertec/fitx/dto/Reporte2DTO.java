@@ -3,7 +3,6 @@ package org.cibertec.fitx.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 public class Reporte2DTO {

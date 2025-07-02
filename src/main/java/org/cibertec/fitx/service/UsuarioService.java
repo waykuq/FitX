@@ -1,5 +1,6 @@
 package org.cibertec.fitx.service;
 
+import org.cibertec.fitx.dto.DietaDto;
 import org.cibertec.fitx.dto.UsuarioDTO;
 import org.cibertec.fitx.entity.UsuarioEntity;
 
@@ -17,4 +18,5 @@ public interface UsuarioService extends GenericService<UsuarioEntity, Integer> {
 
     public Integer guardarUsuarioDTO(UsuarioDTO usuarioDTO);
 
+    public DietaDto getDieta(Integer idUsuario);
 }

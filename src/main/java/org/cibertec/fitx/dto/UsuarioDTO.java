@@ -1,10 +1,6 @@
 package org.cibertec.fitx.dto;
 
-import groovy.lang.GString;
-import jakarta.persistence.*;
 import lombok.Data;
-import org.cibertec.fitx.entity.TipoUsuarioEntity;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 
@@ -23,4 +19,11 @@ public class UsuarioDTO {
 
     // Solo se usa en el registro
     private String contraseña;
+
+    private double peso;
+    private double altura;
+    private LocalDate fechaNacimiento;
+    private String sexo;
+    private String nivel_actividad;
+
 }

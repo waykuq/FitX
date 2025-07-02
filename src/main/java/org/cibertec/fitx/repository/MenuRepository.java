@@ -8,4 +8,6 @@ public interface MenuRepository extends JpaRepository<MenuEntity, Integer> {
 
     List<MenuEntity> findByUsuarioId(Integer usuarioId);
 
+
+
 }
