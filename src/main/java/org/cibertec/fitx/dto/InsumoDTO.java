@@ -10,4 +10,10 @@ public class InsumoDTO {
     private String tipoNombre;
     private Integer unidadId;
     private String unidadNombre;
+
+    private Double calorias;
+    private Double proteinas;
+    private Double grasas;
+    private Double carbohidratos;
+
 }

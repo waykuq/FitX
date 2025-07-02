@@ -9,9 +9,16 @@ import java.util.Set;
 public class RecetaDetalleDTO {
     private Integer id;
     private Integer recetaId;
+
     private Integer insumoId;
     private String insumoNombre;
     private Integer insumoMedidaId;
+    private double insumoPrecio;
+    private double insumoCalorias;
+    private double insumoProteinas;
+    private double insumoGrasas;
+    private double insumoCarbohidratos;
+
     private Integer unidadMedidaId;
     private String unidadMedidaSimbolo;
     private Double cantidad;

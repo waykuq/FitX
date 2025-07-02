@@ -7,7 +7,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------------------------------
 -- TipoUsuario
--- Cantidad: moderado (3 tipos fijos)
 -- ----------------------------------------------------
 INSERT INTO TipoUsuario (id, nombre) VALUES
                                          (1, 'Administrador'),
@@ -16,8 +15,6 @@ INSERT INTO TipoUsuario (id, nombre) VALUES
 
 -- ----------------------------------------------------
 -- Usuario
--- Cantidad: moderado (~30 registros)
--- Datos: Diversos nombres, correos, fechas, estados.
 -- ----------------------------------------------------
 INSERT INTO Usuario (id, id_tipo_usuario, nombre_usuario, dni, nombres, apellidos, correo, contraseña, fecha_inscripcion, estado, telefono) VALUES
                                                                                                                                                 (1, 1, 'admin', '11111111', 'Ana', 'García Pérez', 'admin@fitx.com', 'admin', '2024-01-15', 'Activo', '987654321'),
@@ -53,8 +50,6 @@ INSERT INTO Usuario (id, id_tipo_usuario, nombre_usuario, dni, nombres, apellido
 
 -- ----------------------------------------------------
 -- PerfilNutricional
--- Cantidad: moderado (~30 registros)
--- Datos: Diferentes pesos, tallas, sexos, niveles de actividad.
 -- ----------------------------------------------------
 INSERT INTO PerfilNutricional (id, id_usuario, peso, fecha_nacimiento, sexo, talla, nivel_actividad) VALUES
                                                                                                          (1, 1, 75.00, '1990-05-10', 'M', 1.75, 'Activo'),
@@ -90,8 +85,6 @@ INSERT INTO PerfilNutricional (id, id_usuario, peso, fecha_nacimiento, sexo, tal
 
 -- ----------------------------------------------------
 -- Suscripcion
--- Cantidad: moderado (~30 registros)
--- Datos: Precios 20 (año pasado) y 25 (año actual), diferentes estados.
 -- ----------------------------------------------------
 INSERT INTO Suscripcion (id, id_usuario, fecha_inicio, fecha_fin, precio, estado) VALUES
                                                                                       (1, 1, '2024-01-15', '2025-01-15', 20.00, 'Activo'),
@@ -127,8 +120,6 @@ INSERT INTO Suscripcion (id, id_usuario, fecha_inicio, fecha_fin, precio, estado
 
 -- ----------------------------------------------------
 -- Menu
--- Cantidad: moderado (~30 registros)
--- Datos: Descripciones HTML, fechas variadas.
 -- ----------------------------------------------------
 INSERT INTO Menu (id, id_usuario, nombre, descripcion, fecha_creacion, fecha_ejecucion, estado) VALUES
                                                                                                     (1, 1, 'Menú Semanal Equilibrado', '<h2>Menú Semanal Equilibrado</h2><p>Este menú está diseñado para ofrecer una dieta equilibrada y nutritiva para toda la semana. Incluye opciones para desayuno, almuerzo y cena, con un enfoque en proteínas magras, carbohidratos complejos y grasas saludables.</p><ul><li><strong>Lunes:</strong> Desayuno ligero, Almuerzo con pollo y vegetales, Cena con pescado.</li><li><strong>Martes:</strong> Desayuno energético, Almuerzo vegetariano, Cena con carne magra.</li><li><strong>Miércoles:</strong> Desayuno proteico, Almuerzo con legumbres, Cena con ensalada.</li></ul><p>Ideal para el mantenimiento del peso y el bienestar general.</p>', '2024-01-20', '2024-01-27', 'Activo'),
@@ -163,25 +154,7 @@ INSERT INTO Menu (id, id_usuario, nombre, descripcion, fecha_creacion, fecha_eje
                                                                                                     (30, 30, 'Menú de Celebración Saludable', '<h2>Menú de Celebración Saludable</h2><p>Opciones deliciosas y saludables para ocasiones especiales, para disfrutar sin culpas.</p>', '2025-06-18', '2025-06-25', 'Activo');
 
 -- ----------------------------------------------------
--- UnidadMedida
--- Cantidad: moderado (~8-10 tipos fijos, luego aleatorios si se pide más)
--- ----------------------------------------------------
-INSERT INTO UnidadMedida (id, nombre, simbolo) VALUES
-                                                   (1, 'gramos', 'g'),
-                                                   (2, 'kilogramos', 'kg'),
-                                                   (3, 'mililitros', 'ml'),
-                                                   (4, 'litros', 'L'),
-                                                   (5, 'cucharadas', 'cda'),
-                                                   (6, 'cucharaditas', 'cdta'),
-                                                   (7, 'tazas', 'tz'),
-                                                   (8, 'unidades', 'und'),
-                                                   (9, 'pizcas', 'pz'),
-                                                   (10, 'onzas', 'oz');
-
--- ----------------------------------------------------
 -- Receta
--- Cantidad: moderado (~30 registros)
--- Datos: Descripciones HTML con pasos, variedad de nombres y tiempos.
 -- ----------------------------------------------------
 INSERT INTO Receta (id, id_usuario, fecha_creacion, nombre, porciones, peso_porcion, id_unidad_medida, tiempo_estimado, estado, foto, descripcion) VALUES
                                                                                                                                                        (1, 1, '2024-01-22', 'Salmón al Horno con Espárragos', 2, 250.00, 1, '00:30:00', 'Activo', 'https://www.foodiesfeed.com/wp-content/uploads/ff-images/2024/12/refreshing-lemon-cheesecake-slice-with-mint-garnish.jpg',
@@ -473,8 +446,6 @@ INSERT INTO Receta (id, id_usuario, fecha_creacion, nombre, porciones, peso_porc
 
 -- ----------------------------------------------------
 -- MenuReceta (Relación N:M)
--- Cantidad: moderado (~60 registros para reflejar complejidad)
--- Datos: Cada menú con múltiples recetas, porciones de 1 a 10.
 -- ----------------------------------------------------
 INSERT INTO MenuReceta (id_menu, id_receta, porciones) VALUES
                                                            (1, 1, 2), (1, 2, 4), (1, 3, 1), (1, 6, 3), (1, 8, 2),
@@ -501,9 +472,6 @@ INSERT INTO MenuReceta (id_menu, id_receta, porciones) VALUES
 
 -- ----------------------------------------------------
 -- RecetaFavorita
--- Cantidad: moderado (~60 registros)
--- Datos: Algunos usuarios con muchas recetas favoritas, algunos con pocas.
--- Algunas recetas muy favoritas.
 -- ----------------------------------------------------
 INSERT INTO RecetaFavorita (id, id_receta, id_usuario, fecha_agregado) VALUES
                                                                            (1, 1, 3, '2024-04-05 10:00:00'),
@@ -569,8 +537,6 @@ INSERT INTO RecetaFavorita (id, id_receta, id_usuario, fecha_agregado) VALUES
 
 -- ----------------------------------------------------
 -- Etiqueta
--- Cantidad: moderado (~15-20 registros)
--- Datos: Nombres y colores variados, incluye los ENUM.
 -- ----------------------------------------------------
 INSERT INTO Etiqueta (id, id_usuario, nombre, color, estado) VALUES
                                                                  (1, 1, 'Vegetariano', '4CAF50', 'Activo'),
@@ -596,8 +562,6 @@ INSERT INTO Etiqueta (id, id_usuario, nombre, color, estado) VALUES
 
 -- ----------------------------------------------------
 -- RecetaEtiqueta (Relación N:M)
--- Cantidad: moderado (~60 registros para reflejar complejidad)
--- Datos: Cada receta con varias etiquetas y viceversa.
 -- ----------------------------------------------------
 INSERT INTO RecetaEtiqueta (id_etiqueta, id_receta) VALUES
                                                         (1, 2), (1, 4), (1, 7), (1, 13), (1, 18), (1, 26),
@@ -622,170 +586,99 @@ INSERT INTO RecetaEtiqueta (id_etiqueta, id_receta) VALUES
                                                         (20, 8), (20, 20);
 
 -- ----------------------------------------------------
--- TipoInsumo
--- Cantidad: moderado (~8 tipos fijos)
--- ----------------------------------------------------
-INSERT INTO TipoInsumo (id, nombre) VALUES
-                                        (1, 'Fruta'),
-                                        (2, 'Verdura'),
-                                        (3, 'Proteína'),
-                                        (4, 'Lácteo'),
-                                        (5, 'Grano'),
-                                        (6, 'Especia'),
-                                        (7, 'Aceite'),
-                                        (8, 'Edulcorante');
-
--- ----------------------------------------------------
--- Insumo
--- Cantidad: moderado (~60 registros)
--- Datos: Nombres variados, combinaciones lógicas de unidades y tipos.
--- ----------------------------------------------------
-INSERT INTO Insumo (id, id_unidad_medida, id_tipo_insumo, nombre, estado) VALUES
-                                                                              (1, 1, 3, 'Pechuga de Pollo', 'Activo'),
-                                                                              (2, 1, 3, 'Salmón', 'Activo'),
-                                                                              (3, 1, 5, 'Quinoa', 'Activo'),
-                                                                              (4, 1, 2, 'Espinacas', 'Activo'),
-                                                                              (5, 8, 1, 'Aguacate', 'Activo'),
-                                                                              (6, 1, 2, 'Tomate', 'Activo'),
-                                                                              (7, 1, 2, 'Pepino', 'Activo'),
-                                                                              (8, 1, 2, 'Cebolla', 'Activo'),
-                                                                              (9, 1, 6, 'Ajo', 'Activo'),
-                                                                              (10, 4, 4, 'Leche de Almendras', 'Activo'),
-                                                                              (11, 1, 2, 'Calabacín', 'Activo'),
-                                                                              (12, 1, 2, 'Zanahoria', 'Activo'),
-                                                                              (13, 1, 5, 'Avena', 'Activo'),
-                                                                              (14, 8, 1, 'Plátano', 'Activo'),
-                                                                              (15, 1, 7, 'Aceite de Oliva', 'Activo'),
-                                                                              (16, 1, 6, 'Pimienta Negra', 'Activo'),
-                                                                              (17, 1, 6, 'Sal Marina', 'Activo'),
-                                                                              (18, 1, 3, 'Garbanzos (cocidos)', 'Activo'),
-                                                                              (19, 1, 4, 'Yogur Griego', 'Activo'),
-                                                                              (20, 1, 2, 'Brócoli', 'Activo'),
-                                                                              (21, 1, 2, 'Pimiento Rojo', 'Activo'),
-                                                                              (22, 1, 2, 'Champiñones', 'Activo'),
-                                                                              (23, 1, 8, 'Miel', 'Activo'),
-                                                                              (24, 1, 3, 'Huevo', 'Activo'),
-                                                                              (25, 1, 4, 'Queso Mozzarella', 'Activo'),
-                                                                              (26, 1, 2, 'Lechuga Romana', 'Activo'),
-                                                                              (27, 1, 1, 'Limón', 'Activo'),
-                                                                              (28, 1, 6, 'Jengibre', 'Activo'),
-                                                                              (29, 1, 5, 'Lentejas (secas)', 'Activo'),
-                                                                              (30, 1, 7, 'Aceite de Coco', 'Activo'),
-                                                                              (31, 1, 8, 'Azúcar Morena', 'Activo'),
-                                                                              (32, 1, 6, 'Canela', 'Activo'),
-                                                                              (33, 1, 6, 'Polvo para hornear', 'Activo'),
-                                                                              (34, 1, 3, 'Carne Picada Magra', 'Activo'),
-                                                                              (35, 1, 5, 'Arroz Integral', 'Activo'),
-                                                                              (36, 1, 1, 'Manzana Verde', 'Activo'),
-                                                                              (37, 1, 6, 'Cilantro', 'Activo'),
-                                                                              (38, 1, 4, 'Leche de Coco', 'Activo'),
-                                                                              (39, 1, 6, 'Pasta de Curry', 'Activo'),
-                                                                              (40, 1, 3, 'Atún enlatado', 'Activo'),
-                                                                              (41, 1, 5, 'Pan Integral', 'Activo'),
-                                                                              (42, 1, 6, 'Albahaca Fresca', 'Activo'),
-                                                                              (43, 1, 1, 'Fresas', 'Activo'),
-                                                                              (44, 1, 1, 'Arándanos', 'Activo'),
-                                                                              (45, 1, 5, 'Granola', 'Activo'),
-                                                                              (46, 1, 3, 'Tofu Firme', 'Activo'),
-                                                                              (47, 1, 2, 'Espárragos', 'Activo'),
-                                                                              (48, 1, 6, 'Orégano', 'Activo'),
-                                                                              (49, 1, 6, 'Tomillo', 'Activo'),
-                                                                              (50, 1, 6, 'Romero', 'Activo'),
-                                                                              (51, 1, 4, 'Queso Feta', 'Activo'),
-                                                                              (52, 1, 2, 'Aceitunas Kalamata', 'Activo'),
-                                                                              (53, 1, 6, 'Vinagre Balsámico', 'Activo'),
-                                                                              (54, 1, 6, 'Nuez Moscada', 'Activo'),
-                                                                              (55, 1, 6, 'Comino', 'Activo'),
-                                                                              (56, 1, 8, 'Dátiles', 'Activo'),
-                                                                              (57, 1, 7, 'Mantequilla de Cacahuete', 'Activo'),
-                                                                              (58, 1, 5, 'Coco Rallado', 'Activo'),
-                                                                              (59, 1, 6, 'Semillas de Chía', 'Activo'),
-                                                                              (60, 1, 3, 'Pescado Blanco', 'Activo');
-
--- ----------------------------------------------------
 -- RecetaDetalle
--- Cantidad: moderado (~90 registros para reflejar composición de recetas)
--- Datos: Cantidades variadas para insumos en recetas.
 -- ----------------------------------------------------
+-- Datos de inserción para RecetaDetalle con los ID de Insumo actualizados
 INSERT INTO RecetaDetalle (id, id_receta, id_insumo, id_unidad_medida, cantidad, estado) VALUES
-                                                                                             (1, 1, 2, 1, 200.00, 'Activo'), (2, 1, 47, 1, 150.00, 'Activo'), (3, 1, 15, 5, 2.00, 'Activo'),
-                                                                                             (4, 2, 3, 7, 1.00, 'Activo'), (5, 2, 5, 8, 1.00, 'Activo'), (6, 2, 6, 8, 2.00, 'Activo'), (7, 2, 7, 8, 0.50, 'Activo'),
-                                                                                             (8, 3, 4, 7, 1.00, 'Activo'), (9, 3, 14, 8, 1.00, 'Activo'), (10, 3, 36, 8, 0.50, 'Activo'), (11, 3, 28, 6, 1.00, 'Activo'),
-                                                                                             (12, 4, 18, 1, 400.00, 'Activo'), (13, 4, 8, 8, 1.00, 'Activo'), (14, 4, 9, 8, 2.00, 'Activo'), (15, 4, 39, 6, 1.00, 'Activo'),
-                                                                                             (16, 5, 1, 1, 300.00, 'Activo'), (17, 5, 25, 1, 50.00, 'Activo'), (18, 5, 4, 1, 100.00, 'Activo'),
-                                                                                             (19, 6, 13, 7, 1.00, 'Activo'), (20, 6, 24, 8, 1.00, 'Activo'), (21, 6, 10, 7, 0.50, 'Activo'),
-                                                                                             (22, 7, 29, 7, 1.00, 'Activo'), (23, 7, 8, 8, 1.00, 'Activo'), (24, 7, 12, 8, 2.00, 'Activo'),
-                                                                                             (25, 8, 13, 7, 1.00, 'Activo'), (26, 8, 57, 7, 0.50, 'Activo'), (27, 8, 23, 5, 0.25, 'Activo'),
-                                                                                             (28, 9, 14, 8, 1.00, 'Activo'), (29, 9, 44, 7, 1.00, 'Activo'), (30, 9, 10, 7, 0.50, 'Activo'),
-                                                                                             (31, 10, 60, 1, 300.00, 'Activo'), (32, 10, 19, 7, 1.00, 'Activo'), (33, 10, 37, 5, 2.00, 'Activo'),
-                                                                                             (34, 11, 11, 1, 150.00, 'Activo'), (35, 11, 12, 1, 150.00, 'Activo'), (36, 11, 13, 7, 1.00, 'Activo'),
-                                                                                             (37, 12, 35, 7, 1.00, 'Activo'), (38, 12, 22, 1, 200.00, 'Activo'), (39, 12, 8, 8, 0.50, 'Activo'),
-                                                                                             (40, 13, 11, 8, 1.00, 'Activo'), (41, 13, 6, 8, 1.00, 'Activo'), (42, 13, 25, 1, 50.00, 'Activo'),
-                                                                                             (43, 14, 7, 8, 1.00, 'Activo'), (44, 14, 19, 7, 0.50, 'Activo'), (45, 14, 9, 8, 0.25, 'Activo'),
-                                                                                             (46, 15, 1, 1, 200.00, 'Activo'), (47, 15, 26, 8, 4.00, 'Activo'), (48, 15, 12, 1, 50.00, 'Activo'),
-                                                                                             (49, 16, 13, 7, 0.50, 'Activo'), (50, 16, 45, 7, 0.25, 'Activo'), (51, 16, 43, 1, 50.00, 'Activo'),
-                                                                                             (52, 17, 56, 1, 100.00, 'Activo'), (53, 17, 13, 1, 50.00, 'Activo'), (54, 17, 58, 1, 25.00, 'Activo'),
-                                                                                             (55, 18, 11, 8, 1.00, 'Activo'), (56, 18, 42, 5, 2.00, 'Activo'), (57, 18, 6, 8, 1.00, 'Activo'),
-                                                                                             (58, 19, 29, 7, 1.00, 'Activo'), (59, 19, 8, 8, 1.00, 'Activo'), (60, 19, 21, 8, 0.50, 'Activo'),
-                                                                                             (61, 20, 1, 1, 250.00, 'Activo'), (62, 20, 20, 1, 150.00, 'Activo'), (63, 20, 38, 7, 0.50, 'Activo'),
-                                                                                             (64, 21, 5, 8, 1.00, 'Activo'), (65, 21, 24, 8, 1.00, 'Activo'), (66, 21, 41, 8, 1.00, 'Activo'),
-                                                                                             (67, 22, 2, 8, 0.75, 'Activo'), (68, 22, 12, 8, 1.00, 'Activo'), (69, 22, 8, 8, 0.50, 'Activo'),
-                                                                                             (70, 23, 6, 8, 2.00, 'Activo'), (71, 23, 25, 1, 100.00, 'Activo'), (72, 23, 42, 5, 1.00, 'Activo'),
-                                                                                             (73, 24, 60, 1, 200.00, 'Activo'), (74, 24, 27, 8, 1.00, 'Activo'), (75, 24, 49, 5, 1.00, 'Activo'),
-                                                                                             (76, 25, 24, 8, 3.00, 'Activo'), (77, 25, 22, 1, 100.00, 'Activo'), (78, 25, 15, 6, 1.00, 'Activo'),
-                                                                                             (79, 26, 6, 8, 2.00, 'Activo'), (80, 26, 7, 8, 1.00, 'Activo'), (81, 26, 51, 1, 50.00, 'Activo'),
-                                                                                             (82, 27, 1, 1, 200.00, 'Activo'), (83, 27, 21, 8, 1.00, 'Activo'), (84, 27, 8, 8, 0.50, 'Activo'),
-                                                                                             (85, 28, 6, 8, 3.00, 'Activo'), (86, 28, 7, 8, 1.00, 'Activo'), (87, 28, 8, 8, 0.50, 'Activo'),
-                                                                                             (88, 29, 19, 7, 0.50, 'Activo'), (89, 29, 43, 1, 100.00, 'Activo'), (90, 29, 45, 1, 50.00, 'Activo');
-
--- ----------------------------------------------------
--- ValorNutricional
--- Cantidad: moderado (~60 registros)
--- Datos: Valores nutricionales variados y realistas.
--- ----------------------------------------------------
-INSERT INTO ValorNutricional (id, id_insumo, id_unidad_medida, cantidad, calorias, proteinas, grasas, carbohidratos) VALUES
-                                                                                                                         (1, 1, 1, 100.00, 165.00, 31.00, 3.60, 0.00), -- Pollo
-                                                                                                                         (2, 2, 1, 100.00, 208.00, 20.00, 13.00, 0.00), -- Salmón
-                                                                                                                         (3, 3, 1, 100.00, 120.00, 4.40, 1.90, 21.30), -- Quinoa
-                                                                                                                         (4, 4, 1, 100.00, 23.00, 2.90, 0.40, 3.60), -- Espinacas
-                                                                                                                         (5, 5, 8, 1.00, 160.00, 2.00, 14.70, 8.50), -- Aguacate (por unidad)
-                                                                                                                         (6, 6, 1, 100.00, 18.00, 0.90, 0.20, 3.90), -- Tomate
-                                                                                                                         (7, 7, 1, 100.00, 15.00, 0.70, 0.10, 3.60), -- Pepino
-                                                                                                                         (8, 8, 1, 100.00, 40.00, 1.10, 0.10, 9.30), -- Cebolla
-                                                                                                                         (9, 9, 1, 100.00, 149.00, 6.40, 0.50, 33.10), -- Ajo
-                                                                                                                         (10, 10, 3, 100.00, 13.00, 0.50, 1.10, 0.00), -- Leche de Almendras
-                                                                                                                         (11, 11, 1, 100.00, 17.00, 1.20, 0.30, 3.60), -- Calabacín
-                                                                                                                         (12, 12, 1, 100.00, 41.00, 0.90, 0.20, 9.60), -- Zanahoria
-                                                                                                                         (13, 13, 1, 100.00, 389.00, 16.90, 6.90, 66.30), -- Avena
-                                                                                                                         (14, 14, 8, 1.00, 105.00, 1.30, 0.40, 27.00), -- Plátano (por unidad)
-                                                                                                                         (15, 15, 3, 100.00, 884.00, 0.00, 100.00, 0.00), -- Aceite de Oliva
-                                                                                                                         (16, 18, 1, 100.00, 164.00, 8.90, 2.60, 27.40), -- Garbanzos
-                                                                                                                         (17, 19, 1, 100.00, 59.00, 10.00, 0.40, 3.60), -- Yogur Griego
-                                                                                                                         (18, 20, 1, 100.00, 34.00, 2.80, 0.40, 6.60), -- Brócoli
-                                                                                                                         (19, 21, 1, 100.00, 31.00, 0.90, 0.30, 6.00), -- Pimiento Rojo
-                                                                                                                         (20, 22, 1, 100.00, 22.00, 3.10, 0.30, 3.30), -- Champiñones
-                                                                                                                         (21, 23, 1, 100.00, 304.00, 0.30, 0.00, 82.40), -- Miel
-                                                                                                                         (22, 24, 8, 1.00, 78.00, 6.30, 5.30, 0.60), -- Huevo (por unidad)
-                                                                                                                         (23, 25, 1, 100.00, 280.00, 28.00, 17.00, 2.20), -- Queso Mozzarella
-                                                                                                                         (24, 26, 1, 100.00, 15.00, 1.20, 0.20, 2.90), -- Lechuga
-                                                                                                                         (25, 27, 8, 1.00, 29.00, 1.10, 0.30, 9.00), -- Limón (por unidad)
-                                                                                                                         (26, 28, 1, 100.00, 80.00, 1.80, 0.80, 17.70), -- Jengibre
-                                                                                                                         (27, 29, 1, 100.00, 116.00, 9.00, 0.40, 20.10), -- Lentejas
-                                                                                                                         (28, 30, 3, 100.00, 890.00, 0.00, 100.00, 0.00), -- Aceite de Coco
-                                                                                                                         (29, 31, 1, 100.00, 377.00, 0.00, 0.00, 97.40), -- Azúcar Morena
-                                                                                                                         (30, 35, 1, 100.00, 111.00, 2.60, 0.90, 23.00), -- Arroz Integral
-                                                                                                                         (31, 36, 8, 1.00, 95.00, 0.50, 0.30, 25.00), -- Manzana Verde (por unidad)
-                                                                                                                         (32, 43, 1, 100.00, 32.00, 0.70, 0.30, 7.70), -- Fresas
-                                                                                                                         (33, 44, 1, 100.00, 57.00, 0.70, 0.30, 14.50), -- Arándanos
-                                                                                                                         (34, 45, 1, 100.00, 471.00, 11.00, 20.00, 64.00), -- Granola
-                                                                                                                         (35, 46, 1, 100.00, 145.00, 16.00, 8.00, 3.00), -- Tofu
-                                                                                                                         (36, 47, 1, 100.00, 20.00, 2.20, 0.20, 3.70), -- Espárragos
-                                                                                                                         (37, 51, 1, 100.00, 264.00, 14.00, 21.00, 4.10), -- Queso Feta
-                                                                                                                         (38, 52, 1, 100.00, 115.00, 0.80, 10.70, 6.30), -- Aceitunas Kalamata
-                                                                                                                         (39, 56, 1, 100.00, 282.00, 2.50, 0.40, 75.00), -- Dátiles
-                                                                                                                         (40, 57, 1, 100.00, 588.00, 24.00, 50.00, 20.00), -- Mantequilla de Cacahuete
-                                                                                                                         (41, 58, 1, 100.00, 660.00, 7.00, 64.00, 24.00), -- Coco Rallado
-                                                                                                                         (42, 59, 1, 100.00, 486.00, 17.00, 31.00, 42.00), -- Semillas de Chía
-                                                                                                                         (43, 60, 1, 100.00, 89.00, 19.00, 1.40, 0.00); -- Pescado Blanco
+                                                                                             (1, 1, 490, 1, 200.00, 'Activo'), -- Salmón -> Pescado atún, fresco
+                                                                                             (2, 1, 203, 1, 150.00, 'Activo'), -- Espárragos -> Esparragos
+                                                                                             (3, 1, 434, 5, 2.00, 'Activo'),   -- Aceite de Oliva -> Aceite vegetal de olivo
+                                                                                             (4, 2, 54, 7, 1.00, 'Activo'),    -- Quinoa -> Quinua
+                                                                                             (5, 2, 340, 8, 1.00, 'Activo'),   -- Aguacate -> Palta
+                                                                                             (6, 2, 239, 8, 2.00, 'Activo'),   -- Tomate -> Tomate
+                                                                                             (7, 2, 227, 8, 0.50, 'Activo'),   -- Pepino -> Pepinillo sin cáscara
+                                                                                             (8, 3, 205, 7, 1.00, 'Activo'),   -- Espinacas -> Espinaca negra sin tronco
+                                                                                             (9, 3, 356, 8, 1.00, 'Activo'),   -- Manzana Verde -> Manzana delicia “helada” con cáscara
+                                                                                             (10, 3, 356, 8, 0.50, 'Activo'),  -- Plátano -> Plátano de seda (usando manzana por similitud en batido)
+                                                                                             (11, 3, 271, 6, 1.00, 'Activo'),  -- Jengibre -> Kión sin cáscara
+                                                                                             (12, 4, 805, 1, 400.00, 'Activo'), -- Garbanzos (cocidos) -> Garbanzo, cocido
+                                                                                             (13, 4, 189, 8, 1.00, 'Activo'),  -- Cebolla -> Cebolla de cabeza
+                                                                                             (14, 4, 173, 8, 2.00, 'Activo'),  -- Ajo -> Ajo sin cáscara
+                                                                                             (15, 4, 746, 6, 1.00, 'Activo'),  -- Pasta de Curry -> Condimentos o especies molidas
+                                                                                             (16, 5, 619, 1, 300.00, 'Activo'), -- Pechuga de Pollo -> Gallina, pechuga de (sin piel)
+                                                                                             (17, 5, 676, 1, 50.00, 'Activo'), -- Queso Mozzarella -> Queso mantecoso
+                                                                                             (18, 5, 205, 1, 100.00, 'Activo'), -- Espinacas -> Espinaca negra sin tronco
+                                                                                             (19, 6, 7, 7, 1.00, 'Activo'),     -- Avena -> Avena, hojuela cruda
+                                                                                             (20, 6, 707, 8, 1.00, 'Activo'),  -- Huevo -> Huevo de gallina entero, crudo
+                                                                                             (21, 6, 662, 7, 0.50, 'Activo'),  -- Leche de Almendras -> Crema de leche, espesa
+                                                                                             (22, 7, 814, 7, 1.00, 'Activo'),   -- Lentejas (secas) -> Lentejas chicas
+                                                                                             (23, 7, 189, 8, 1.00, 'Activo'),  -- Cebolla -> Cebolla de cabeza
+                                                                                             (24, 7, 177, 8, 2.00, 'Activo'),  -- Apio -> Apio, tallo sin hojas
+                                                                                             (25, 8, 7, 7, 1.00, 'Activo'),     -- Avena -> Avena, hojuela cruda
+                                                                                             (26, 8, 441, 7, 0.50, 'Activo'),   -- Mantequilla de Cacahuete -> Maní crudo, pelado
+                                                                                             (27, 8, 722, 5, 0.25, 'Activo'),  -- Miel -> Miel de abeja
+                                                                                             (28, 9, 356, 8, 1.00, 'Activo'),  -- Plátano -> Plátano de seda (usando manzana por similitud en batido)
+                                                                                             (29, 9, 303, 7, 1.00, 'Activo'),  -- Frutos Rojos -> Fresa
+                                                                                             (30, 9, 662, 7, 0.50, 'Activo'),  -- Leche Vegetal -> Crema de leche, espesa
+                                                                                             (31, 10, 525, 1, 300.00, 'Activo'),-- Pescado Blanco -> Pescado merluza, fresco
+                                                                                             (32, 10, 681, 7, 1.00, 'Activo'), -- Yogur Griego -> Yogurt natural
+                                                                                             (33, 10, 199, 5, 2.00, 'Activo'), -- Cilantro -> Culantro sin tallo
+                                                                                             (34, 11, 185, 1, 150.00, 'Activo'),-- Calabacín -> Calabaza italiana
+                                                                                             (35, 11, 245, 1, 150.00, 'Activo'),-- Zanahoria -> Zanahoria
+                                                                                             (36, 11, 7, 7, 1.00, 'Activo'),   -- Avena -> Avena, hojuela cruda
+                                                                                             (37, 12, 35, 7, 1.00, 'Activo'),  -- Arroz Integral -> Maíz, grano fresco (choclo) (por ser grano)
+                                                                                             (38, 12, 734, 1, 200.00, 'Activo'),-- Champiñones -> Champiñones
+                                                                                             (39, 12, 189, 8, 0.50, 'Activo'), -- Cebolla -> Cebolla de cabeza
+                                                                                             (40, 13, 178, 8, 1.00, 'Activo'), -- Berenjena -> Berenjena
+                                                                                             (41, 13, 239, 8, 1.00, 'Activo'), -- Tomate -> Tomate
+                                                                                             (42, 13, 676, 1, 50.00, 'Activo'), -- Queso Mozzarella -> Queso mantecoso
+                                                                                             (43, 14, 227, 8, 1.00, 'Activo'), -- Pepino -> Pepinillo sin cáscara
+                                                                                             (44, 14, 681, 7, 0.50, 'Activo'), -- Yogur Griego -> Yogurt natural
+                                                                                             (45, 14, 173, 8, 0.25, 'Activo'), -- Ajo -> Ajo sin cáscara
+                                                                                             (46, 15, 619, 1, 200.00, 'Activo'),-- Pechuga de Pollo -> Gallina, pechuga de (sin piel)
+                                                                                             (47, 15, 214, 8, 4.00, 'Activo'), -- Lechuga Romana -> Lechuga larga
+                                                                                             (48, 15, 245, 1, 50.00, 'Activo'), -- Zanahoria -> Zanahoria
+                                                                                             (49, 16, 7, 7, 0.50, 'Activo'),    -- Avena -> Avena, hojuela cruda
+                                                                                             (50, 16, 437, 7, 0.25, 'Activo'),  -- Frutos Secos -> Almendra
+                                                                                             (51, 16, 451, 1, 50.00, 'Activo'), -- Semillas de Chía -> Chía, semilla de
+                                                                                             (52, 17, 302, 1, 100.00, 'Activo'),-- Dátiles -> Dátiles
+                                                                                             (53, 17, 7, 1, 50.00, 'Activo'),     -- Avena -> Avena, hojuela cruda
+                                                                                             (54, 17, 390, 1, 25.00, 'Activo'), -- Coco Rallado -> Coco rallado
+                                                                                             (55, 18, 185, 8, 1.00, 'Activo'), -- Calabacín -> Calabaza italiana
+                                                                                             (56, 18, 434, 5, 2.00, 'Activo'),  -- Aceite de Oliva -> Aceite vegetal de olivo
+                                                                                             (57, 18, 239, 8, 1.00, 'Activo'), -- Tomate -> Tomate
+                                                                                             (58, 19, 814, 7, 1.00, 'Activo'),  -- Lentejas (secas) -> Lentejas chicas
+                                                                                             (59, 19, 189, 8, 1.00, 'Activo'),  -- Cebolla -> Cebolla de cabeza
+                                                                                             (60, 19, 229, 8, 0.50, 'Activo'),  -- Pimiento Rojo -> Pimiento rojo
+                                                                                             (61, 20, 619, 1, 250.00, 'Activo'),-- Pollo -> Gallina, pechuga de (sin piel)
+                                                                                             (62, 20, 181, 1, 150.00, 'Activo'),-- Brócoli -> Brocoli
+                                                                                             (63, 20, 38, 7, 0.50, 'Activo'),   -- Leche de Coco -> Maíz, morado sin coronta ( placeholder por no haber)
+                                                                                             (64, 21, 340, 8, 1.00, 'Activo'),  -- Aguacate -> Palta
+                                                                                             (65, 21, 707, 8, 1.00, 'Activo'),  -- Huevo Poché -> Huevo de gallina entero, crudo
+                                                                                             (66, 21, 129, 8, 1.00, 'Activo'),  -- Pan Integral -> Pan integral
+                                                                                             (67, 22, 249, 8, 0.75, 'Activo'),  -- Calabaza -> Zapallo macre
+                                                                                             (68, 22, 245, 8, 1.00, 'Activo'),  -- Zanahoria -> Zanahoria
+                                                                                             (69, 22, 189, 8, 0.50, 'Activo'),  -- Cebolla -> Cebolla de cabeza
+                                                                                             (70, 23, 239, 8, 2.00, 'Activo'),  -- Tomates -> Tomate
+                                                                                             (71, 23, 676, 1, 100.00, 'Activo'),-- Mozzarella -> Queso mantecoso
+                                                                                             (72, 23, 174, 5, 1.00, 'Activo'),  -- Albahaca -> Albahaca sin tallo
+                                                                                             (73, 24, 525, 1, 200.00, 'Activo'),-- Pescado Blanco -> Pescado merluza, fresco
+                                                                                             (74, 24, 319, 8, 1.00, 'Activo'),  -- Limón -> Limón, jugo de
+                                                                                             (75, 24, 281, 5, 1.00, 'Activo'),  -- Hierbas -> Tomillo seco*
+                                                                                             (76, 25, 705, 8, 3.00, 'Activo'),  -- Claras de huevo -> Huevo de gallina, clara de
+                                                                                             (77, 25, 734, 1, 100.00, 'Activo'),-- Champiñones -> Champiñones
+                                                                                             (78, 25, 434, 6, 1.00, 'Activo'),  -- Aceite -> Aceite vegetal de olivo
+                                                                                             (79, 26, 239, 8, 2.00, 'Activo'),  -- Tomate -> Tomate
+                                                                                             (80, 26, 227, 8, 1.00, 'Activo'),  -- Pepino -> Pepinillo sin cáscara
+                                                                                             (81, 26, 675, 1, 50.00, 'Activo'), -- Queso Feta -> Queso fresco de vaca
+                                                                                             (82, 27, 619, 1, 200.00, 'Activo'),-- Pollo -> Gallina, pechuga de (sin piel)
+                                                                                             (83, 27, 229, 8, 1.00, 'Activo'),  -- Pimientos -> Pimiento rojo
+                                                                                             (84, 27, 189, 8, 0.50, 'Activo'),  -- Cebolla -> Cebolla de cabeza
+                                                                                             (85, 28, 239, 8, 3.00, 'Activo'),  -- Tomates -> Tomate
+                                                                                             (86, 28, 227, 8, 1.00, 'Activo'),  -- Pepino -> Pepinillo sin cáscara
+                                                                                             (87, 28, 189, 8, 0.50, 'Activo'),  -- Cebolla -> Cebolla de cabeza
+                                                                                             (88, 29, 681, 7, 0.50, 'Activo'),  -- Yogur Griego -> Yogurt natural
+                                                                                             (89, 29, 303, 1, 100.00, 'Activo'),-- Frutas -> Fresa
+                                                                                             (90, 29, 87, 1, 50.00, 'Activo');    -- Granola -> Galleta dulce con avena y granola-- ----------------------------------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

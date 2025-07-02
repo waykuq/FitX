@@ -18,4 +18,8 @@ public class UnidadMedidaEntity {
     @Column(name = "simbolo")//, length = 10)
     private String simbolo;
 
+    @Column(name = "factor_conversion")//, length = 10)
+    private Double factorConversion;
+
+
 }

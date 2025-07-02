@@ -1,8 +1,6 @@
 package org.cibertec.fitx.service.impl;
 
-import org.cibertec.fitx.dto.RecetaDTO;
-import org.cibertec.fitx.dto.EtiquetaMinDTO;
-import org.cibertec.fitx.dto.RecetaDetalleDTO;
+import org.cibertec.fitx.dto.*;
 import org.cibertec.fitx.entity.EtiquetaEntity;
 import org.cibertec.fitx.entity.RecetaDetalleEntity;
 import org.cibertec.fitx.entity.RecetaEntity;
@@ -45,17 +43,19 @@ public class RecetaServiceImpl extends GenericServiceImpl<RecetaEntity, Integer>
 	@Override
 	public List<RecetaDTO> listarRecetaDTO() {
 		List<RecetaEntity> recetas = ((RecetaRepository) repository).findAllWithDetails();
-		return recetas.stream()
+		List<RecetaDTO> temp = recetas.stream()
 				.map(this::mapearEntidadADto)
 				.collect(Collectors.toList());
+		return temp;
 	}
 
 	@Override
 	public List<RecetaDTO> listarPorUsuarioDTO(Integer usuarioId) {
 		List<RecetaEntity> recetas = ((RecetaRepository) repository).findVisiblesPorUsuario(usuarioId);
-		return recetas.stream()
+		List<RecetaDTO> temp = recetas.stream()
 				.map(this::mapearEntidadADto)
 				.collect(Collectors.toList());
+		return temp;
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class RecetaServiceImpl extends GenericServiceImpl<RecetaEntity, Integer>
 		dto.setEtiquetas(etiquetasDTO);
 
 
-		// Lista de detalle
+		// Lista de detalle de insumos
 		List<RecetaDetalleEntity> detalles = detalleRepository.findByRecetaId(recetaEntity.getId());
 
 		Set<RecetaDetalleDTO> detallesDTO = new HashSet<RecetaDetalleDTO>();
@@ -123,6 +123,10 @@ public class RecetaServiceImpl extends GenericServiceImpl<RecetaEntity, Integer>
 						detalleDto.setInsumoId(e.getInsumo().getId());
 						detalleDto.setInsumoNombre(e.getInsumo().getNombre());
 						detalleDto.setInsumoMedidaId(e.getInsumo().getUnidadMedida().getId());
+						detalleDto.setInsumoCalorias(e.getInsumo().getValorNutricional().getCalorias());
+						detalleDto.setInsumoGrasas(e.getInsumo().getValorNutricional().getGrasas());
+						detalleDto.setInsumoCarbohidratos(e.getInsumo().getValorNutricional().getCarbohidratos());
+						detalleDto.setInsumoProteinas(e.getInsumo().getValorNutricional().getProteinas());
 						detalleDto.setUnidadMedidaId(e.getUnidadMedida().getId());
 						detalleDto.setUnidadMedidaSimbolo(e.getUnidadMedida().getSimbolo());
 						detalleDto.setCantidad(e.getCantidad());
@@ -132,6 +136,21 @@ public class RecetaServiceImpl extends GenericServiceImpl<RecetaEntity, Integer>
 		}
 		dto.setDetalles(detallesDTO);
 
+		ValorNutricionalRecetaDTO v = ((RecetaRepository) repository).valorNutricionalRecetaDto(dto.getId());
+		dto.setValorNutricional(v);
+
+		return dto;
+	}
+
+	@Override
+	public RecetaMinDTO mapearEntidadAMinDto(RecetaEntity recetaEntity) {
+		if (recetaEntity == null) {
+			return null;
+		}
+
+		RecetaMinDTO dto = new RecetaMinDTO();
+		dto.setId(recetaEntity.getId());
+		dto.setNombre(recetaEntity.getNombre());
 		return dto;
 	}
 
@@ -160,8 +179,6 @@ public class RecetaServiceImpl extends GenericServiceImpl<RecetaEntity, Integer>
 					.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 			recetaExistente.setUsuario(usuario);
 			recetaExistente.setEstado("Activo");
-
-			repository.save(recetaExistente);
 		} else {
 			recetaExistente = repository.findById(recetaId)
 					.orElseThrow(() -> new RuntimeException("Receta no encontrada con id: " + recetaId));
@@ -253,6 +270,14 @@ public class RecetaServiceImpl extends GenericServiceImpl<RecetaEntity, Integer>
 			nuevoDetalle.setReceta(receta);
 			receta.getDetalles().add(nuevoDetalle);
 		}
+	}
+
+	public List<RecetaMinDTO> listarRecetasCreadasPorUsuarioMinDto(Integer usuarioId) {
+		List<RecetaEntity> recetas = ((RecetaRepository) repository).findByUsuarioId(usuarioId);
+		List<RecetaMinDTO> temp = recetas.stream()
+				.map(this::mapearEntidadAMinDto)
+				.collect(Collectors.toList());
+		return temp;
 	}
 
 }

@@ -16,7 +16,15 @@
             #insumosTable th:nth-child(3),
             #insumosTable td:nth-child(3),
             #insumosTable th:nth-child(4),
-            #insumosTable td:nth-child(4) {
+            #insumosTable td:nth-child(4),
+            #insumosTable th:nth-child(5),
+            #insumosTable td:nth-child(5),
+            #insumosTable th:nth-child(6),
+            #insumosTable td:nth-child(6),
+            #insumosTable th:nth-child(7),
+            #insumosTable td:nth-child(7),
+            #insumosTable th:nth-child(8),
+            #insumosTable td:nth-child(8) {
                 text-align: center;
             }
         </style>
@@ -41,7 +49,11 @@
                         <th>Nombre</th>
                         <th class="text-center">Tipo de insumo</th>
                         <th class="text-center">Unidad de medida</th>
-                        <th class="text-center">Acciones</th>
+                        <th class="text-center">Carlorías (en 100g)</th>
+                        <th class="text-center">Proteinas (en 100g)</th>
+                        <th class="text-center">Grasas (en 100g)</th>
+                        <th class="text-center">Carbohidratos (en 100g)</th>
+                        <th class="text-center col-2">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,18 +87,62 @@
                             <div class="mb-3">
                                 <label class="form-label">Nombre del insumo</label>
                                 <input type="text" class="form-control" name="nombre" id="nombre" required/>
+                                <div class="invalid-feedback">
+                                    Ingrese un nombre válido.
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Tipo de insumo</label>
                                 <select class="form-select" id="tipoInsumo" name="tipoInsumo" required>
                                 </select>
+                                <div class="invalid-feedback">
+                                    Seleccione un tipo de insumo válido.
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Unidad de medida</label>
                                 <select class="form-select" id="unidadMedida" name="unidadMedida" required>
                                 </select>
+                                <div class="invalid-feedback">
+                                    Seleccione una unidad de medida válida.
+                                </div>
                             </div>
                         </div>
+                        <hr>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <h5>Valores nutricionales por 100 g</h5>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Calorias</label>
+                                <input type="number" class="form-control" name="calorias" id="calorias" required/>
+                                <div class="invalid-feedback">
+                                    Ingrese un dato válido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Proteinas</label>
+                                <input type="number" class="form-control" name="proteinas" id="proteinas" required/>
+                                <div class="invalid-feedback">
+                                    Ingrese un dato válido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Grasas</label>
+                                <input type="number" class="form-control" name="grasas" id="grasas" required/>
+                                <div class="invalid-feedback">
+                                    Ingrese un dato válido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Carbohidratos</label>
+                                <input type="number" class="form-control" name="carbohidratos" id="carbohidratos" required/>
+                                <div class="invalid-feedback">
+                                    Ingrese un dato válido.
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                         <div class="modal-footer">
                             <button class="btn btn-primary" type="submit" id="guardarInsumoBtn" name="guardarInsumoBtn">
                                 Guardar
@@ -157,7 +213,7 @@
                     const insumos = await response.json();
 
                     const data = {
-                        headings: ['Nombre', 'Tipo de insumo', 'Unidad de medida', 'Acciones'],
+                        headings: ['Nombre', 'Tipo de insumo', 'Unidad de medida', 'Calorias', 'Proteinas', 'Grasas', 'Carbohidratos', 'Acciones'],
                         data: []
                     };
 
@@ -170,6 +226,10 @@
                             insumo.nombre,
                             insumo.tipoNombre,
                             insumo.unidadNombre,
+                            insumo.calorias,
+                            insumo.proteinas,
+                            insumo.grasas,
+                            insumo.carbohidratos,
                             actionsHtml
                         ]);
                     });
@@ -247,18 +307,13 @@
 
                     document.getElementById('insumoId').value = insumoDto.id;
                     document.getElementById('nombre').value = insumoDto.nombre;
+                    document.getElementById('unidadMedida').value = insumoDto.unidadId ?? '';
+                    document.getElementById('tipoInsumo').value = insumoDto.tipoId ?? '';
 
-                    if (insumoDto.unidadId) {
-                        document.getElementById('unidadMedida').value = insumoDto.unidadId;
-                    } else {
-                        document.getElementById('unidadMedida').value = '';
-                    }
-
-                    if (insumoDto.tipoId) {
-                        document.getElementById('tipoInsumo').value = insumoDto.tipoId;
-                    } else {
-                        document.getElementById('tipoInsumo').value = '';
-                    }
+                    document.getElementById('calorias').value = insumoDto.calorias ?? 0;
+                    document.getElementById('proteinas').value = insumoDto.proteinas ?? 0;
+                    document.getElementById('grasas').value = insumoDto.grasas ?? 0;
+                    document.getElementById('carbohidratos').value = insumoDto.carbohidratos ?? 0;
 
                     document.getElementById('modalInsumoLabel').textContent = 'Editar Insumo';
                     new bootstrap.Modal(document.getElementById('modalInsumo')).show();
@@ -283,13 +338,24 @@
                 const nombre = document.getElementById('nombre').value;
                 const unidadMedidaId = document.getElementById('unidadMedida').value;
                 const tipoInsumoId = document.getElementById('tipoInsumo').value;
+                const calorias = document.getElementById('calorias').value;
+                const proteinas = document.getElementById('proteinas').value;
+                const grasas = document.getElementById('grasas').value;
+                const carbohidratos = document.getElementById('carbohidratos').value;
 
                 const insumo = {
                     id: id ? parseInt(id) : null,
                     nombre: nombre,
-                    unidadMedida: {id: parseInt(unidadMedidaId)},
-                    tipoInsumo: {id: parseInt(tipoInsumoId)}
+                    unidadId: parseInt(unidadMedidaId),
+                    tipoId: parseInt(tipoInsumoId),
+
+                    calorias: calorias,
+                    proteinas: proteinas,
+                    grasas: grasas,
+                    carbohidratos: carbohidratos
                 };
+
+                console.log(insumo);
 
                 const method = id ? 'PUT' : 'POST';
                 const url = id ? `${API_URL}/${id}` : API_URL;

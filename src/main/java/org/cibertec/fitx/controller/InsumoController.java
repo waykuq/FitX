@@ -53,10 +53,9 @@ public class InsumoController {
 
     // 3. Crear nuevo insumo
     @PostMapping
-    public ResponseEntity<String> crearInsumo(@RequestBody InsumoEntity insumo) {
+    public ResponseEntity<String> crearInsumo(@RequestBody InsumoDTO insumoDto) {
         try {
-            insumo.setEstado("Activo");
-            insumoService.guardar(insumo);
+            insumoService.guardarInsumoDTO(insumoDto);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (DataIntegrityViolationException e) {
             System.err.println("Error de integridad de datos al crear insumo: " + e.getMessage());
@@ -72,9 +71,8 @@ public class InsumoController {
 
     // 4. Editar insumo
     @PutMapping("/{id}")
-    public ResponseEntity<String> editarInsumo(@PathVariable Integer id, @RequestBody InsumoEntity insumo) {
+    public ResponseEntity<String> editarInsumo(@PathVariable Integer id, @RequestBody InsumoDTO insumoDto) {
         try {
-//            insumo.setEstado("Activo");
             InsumoEntity actualEntity = insumoService.buscarPorId(id);
 
             if (actualEntity == null) {
@@ -82,12 +80,7 @@ public class InsumoController {
                         .body("Insumo con ID " + id + " no encontrado.");
             }
 
-            actualEntity.setNombre(insumo.getNombre());
-//            actualEntity.setEstado("Activo");
-            actualEntity.setTipoInsumo(insumo.getTipoInsumo());
-            actualEntity.setUnidadMedida(insumo.getUnidadMedida());
-
-            insumoService.guardar(actualEntity);
+            insumoService.guardarInsumoDTO(insumoDto);
             return ResponseEntity.noContent().build();
         } catch (DataIntegrityViolationException e) {
             System.err.println("Error de integridad de datos al editar insumo: " + e.getMessage());

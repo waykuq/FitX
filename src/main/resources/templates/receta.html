@@ -141,14 +141,16 @@
 
 
         function formatearTiempo(tiempo) {
-            const [horas, minutos, segundos] = tiempo.split(":").map(Number);
-            let totalMinutos = horas * 60 + minutos;
-            if (segundos > 0) totalMinutos += 1;
+            if (tiempo) {
+                const [horas, minutos, segundos] = tiempo.split(":").map(Number);
+                let totalMinutos = horas * 60 + minutos;
+                if (segundos > 0) totalMinutos += 1;
 
-            const h = Math.floor(totalMinutos / 60);
-            const m = totalMinutos % 60;
+                const h = Math.floor(totalMinutos / 60);
+                const m = totalMinutos % 60;
+                return (h > 0 ? `${h} h ` : "") + (m > 0 || h === 0 ? `${m} min` : "");
+            } else return "";
 
-            return (h > 0 ? `${h} h ` : "") + (m > 0 || h === 0 ? `${m} min` : "");
         }
 
         function inicializarTabla() {

@@ -73,8 +73,8 @@ public class RecetaEntity {
     @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MenuRecetaEntity> menuRecetas = new HashSet<>();
 
-    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RecetaFavoritaEntity> favoritas = new HashSet<>();
+//    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<RecetaFavoritaEntity> favoritas = new HashSet<>();
 
 
 }

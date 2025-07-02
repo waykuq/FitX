@@ -16,9 +16,13 @@ public class ValorNutricionalEntity {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne
-    // @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_insumo")
+//    @ManyToOne
+//    // @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JoinColumn(name = "id_insumo")
+//    private InsumoEntity insumo;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
     private InsumoEntity insumo;
 
     @ManyToOne

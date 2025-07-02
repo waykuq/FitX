@@ -44,6 +44,7 @@ public class UnidadMedidaServiceImpl extends GenericServiceImpl<UnidadMedidaEnti
 		dto.setId(unidadMedidaEntity.getId());
 		dto.setNombre(unidadMedidaEntity.getNombre());
 		dto.setSimbolo(unidadMedidaEntity.getSimbolo());
+		dto.setFactorConversion(unidadMedidaEntity.getFactorConversion());
 
 		return dto;
 	}

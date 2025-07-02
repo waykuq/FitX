@@ -20,7 +20,15 @@
             #insumosTable th:nth-child(3),
             #insumosTable td:nth-child(3),
             #insumosTable th:nth-child(4),
-            #insumosTable td:nth-child(4) {
+            #insumosTable td:nth-child(4),
+            #informacionNutricionalTable th:nth-child(1),
+            #informacionNutricionalTable td:nth-child(1),
+            #informacionNutricionalTable th:nth-child(2),
+            #informacionNutricionalTable td:nth-child(2),
+            #informacionNutricionalTable th:nth-child(3),
+            #informacionNutricionalTable td:nth-child(3),
+            #informacionNutricionalTable th:nth-child(4),
+            #informacionNutricionalTable td:nth-child(4) {
                 text-align: center;
             }
 
@@ -50,13 +58,14 @@
             <button class="btn btn-danger btn-editar" onclick="abrirModalEliminarReceta()" style="display: none">️
                 Eliminar
             </button>
-            <button class="btn btn-primary btn-editar btn-crear" onclick="guardarReceta()" style="display: none">
+            <button class="btn btn-primary btn-editar btn-crear" onclick="guardarReceta(event)" style="display: none">
                 Guardar
             </button>
 
         </div>
     </div>
 
+    <form id="formReceta" class="needs-validation" novalidate>
     <!-- Datos generales -->
     <div class="row g-4 mb-4">
         <div class="col-md-3">
@@ -84,24 +93,39 @@
             <div class="row g-4 mb-4">
                 <div class="col-md-12">
                     <label class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre">
+                    <input type="text" class="form-control" id="nombre" name="nombre" required />
+                    <div class="invalid-feedback">
+                        Ingrese un nombre válido.
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Porciones</label>
-                    <input type="number" class="form-control" id="porciones" name="porciones">
+                    <input type="number" class="form-control" id="porciones" name="porciones" required />
+                    <div class="invalid-feedback">
+                        Ingrese un número  válido.
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Peso por porción</label>
-                    <input type="number" class="form-control" id="pesoPorcion" name="pesoPorcion">
+                    <input type="number" class="form-control" id="pesoPorcion" name="pesoPorcion" required />
+                    <div class="invalid-feedback">
+                        Ingrese un número  válido.
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Unidad de medida</label>
-                    <select class="form-select" id="unidadMedida" name="unidadMedida" required>
+                    <select class="form-select" id="unidadMedida" name="unidadMedida" required />
                     </select>
+                    <div class="invalid-feedback">
+                        Seleccione una unidad de medida válida.
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Tiempo estimado</label>
                     <input type="time" class="form-control" id="tiempoEstimado" name="tiempoEstimado" step="60">
+                    <div class="invalid-feedback">
+                        Ingrese un tiempo estimado válido.
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label class="form-label">Procedimiento</label>
@@ -115,7 +139,7 @@
     <div class="mb-5">
         <div class="d-flex justify-content-between align-items-center mb-2">
             <h5>Etiquetas</h5>
-            <button class="btn btn-sm btn-success btn-editar btn-crear" onclick="abrirModalEtiqueta()">➕ Agregar
+            <button class="btn btn-sm btn-success btn-editar btn-crear" onclick="abrirModalEtiqueta(event)">➕ Agregar
                 etiqueta
             </button>
         </div>
@@ -129,7 +153,7 @@
     <div class="mb-5">
         <div class="d-flex justify-content-between align-items-center mb-2">
             <h5>Insumos</h5>
-            <button class="btn btn-sm btn-success btn-editar btn-crear" onclick="abrirModalAgregarInsumo()">➕ Agregar
+            <button class="btn btn-sm btn-success btn-editar btn-crear" onclick="abrirModalAgregarInsumo(event)">➕ Agregar
                 insumo
             </button>
         </div>
@@ -149,38 +173,33 @@
     <hr>
 
     <!-- Información nutricional -->
-    <!--                <div class="mb-4">-->
-    <!--                    <h5>Información nutricional por porción</h5>-->
-    <!--                    <table class="table table-bordered bg-white">-->
-    <!--                        <thead class="table-light">-->
-    <!--                            <tr>-->
-    <!--                                <th>Calorías (Kcal)</th>-->
-    <!--                                <th>Proteínas (g)</th>-->
-    <!--                                <th>Grasas (g)</th>-->
-    <!--                                <th>Carbohidratos (g)</th>-->
-    <!--                            </tr>-->
-    <!--                        </thead>-->
-    <!--                        <tbody>-->
-    <!--                            <tr>-->
-    <!--                                <td>230</td>-->
-    <!--                                <td>10</td>-->
-    <!--                                <td>8</td>-->
-    <!--                                <td>28</td>-->
-    <!--                            </tr>-->
-    <!--                        </tbody>-->
-    <!--                    </table>-->
-    <!--                </div>-->
-    <!--                <hr>-->
+    <div class="mb-4">
+        <h5>Información nutricional por porción de <span id="informacionNutricionalTitulo"></span> g</h5>
+        <table class="table table-striped align-middle mt-4 table-hover" id="informacionNutricionalTable" >
+            <thead class="table-light">
+                <tr>
+                    <th>Calorías (Kcal)</th>
+                    <th>Proteínas (g)</th>
+                    <th>Grasas (g)</th>
+                    <th>Carbohidratos (g)</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+
     <!-- Botones -->
     <div class="text-end mt-4">
         <button class="btn btn-secondary" onclick="regresar()"> Regresar</button>
         <button class="btn btn-danger btn-editar" onclick="abrirModalEliminarReceta()" style="display: none">️
             Eliminar
         </button>
-        <button class="btn btn-primary btn-editar btn-crear" onclick="guardarReceta()" style="display: none"> Guardar
+        <button type="submit" class="btn btn-primary btn-editar btn-crear" onclick="guardarReceta(event)" style="display: none"> Guardar
         </button>
     </div>
-
+    </form>
 
     <!-- Footer -->
     <footer class="mt-5">
@@ -196,7 +215,7 @@
     <div class="modal fade" id="modalInsumo" tabindex="-1" aria-labelledby="modalInsumoLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="formInsumo">
+                <form id="formInsumo" class="needs-validation" novalidate>
                     <input type="hidden" id="detalleId">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalInsumoLabel">Agregar insumo</h5>
@@ -207,17 +226,26 @@
                             <label class="form-label">Insumo</label>
                             <!--                            <input type="text" id="buscarInsumo" class="form-control"-->
                             <!--                                placeholder="Ej. Tomate, Pollo...">-->
-                            <select id="insumo" name="insumo" class="form-select">
+                            <select id="insumo" name="insumo" class="form-select" required>
                             </select>
+                            <div class="invalid-feedback">
+                                Seleccione un insumo válido.
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Cantidad</label>
-                            <input type="number" id="insumoCantidad" class="form-control" min="0.01" step="0.1">
+                            <input type="number" id="insumoCantidad" class="form-control" required>
+                            <div class="invalid-feedback">
+                                Ingrese una cantidad válida.
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Unidad de medida</label>
-                            <select id="insumoUnidad" class="form-select">
+                            <select id="insumoUnidad" class="form-select" required>
                             </select>
+                            <div class="invalid-feedback">
+                                Seleccione una unidad de medida válida.
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -395,13 +423,15 @@
                 }
                 insumos = await responseI.json();
 
-                cargarSelectIngredientes();
+                await cargarSelectIngredientes();
             } catch (error) {
                 console.error("Error al cargar los insumos:", error);
                 alert("No se pudieron cargar las opciones para insumos: " + error.message);
             }
         }
 
+
+        // ------------------- Etiquetas
 
         function cargarEtiquetasReceta() {
             var etiquetas = "";
@@ -434,7 +464,10 @@
             });
         }
 
-        function abrirModalEtiqueta() {
+        function abrirModalEtiqueta(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
             cargarSelectEtiquetas();
             new bootstrap.Modal(document.getElementById('modalEtiqueta')).show();
         }
@@ -495,6 +528,8 @@
             }
         }
 
+        // ------------------- Insumos
+
         function cargarIngredientesReceta() {
             const tbody = document.querySelector('#insumosTable tbody');
             tbody.innerHTML = '';
@@ -512,7 +547,7 @@
 
                 const celdaAccion = document.createElement('td');
                 celdaAccion.innerHTML = `
-                        <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarInsumo(${d.id})">Editar</button>
+                        <button class="btn btn-warning btn-sm me-2" onclick="abrirModalEditarInsumo(event, ${d.id})">Editar</button>
                         <button class="btn btn-danger btn-sm" onclick="eliminarInsumoReceta(${d.id})">Eliminar</button>
                     `;
 
@@ -524,9 +559,11 @@
                 if (d.id < 0) fila.classList.add('table-success');
                 tbody.appendChild(fila);
             });
+
+            CalcularValorNutricional()
         }
 
-        function cargarSelectIngredientes() {
+        async function cargarSelectIngredientes() {
             const selectI = document.getElementById('insumo');
             selectI.innerHTML = '<option value="">-- Seleccione --</option>';
             insumos.sort((a, b) =>
@@ -548,6 +585,15 @@
 
         function guardarInsumoReceta(event) {
             event.preventDefault();
+            event.stopPropagation();
+
+            const formInsumo = document.getElementById('formInsumo');
+            // Validación de Bootstrap 5
+            if (!formInsumo.checkValidity()) {
+                formInsumo.classList.add('was-validated');
+                return;
+            }
+
             let detalle = null;
 
             if (document.getElementById('detalleId').value != '') {
@@ -563,6 +609,10 @@
             detalle.insumoNombre = insumo.nombre;
             detalle.insumoMedidaId = insumo.unidadId;
             detalle.unidadMedidaId = document.getElementById('insumoUnidad').value;
+            detalle.insumoCalorias = insumo.calorias;
+            detalle.insumoCarbohidratos = insumo.carbohidratos;
+            detalle.insumoProteinas = insumo.proteinas;
+            detalle.insumoGrasas = insumo.grasas;
 
             const select = document.getElementById('insumoUnidad');
             detalle.unidadMedidaSimbolo = select.options[select.selectedIndex].text;
@@ -581,6 +631,8 @@
         }
 
 
+
+        // ------------------- Insumos
         async function cargarReceta(id) {
             try {
                 const res = await fetch(API_URL + '/' + id);
@@ -617,7 +669,10 @@
         }
 
 
-        function abrirModalAgregarInsumo() {
+        function abrirModalAgregarInsumo(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
             document.getElementById('formInsumo').reset();
             document.getElementById('detalleId').value = "";
             document.getElementById('modalInsumoLabel').textContent = 'Agregar Insumo';
@@ -625,7 +680,10 @@
             new bootstrap.Modal(document.getElementById('modalInsumo')).show();
         }
 
-        function abrirModalEditarInsumo(id) {
+        function abrirModalEditarInsumo(event, id) {
+            event.preventDefault();
+            event.stopPropagation();
+
             document.getElementById('formInsumo').reset();
             const detalle = recetaDto.detalles.find(obj => obj.id === id);
             document.getElementById('detalleId').value = detalle?.id;
@@ -689,7 +747,17 @@
         });
 
         // Guardar receta (crear o editar)
-        async function guardarReceta() {
+        async function guardarReceta(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const formReceta = document.getElementById('formReceta');
+            // Validación de Bootstrap 5
+            if (!formReceta.checkValidity()) {
+                formReceta.classList.add('was-validated');
+                return;
+            }
+
             recetaDto.nombre = document.getElementById('nombre').value;
             recetaDto.porciones = document.getElementById('porciones').value;
             recetaDto.pesoPorcion = document.getElementById('pesoPorcion').value;
@@ -702,7 +770,10 @@
             console.log(recetaDto);
 
             const method = (recetaDto.id > -1) ? 'PUT' : 'POST';
-            const url = recetaDto.id ? `${API_URL}/${recetaDto.id}` : API_URL;
+            const url = (recetaDto.id > -1) ? `${API_URL}/${recetaDto.id}` : API_URL;
+
+            console.log(method +' -> ' +url);
+            alert('hola');
 
             try {
                 const response = await fetch(url, {
@@ -778,6 +849,50 @@
 
         function regresar() {
             window.location.href = "/web/recetas";
+        }
+
+        function CalcularValorNutricional()
+        {
+            if (recetaDto.valorNutricional != null) {
+
+                let calorias = 0, proteinas = 0, carbohidratos = 0, grasas = 0;
+
+                recetaDto.detalles.forEach(e => {
+                    calorias += e.insumoCalorias;
+                    proteinas += e.insumoProteinas;
+                    carbohidratos += e.insumoCarbohidratos;
+                    grasas += e.insumoGrasas;
+                });
+                const pesoPorcion = recetaDto.pesoPorcion ?? 100;
+                const factor_conversion = pesoPorcion / (recetaDto.detalles.length * 100);
+                calorias *= factor_conversion;
+                proteinas *= factor_conversion;
+                carbohidratos *= factor_conversion;
+                grasas = grasas *= factor_conversion;
+
+                const fila = document.createElement('tr');
+                const celdaCalorias = document.createElement('td');
+                celdaCalorias.textContent = calorias.toFixed(2);;
+
+                const celdaProteinas = document.createElement('td');
+                celdaProteinas.textContent = proteinas.toFixed(2);;
+
+                const celdaGrasas = document.createElement('td');
+                celdaGrasas.textContent = grasas.toFixed(2);;
+
+                const celdaCarbohidratos = document.createElement('td');
+                celdaCarbohidratos.textContent = carbohidratos.toFixed(2);;
+
+                fila.appendChild(celdaCalorias);
+                fila.appendChild(celdaProteinas);
+                fila.appendChild(celdaGrasas);
+                fila.appendChild(celdaCarbohidratos);
+
+                const tbody = document.querySelector('#informacionNutricionalTable tbody');
+                tbody.innerHTML = '';
+                tbody.appendChild(fila);
+                document.querySelector('#informacionNutricionalTitulo').innerHTML = pesoPorcion;
+            }
         }
 
     </script>

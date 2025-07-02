@@ -21,6 +21,11 @@ public class InsumoEntity {
     @JoinColumn(name = "id_tipo_insumo")
     private TipoInsumoEntity tipoInsumo;
 
+//    @OneToOne(mappedBy = "insumo", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "insumo", cascade = CascadeType.ALL)
+//    @JoinColumn(name = "id")
+    private ValorNutricionalEntity valorNutricional;
+
     @Column(name = "nombre")
     private String nombre;
 

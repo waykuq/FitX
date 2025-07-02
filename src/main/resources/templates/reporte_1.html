@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html
+        lang="es"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout_main.html}" >
+<head>
+    <th:block th:fragment="cabera">
+        <title>Reporte de Usuarios - FitX</title>
+    </th:block>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <div class="container my-5">
+            <h2 class="mb-5">Reporte de Usuarios (<span th:text="${reportes.size()}">0</span>)</h2>
+
+            <!-- Filtros -->
+            <form class="row g-2 mb-5" action="/web/reporte/usuario" method="post">
+                <div class="col-md-4">
+                    <select class="form-select" id="usuario" name="usuario" >
+                        <option value="-1">Todos</option>
+                        <option
+                                th:each="u : ${usuarios}"
+                                th:value="${u.id}"
+                                th:text="${u.nombres + ' ' + u.apellidos}"
+                                th:selected="${u.id == usuarioSeleccionado}"
+                        >Usuarios</option>
+                    </select>
+                    <p class="text-muted ps-3">Usuario</p>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="rol" name="rol" >
+                        <option value="-1">Todos</option>
+                        <option
+                                th:each="r : ${roles}"
+                                th:value="${r.id}"
+                                th:text="${r.nombre}"
+                                th:selected="${r.id == rolSeleccionado}"
+                        >Rol</option>
+                    </select>
+                    <p class="text-muted ps-3">Rol</p>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="suscripcion" name="suscripcion" >
+                        <option value="-1">Todos</option>
+                        <option value="Activo" th:selected="${suscripcionSeleccionado == 'Activo'}" >Activo</option>
+                        <option value="Inactivo" th:selected="${suscripcionSeleccionado == 'Inactivo'}">Inactivo</option>
+<!--                        <option value="suspendido">Baja</option>-->
+                    </select>
+                    <p class="text-muted ps-3">Suscripción</p>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-secondary w-100">🔍 Filtrar</button>
+                </div>
+            </form>
+
+
+            <div th:each="reporte : ${reportes}" class="card mb-4 shadow-sm">
+                <div class="card mb-4 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title p-3 mb-3 bg-primary-subtle" >
+                            👤 <span th:text="${reporte.rol + ': ' + reporte.nombres + ' ' + reporte.apellidos}">Nombre Usuario</span>
+                        </h5>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-1"><strong>DNI:</strong> <span th:text="${reporte.dni}">11111111</span></p>
+                                <p class="mb-1"><strong>Correo:</strong> <span th:text="${reporte.correo}">correo@example.com</span></p>
+                                <p class="mb-1"><strong>Teléfono:</strong> <span th:text="${reporte.telefono}">987654321</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-1">
+                                    <strong>Estado suscripción:</strong>
+                                    <span th:class="'badge rounded-pill ' + (${reporte.estadoSuscripcion} == 'Activo' ? 'bg-success' : 'bg-secondary')"
+                                          th:text="${reporte.estadoSuscripcion}">Inactivo</span>
+                                </p>
+                                <p class="mb-1">
+                                    <strong>Última suscripción:</strong>
+                                    <span th:text="${reporte.fechaInicioUltimaSuscripcion}">2024-01-01</span> a
+                                    <span th:text="${reporte.fechaFinUltimaSuscripcion}">2024-12-31</span>
+                                </p>
+                                <p class="mb-1"><strong>Total suscripciones:</strong> <span th:text="${reporte.suscripciones.size()}">0</span></p>
+                                <p class="mb-1"><strong>Menús registrados:</strong> <span th:text="${reporte.menus.size()}">0</span></p>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <h6 class="text-muted text-uppercase">🍽️ Menús</h6>
+                        <table class="table table-sm table-bordered mb-4">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Fecha de ejecución</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="menu : ${reporte.menus}">
+                                <td th:text="${menu.nombre}">Menú semanal</td>
+                                <td th:text="${menu.fechaEjecucion}">2024-01-01</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <h6 class="text-muted text-uppercase">📖 Recetas creadas</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item py-1" th:each="receta : ${reporte.recetas}" th:text="${receta.nombre}">Ensalada César</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0">Desarrollado por FitX © 2025. Todos los derechos reservados.</p>
+                <a href="#" class="text-decoration-none">Política de privacidad</a>
+            </div>
+        </footer>
+    </main>
+
+    <th:block th:fragment="modales">
+    </th:block>
+
+    <th:block th:fragment="scripts">
+    </th:block>
+
+</body>
+
+</html>

@@ -86,7 +86,8 @@ CREATE TABLE Menu (
 CREATE TABLE UnidadMedida (
                               id INT PRIMARY KEY AUTO_INCREMENT,
                               nombre VARCHAR(50) NOT NULL,
-                              simbolo VARCHAR(10) NOT NULL
+                              simbolo VARCHAR(10) NOT NULL,
+                              factor_conversion DOUBLE NOT NULL DEFAULT 1.0
 );
 
 -- Receta
@@ -163,6 +164,19 @@ CREATE TABLE Insumo (
                         FOREIGN KEY (id_tipo_insumo) REFERENCES TipoInsumo(id)
 );
 
+-- Valor Nutricional
+CREATE TABLE ValorNutricional (
+                                  id INT PRIMARY KEY,
+                                  id_unidad_medida INT NOT NULL,
+                                  cantidad DECIMAL(10,2) NOT NULL,
+                                  calorias DECIMAL(10,2) NOT NULL,
+                                  proteinas DECIMAL(10,2) NOT NULL,
+                                  grasas DECIMAL(10,2) NOT NULL,
+                                  carbohidratos DECIMAL(10,2) NOT NULL,
+                                  FOREIGN KEY (id) REFERENCES Insumo(id), -- ON DELETE CASCADE,
+                                  FOREIGN KEY (id_unidad_medida) REFERENCES UnidadMedida(id)
+);
+
 -- Receta Detalle
 CREATE TABLE RecetaDetalle (
                                id INT PRIMARY KEY AUTO_INCREMENT,
@@ -176,16 +190,3 @@ CREATE TABLE RecetaDetalle (
                                FOREIGN KEY (id_unidad_medida) REFERENCES UnidadMedida(id)
 );
 
--- Valor Nutricional
-CREATE TABLE ValorNutricional (
-                                  id INT PRIMARY KEY AUTO_INCREMENT,
-                                  id_insumo INT NOT NULL,
-                                  id_unidad_medida INT NOT NULL,
-                                  cantidad DECIMAL(10,2) NOT NULL,
-                                  calorias DECIMAL(10,2) NOT NULL,
-                                  proteinas DECIMAL(10,2) NOT NULL,
-                                  grasas DECIMAL(10,2) NOT NULL,
-                                  carbohidratos DECIMAL(10,2) NOT NULL,
-                                  FOREIGN KEY (id_insumo) REFERENCES Insumo(id) ON DELETE CASCADE,
-                                  FOREIGN KEY (id_unidad_medida) REFERENCES UnidadMedida(id)
-);

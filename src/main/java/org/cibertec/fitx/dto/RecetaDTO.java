@@ -22,4 +22,6 @@ public class RecetaDTO {
 
     private Set<EtiquetaMinDTO> etiquetas;
     private Set<RecetaDetalleDTO> detalles;
+
+    private ValorNutricionalRecetaDTO valorNutricional;
 }
