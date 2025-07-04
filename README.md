@@ -28,6 +28,12 @@
 
 ---
 
+## 🚀 Endpoint
+
+/web/login
+
+---
+
 ## ⚙️ Configuración
 
 ### Archivo `application.properties`
