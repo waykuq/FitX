@@ -81,6 +81,7 @@ public class UnidadMedidaController {
             }
             actualEntity.setNombre(unidadMedida.getNombre());
             actualEntity.setSimbolo(unidadMedida.getSimbolo());
+            actualEntity.setFactorConversion(unidadMedida.getFactorConversion());
             unidadMedidaService.guardar(actualEntity);
 
             return ResponseEntity.noContent().build();

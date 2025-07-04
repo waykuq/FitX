@@ -14,7 +14,9 @@
             #unidadTable th:nth-child(2),
             #unidadTable td:nth-child(2),
             #unidadTable th:nth-child(3),
-            #unidadTable td:nth-child(3) {
+            #unidadTable td:nth-child(3),
+            #unidadTable th:nth-child(4),
+            #unidadTable td:nth-child(4) {
                 text-align: center;
             }
         </style>
@@ -39,6 +41,7 @@
                     <tr>
                         <th>Nombre</th>
                         <th class="text-center">Símbolo</th>
+                        <th class="text-center">Factor de conversión</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -79,6 +82,16 @@
                             <div class="mb-3">
                                 <label class="form-label">Símbolo</label>
                                 <input type="text" class="form-control" name="simbolo" id="simbolo" required />
+                                <div class="invalid-feedback">
+                                    Ingrese un símbolo válido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Factor de conversión</label>
+                                <input type="number" class="form-control" name="factor_conversion" id="factor_conversion" required />
+                                <div class="">
+                                    Este valor se utiliza para convertir la unidad de medida en gramos.
+                                </div>
                                 <div class="invalid-feedback">
                                     Ingrese un símbolo válido.
                                 </div>
@@ -164,6 +177,7 @@
                         data.data.push([
                             unidad.nombre,
                             unidad.simbolo,
+                            unidad.factorConversion,
                             actionsHtml
                         ]);
                     });
@@ -199,6 +213,7 @@
                     document.getElementById('unidadMedidaId').value = unidadMedida.id;
                     document.getElementById('nombre').value = unidadMedida.nombre;
                     document.getElementById('simbolo').value = unidadMedida.simbolo;
+                    document.getElementById('factor_conversion').value = unidadMedida.factorConversion;
                     document.getElementById('modalUnidadLabel').textContent = 'Editar Unidad de Medida';
 
                     new bootstrap.Modal(document.getElementById('modalUnidad')).show();
@@ -222,11 +237,13 @@
                 const id = document.getElementById('unidadMedidaId').value;
                 const nombre = document.getElementById('nombre').value;
                 const simbolo = document.getElementById('simbolo').value;
+                const factorConversion = document.getElementById('factor_conversion').value;
 
                 const unidadMedida = {
                     id: id ? parseInt(id) : null,
                     nombre: nombre,
-                    simbolo: simbolo
+                    simbolo: simbolo,
+                    factorConversion: factorConversion
                 };
 
                 const method = id ? 'PUT' : 'POST';

@@ -4,6 +4,7 @@ import org.cibertec.fitx.dto.DietaDto;
 import org.cibertec.fitx.dto.UsuarioDTO;
 import org.cibertec.fitx.entity.PerfilNutricionalEntity;
 import org.cibertec.fitx.entity.UsuarioEntity;
+
 import org.cibertec.fitx.repository.UsuarioRepository;
 import org.cibertec.fitx.service.TipoUsuarioService;
 import org.cibertec.fitx.service.UsuarioService;
