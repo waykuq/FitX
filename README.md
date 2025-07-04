@@ -36,13 +36,19 @@
 
 ## ⚙️ Configuración
 
-### Archivo `application.properties`
+### Archivo `/src/main/resources/application.properties`
 
 Actualiza la línea 13 con:
-
 ```properties
 spring.sql.init.mode=always
 ```
+
+### Archivo `/env.properties`
+Actualiza el puerto de conexión con la base de datos en la línea 4 con:
+```properties
+DB_URL_PREFIX=jdbc:mysql://localhost:3306/
+```
+
 ---
 ## Usuarios de prueba
 
